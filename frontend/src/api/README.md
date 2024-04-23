@@ -1,5 +1,5 @@
-# 🔗 Services
-여기는 Seoul Pop Team의 index directory 입니다.
+# 🔗 Api
+여기는 Seoul Pop Team의 api directory 입니다.
 
 ---
 
@@ -10,7 +10,7 @@
 ### 🔎 How to use
 
 ```tsx
-import { getDataApi } from '@/index/example';
+import { getDataApi } from '@/api/example';
 ...
 
 const data = await getDataApi()

@@ -10,6 +10,6 @@
 ### 🌱 How to contribute
 
 - 파일의 이름은 camelCase를 따른다.
-  - ex) `index.ts`
+  - ex) `api.ts`
 - 변수의 이름은 대문자만 사용하여 작성한다.
   - ex) `export const JEONG_SANG_SOO`
