@@ -16,8 +16,7 @@ const queryClient = new QueryClient({
 root.render(
   <QueryClientProvider client={queryClient}>
     <App />
-    {(import.meta.env.NODE_ENV === 'development' || import.meta.env.NODE_ENV === 'local') && (
-      <ReactQueryDevtools />
-    )}
+    {(import.meta.env.VITE_NODE_ENV === 'development' ||
+      import.meta.env.VITE_NODE_ENV === 'local') && <ReactQueryDevtools />}
   </QueryClientProvider>,
 );
