@@ -1,5 +1,5 @@
 # 🔗 Services
-여기는 Seoul Pop Team의 api directory 입니다.
+여기는 Seoul Pop Team의 index directory 입니다.
 
 ---
 
@@ -10,7 +10,7 @@
 ### 🔎 How to use
 
 ```tsx
-import { getDataApi } from '@/api/example';
+import { getDataApi } from '@/index/example';
 ...
 
 const data = await getDataApi()
@@ -20,8 +20,8 @@ const data = await getDataApi()
 
 ### 🌱 How to contribute
 
-- 만들고자 하는 서비스의 이름으로 현재 디렉토리의 하위에 디렉토리를 생성한다.
-    - 디렉토리의 이름은 모두 소문자로 작성한다. `example.ts`
+- 만들고자 하는 서비스의 이름으로 현재 디렉토리의 하위에 파일을 생성한다.
+    - 파일 이름은 camelCase를 따른다. `camelCase.ts`
 - API 요청을 이 곳에서만 정리하고, 전달한다.
 
 ### 💡 Example
