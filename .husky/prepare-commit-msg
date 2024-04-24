@@ -10,5 +10,4 @@ JIRA_ID=`echo $BRANCH_NAME | egrep -o '[0-9]+'`
 JIRA_TICKET=$JIRA_NAME-$JIRA_ID
 
 sed -i.bak -e "\$s/\$/ (#$JIRA_TICKET)/" "$1" # <type>: <message> (#<JIRA_TICKET>)   
-# fi
 
