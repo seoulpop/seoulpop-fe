@@ -36,3 +36,6 @@ application-secret.yml
 
 ### VS Code ###
 .vscode/
+
+### node modules
+/node_modules
