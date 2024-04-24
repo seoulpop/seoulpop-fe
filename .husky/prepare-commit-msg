@@ -1,0 +1,14 @@
+if [ -z "$BRANCHES_TO_SKIP" ]; then
+  BRANCHES_TO_SKIP=(main release-be release-fe dev-be dev-fe hotfix)
+fi
+
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+BRANCH_NAME="$(echo $BRANCH_NAME | cut -d'/' -f1)" # fe-<issue-number> 를 가져온다.
+
+JIRA_NAME='S10P31A409'
+JIRA_ID=`echo $BRANCH_NAME | egrep -o '[0-9]+'`
+JIRA_TICKET=$JIRA_NAME-$JIRA_ID
+
+sed -i.bak -e "\$s/\$/ (#$JIRA_TICKET)/" "$1" # <type>: <message> (#<JIRA_TICKET>)   
+# fi
+
