@@ -8,7 +8,7 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-//    "allowImportingTsExtensions": true,
+    //    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -20,12 +20,15 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["aframe"],
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "#/*": ["public/*"],
+      "#/*": ["public/*"]
     }
   },
   "include": ["src", "public", "src/types/svg.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json"}]
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
