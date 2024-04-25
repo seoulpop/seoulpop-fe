@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import 'aframe';
-import { AssetItem, Assets, Entity, Scene } from '@belivvr/aframe-react';
-import FoundButton from './FounButton';
+import { AssetItem, Assets, Entity, Scene, Camera } from '@belivvr/aframe-react';
+
+import FoundButton from '@/pages/ArDemo/FoundButton';
 
 const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
@@ -22,7 +23,9 @@ const ArDemo = () => {
   return (
     <>
       <FoundButton />
-      <Scene cursor='rayOrigin: mouse'>
+      <Scene>
+        <Camera cursor={{ rayOrigin: 'mouse' }} />
+
         <Assets>
           <AssetItem id='hamster' src='/assets/hamster/scene.gltf' />
         </Assets>
