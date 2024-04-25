@@ -16,14 +16,9 @@ const Router = () => {
       children: [
         { index: true, element: <MainPage /> },
         { path: '/example', element: <ExamplePage /> },
+        { path: '/ardemo', element: <ArDemo /> },
         // { path: '/category/:category', element: <CategoryResultPage /> },
       ],
-    },
-    {
-      path: '/ardemo',
-      element: <Root />,
-      errorElement: <NotFoundPage />,
-      children: [{ index: true, element: <ArDemo /> }],
     },
   ]);
 
