@@ -8,8 +8,7 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-//    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true,s
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
