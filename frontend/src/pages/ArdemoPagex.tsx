@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import 'aframe';
 import { AssetItem, Assets, Entity, Scene, Camera } from '@belivvr/aframe-react';
 
-import FoundButton from '@/pages/ArDemo/FoundButton';
+import FoundButton from '@/containers/ArDemo/FoundButton';
 
 const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);

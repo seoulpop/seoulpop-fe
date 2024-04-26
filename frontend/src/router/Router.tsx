@@ -5,7 +5,7 @@ const Root = lazy(() => import('./Root'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 const MainPage = lazy(() => import('@/pages/MainPage'));
 const ExamplePage = lazy(() => import('@/pages/ExamplePage'));
-const ArDemo = lazy(() => import('@/pages/ArDemo')); // ar 테스트 후 삭제 예정
+const ArDemo = lazy(() => import('@/pages/ArdemoPagex')); // ar 테스트 후 삭제 예정
 
 const Router = () => {
   const router = createBrowserRouter([
