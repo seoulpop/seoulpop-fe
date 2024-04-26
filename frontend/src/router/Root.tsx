@@ -1,12 +1,10 @@
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 // import useMediaQuery from '@/hooks/useMediaQuery';
 
 // import NavBar from '@/components/NavBar';
 
 const Root = () => {
-  // const scrollDirection = useScrollDirection();
-
   // const { isMobile } = useMediaQuery();
 
   return (
@@ -16,7 +14,6 @@ const Root = () => {
 
         {/* {isMobile && <NavBar isHide={isListShowed && scrollDirection.y === 'down'} />} */}
       </>
-      <ScrollRestoration />
       {/* <Modal portalElementId='portal' isBottom={isMobile} blockScrollOnMount /> */}
     </>
   );
