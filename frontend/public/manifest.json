@@ -1,10 +1,10 @@
 {
-  "name": "MyProgressiveWebApp",
-  "short_name": "MyPWA",
+  "name": "Seoul Pop",
+  "short_name": "Seoul Pop",
   "start_url": "",
   "display": "standalone",
-  "background_color": "#F8F7DA",
-  "theme_color": "#735CFF",
+  "background_color": "#FFFFFF",
+  "theme_color": "#000000",
   "description": "PWA with Vite.js, React.js and TypeScript",
   "icons": [
     {
