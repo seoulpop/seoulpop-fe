@@ -11,19 +11,5 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .register('/service-worker.js')
-          .then((registration) => {
-            // Service worker registration succeeded
-          })
-          .catch((err) => {
-            console.log('Service worker registration failed:', err);
-          });
-      } else {
-        console.log('Service workers are not supported.');
-      }
-    </script>
   </body>
 </html>
