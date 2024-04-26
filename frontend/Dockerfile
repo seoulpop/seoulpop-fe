@@ -9,16 +9,14 @@ RUN pnpm install --frozen-lockfile
 FROM deps AS builder
 COPY . .
 RUN pnpm build
-RUN ls /app/dist # 빌드 결과 확인
 
-FROM base AS runner
+FROM node:20.11.1-alpine AS runner
+WORKDIR /app
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package.json /app/pnpm-lock.yaml ./
 
+COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile
-
+RUN npm install -g serve
 EXPOSE 3000
-ENV NODE_ENV=production
-ENV HOST=0.0.0.0
 
-CMD ["node", "dist/main.js"]
+CMD ["serve", "-s", "dist", "-l", "3000"]
