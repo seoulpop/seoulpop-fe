@@ -3,6 +3,17 @@ if [ -z "$BRANCHES_TO_SKIP" ]; then
 fi
 
 BRANCH_NAME=$(git symbolic-ref --short HEAD)
+BRANCH_NAME="${BRANCH_NAME##*/}"
+
+# main release-be release-fe dev-be dev-fe hotfix 브랜치는 규칙을 무시
+for branch in "${BRANCHES_TO_SKIP[@]}"; do
+    if [[ "$BRANCH_NAME" == "$branch" ]]; then
+        echo "Skipping commit message hook for branch $BRANCH_NAME"
+        exit 0
+    fi
+done
+
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
 BRANCH_NAME="$(echo $BRANCH_NAME | cut -d'/' -f1)" # fe-<issue-number> 를 가져온다.
 
 JIRA_NAME='S10P31A409'
@@ -10,4 +21,3 @@ JIRA_ID=`echo $BRANCH_NAME | egrep -o '[0-9]+'`
 JIRA_TICKET=$JIRA_NAME-$JIRA_ID
 
 sed -i.bak -e "\$s/\$/ (#$JIRA_TICKET)/" "$1" # <type>: <message> (#<JIRA_TICKET>)   
-
