@@ -32,6 +32,9 @@ dependencies:
   react-dom:
     specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
+  react-kakao-maps-sdk:
+    specifier: ^1.1.26
+    version: 1.1.26(react-dom@18.2.0)(react@18.2.0)
   react-router-dom:
     specifier: ^6.22.3
     version: 6.22.3(react-dom@18.2.0)(react@18.2.0)
@@ -4341,6 +4344,10 @@ packages:
       object.values: 1.2.0
     dev: true
 
+  /kakao.maps.d.ts@0.1.39:
+    resolution: {integrity: sha512-KXENJ8hHYtjb5G+0vf8TXx/PwWW4j5ndDiQTSMvGtF7EFWu2P3N/+Zivcj9/UKn3j29Iz/sIUaA7WL8Ug3IDGQ==}
+    dev: false
+
   /keyv@3.1.0:
     resolution: {integrity: sha512-9ykJ/46SN/9KPM/sichzQ7OvXyGDYKGTaDlKMGCAlg2UK8KRy4jb0d8sFc+0Tt0YYnThq8X2RZgCg74RPxgcVA==}
     dependencies:
@@ -4838,6 +4845,18 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+
+  /react-kakao-maps-sdk@1.1.26(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-rzQLGVPk8LmT8ffZFiPEutQxxufH/K9ffbFgCnE9OqqfvlQ94qmBtl8s5MvTtt3noOJ3W1WBTle1B/Y+Yphuug==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+      react-dom: ^16.8 || ^17 || ^18
+    dependencies:
+      '@babel/runtime': 7.24.4
+      kakao.maps.d.ts: 0.1.39
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}

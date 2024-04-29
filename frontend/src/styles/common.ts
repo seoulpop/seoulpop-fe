@@ -10,4 +10,12 @@ export const BORDER_RADIUS = {
   sm: '8px',
   md: '12px',
   lg: '16px',
+  circle: '999px',
+};
+
+export const Z_INDEX = {
+  alert: 5000,
+  modal: 3000,
+  layout: 2000,
+  float: 1000,
 };
