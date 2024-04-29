@@ -5,7 +5,7 @@ import { getMarkerInfo } from '@/api/markerInfo';
 
 const useMaps = () => {
   const { data: markerData, isLoading } = useQuery<MarkerInfo[]>({
-    queryKey: [],
+    queryKey: ['marker'],
     queryFn: () => getMarkerInfo(),
   });
 
