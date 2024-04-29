@@ -9,7 +9,7 @@ const base = css`
     --lightgray-transparent-50: rgb(205 205 205 / 50%);
     --black: #000;
     --white: #fff;
-    --shadow: 0 1px 16px 0 rgb(66 66 66 / 10%);
+    --shadow: 0 1px 8px 0 rgb(66 66 66 / 50%);
   }
 
   * {
