@@ -6,4 +6,5 @@ export interface MarkerInfo {
   lng: number;
   name: string;
   category: category;
+  visited?: boolean;
 }

@@ -6,4 +6,5 @@ export const DEFAULT_MARKER_INFO: MarkerInfo = {
   lng: 126.975359779271,
   name: '서울 숭례문 (서울 崇禮門)',
   category: '문화재',
+  // visited: false,
 };
