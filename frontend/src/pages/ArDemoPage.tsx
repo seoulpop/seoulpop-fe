@@ -18,6 +18,8 @@ const ButtonBlock = styled.div`
   bottom: 5.4rem;
   transform: translate(-50%, 0);
 
+  min-width: 27.7rem;
+
   z-index: ${Z_INDEX.float};
 `;
 

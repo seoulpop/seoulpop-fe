@@ -12,11 +12,15 @@ const SearchIconWrapper = styled.span`
   background-size: cover;
 `;
 
+const Text = styled.span`
+  letter-spacing: -0.03rem;
+`;
+
 const FoundButton = () => {
   return (
     <Button type='button' color='#735cff' size='medium' onClick={() => {}}>
       <SearchIconWrapper />
-      <span>새로운 문화재를 발견했습니다.</span>
+      <Text>새로운 문화재를 발견했습니다.</Text>
     </Button>
   );
 };
