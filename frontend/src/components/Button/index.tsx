@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 
-const lightFontColors: string[] = ['#000', '#735cff', '#e9b43a'];
+const lightFontColors: string[] = ['var(--primary)', 'var(--secondary)', 'var(--black)'];
 
 const ButtonContent = styled.button`
   height: 4.4rem;
