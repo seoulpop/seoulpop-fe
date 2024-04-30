@@ -21,7 +21,8 @@
     "react-dom": "^18.2.0",
     "react-kakao-maps-sdk": "^1.1.26",
     "react-router-dom": "^6.22.3",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "arjs": "https://github.com/AR-js-org/AR.js"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

@@ -23,6 +23,9 @@ dependencies:
   aframe:
     specifier: ^1.5.0
     version: 1.5.0
+  arjs:
+    specifier: https://github.com/AR-js-org/AR.js
+    version: github.com/AR-js-org/AR.js/e2f2893a7e0af8853687d34ca0aee7edf5321e9b
   axios:
     specifier: ^1.6.8
     version: 1.6.8
@@ -120,6 +123,15 @@ packages:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
     dev: true
+
+  /@ar-js-org/artoolkit5-js@0.3.0:
+    resolution: {integrity: sha512-vFqIf8etxYVvSwB+aNkum9ywoVxQFPygXn4KvWnLN1/nyvc6bZW4Kc8MBTiewpJf5jxgmiTfvYzUN+FAosAaLw==}
+    dependencies:
+      '@babel/runtime': 7.24.4
+      axios: 1.6.8
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@babel/code-frame@7.24.2:
     resolution: {integrity: sha512-y5+tLQyV8pg3fsiln67BVLD1P13Eg4lh5RW9mF0zUuvLrv9uIQ4MCL+CRT+FTsBlBjcIan6PGsLcBN0m3ClUyQ==}
@@ -5255,6 +5267,10 @@ packages:
   /text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
 
+  /three@0.150.1:
+    resolution: {integrity: sha512-5C1MqKUWaHYo13BX0Q64qcdwImgnnjSOFgBscOzAo8MYCzEtqfQqorEKMcajnA3FHy1yVlIe9AmaMQ0OQracNA==}
+    dev: false
+
   /to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
     engines: {node: '>=4'}
@@ -5609,6 +5625,21 @@ packages:
       '@types/react': 18.2.79
       react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  github.com/AR-js-org/AR.js/e2f2893a7e0af8853687d34ca0aee7edf5321e9b:
+    resolution: {tarball: https://codeload.github.com/AR-js-org/AR.js/tar.gz/e2f2893a7e0af8853687d34ca0aee7edf5321e9b}
+    name: '@ar-js-org/ar.js'
+    version: 3.4.5
+    prepare: true
+    requiresBuild: true
+    dependencies:
+      '@ar-js-org/artoolkit5-js': 0.3.0
+      aframe: 1.5.0
+      three: 0.150.1
+    transitivePeerDependencies:
+      - debug
+      - supports-color
     dev: false
 
   github.com/dmarcos/three-bmfont-text/eed4878795be9b3e38cf6aec6b903f56acd1f695:
