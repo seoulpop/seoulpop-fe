@@ -18,7 +18,7 @@ const Text = styled.span`
 
 const FoundButton = () => {
   return (
-    <Button type='button' color='#735cff' size='medium' onClick={() => {}}>
+    <Button type='button' color='#735cff' size='medium'>
       <SearchIconWrapper />
       <Text>새로운 문화재를 발견했습니다.</Text>
     </Button>
