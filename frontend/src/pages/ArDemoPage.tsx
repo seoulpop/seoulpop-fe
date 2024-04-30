@@ -7,7 +7,7 @@ import 'arjs';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
 
-const Container = styled.div`
+const SceneContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
@@ -40,7 +40,7 @@ const ArDemo = () => {
   }, []);
 
   return (
-    <Container>
+    <SceneContainer>
       <ButtonBlock>
         <FoundButton />
       </ButtonBlock>
@@ -71,7 +71,7 @@ const ArDemo = () => {
           />
         )}
       </Scene>
-    </Container>
+    </SceneContainer>
   );
 };
 
