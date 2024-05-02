@@ -51,7 +51,7 @@ const ArDemo = () => {
           alpha: true,
         }}
       >
-        <Camera cursor={{ rayOrigin: 'mouse' }} />
+        <Camera gps-new-camera='gpsMinDistance: 5' />
 
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
@@ -60,13 +60,14 @@ const ArDemo = () => {
           <Entity
             id='hamster'
             gltfModel='#hamster'
-            position={{ x: 0, y: 1.5, z: -0.2 }}
+            gps-new-entity-place='latitude: 37.50183539829876; longitude: 127.03968585351448'
             scale={{
-              x: 0.0001,
-              y: 0.0001,
-              z: 0.0001,
+              x: 0.1,
+              y: 0.1,
+              z: 0.1,
             }}
             hamevent
+            animation-mixer='clip: *;'
           />
         )}
       </Scene>
