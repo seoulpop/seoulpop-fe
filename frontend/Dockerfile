@@ -19,4 +19,4 @@ RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile
 RUN npm install -g serve
 EXPOSE 3000
 
-CMD ["serve", "-s", "dist", "-l", "3000"]
+CMD ["sh", "-c", "serve -s dist -l 3000"]

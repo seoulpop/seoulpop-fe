@@ -62,6 +62,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-unresolved': 'off',
     'import/no-absolute-path': 'off',
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     'no-restricted-exports': ['error', { 'restrictDefaultExports': { 'defaultFrom': false } }],
     'import/order': [
       'warn',
