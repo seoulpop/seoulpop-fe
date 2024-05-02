@@ -4,11 +4,12 @@ WORKDIR /app
 FROM base AS deps
 RUN npm install -g pnpm
 COPY package.json pnpm-lock.yaml ./
+COPY env.list ./
 RUN pnpm install --frozen-lockfile
 
 FROM deps AS builder
 COPY . .
-RUN pnpm build
+RUN source env.list && pnpm build
 
 FROM node:20.11.1-alpine AS runner
 WORKDIR /app
