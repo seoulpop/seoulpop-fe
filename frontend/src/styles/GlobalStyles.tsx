@@ -15,7 +15,7 @@ const mainStyles = css`
 
 const isArMode = window.location.pathname === '/ardemo'; // TODO: 라우트명 변경
 
-// ar은 독립적인 레이아웃을 가짐
+// MARK: ar은 독립적인 레이아웃을 가짐
 const GlobalStyles = () => <Global styles={isArMode ? globalStyles : [globalStyles, mainStyles]} />;
 
 export default GlobalStyles;
