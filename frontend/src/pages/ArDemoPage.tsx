@@ -54,7 +54,7 @@ const ArDemo = () => {
         <Camera cursor={{ rayOrigin: 'mouse' }} />
 
         <Assets>
-          <AssetItem id='hamster' src='/assets/hamster/scene.gltf' />
+          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
         </Assets>
         {assetsReady && (
           <Entity
@@ -62,9 +62,9 @@ const ArDemo = () => {
             gltfModel='#hamster'
             position={{ x: 0, y: 1.5, z: -0.2 }}
             scale={{
-              x: 0.2,
-              y: 0.2,
-              z: 0.2,
+              x: 0.0001,
+              y: 0.0001,
+              z: 0.0001,
             }}
             hamevent
           />
