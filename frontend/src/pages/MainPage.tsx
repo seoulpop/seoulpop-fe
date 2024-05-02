@@ -1,11 +1,15 @@
+/** @jsxImportSource @emotion/react */
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import { css } from '@emotion/react';
 
 import { DEFAULT_MARKER_INFO } from '@/constants/map';
 import useMaps from '@/hooks/server/useMap';
-import { Z_INDEX } from '@/styles/common';
+import { BORDER_RADIUS, Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/marker';
+import { slideIn, slideOut } from '@/styles/animation';
+import { IconDown, IconUp } from '#/svgs';
 
 import Button from '@/components/Button';
 
@@ -25,10 +29,41 @@ const CategoryWrapper = styled.div`
   z-index: ${Z_INDEX.float};
 `;
 
+const carouselStyle = (visible: boolean) => css`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation: ${visible ? slideIn : slideOut} 0.5s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+  z-index: ${Z_INDEX.float};
+`;
+
+const BottomPanelArea = styled.div`
+  position: fixed;
+  bottom: 10rem;
+`;
+
+// TODO: 버튼 공통 컴포넌트로 바꿔야 함
+const PanelToggleButtonStyle = css`
+  margin-left: 2rem;
+  width: 4.8rem;
+  height: 4.8rem;
+  background-color: var(--white);
+  border: none;
+  border-radius: ${BORDER_RADIUS.circle};
+  box-shadow: var(--shadow);
+  cursor: pointer;
+`;
+
 const MainPage = () => {
   const { markerData } = useMaps();
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  const togglePanel = () => {
+    setIsVisible(!isVisible);
+  };
 
   const handleMapCategoryClick = (index: number) => {
     setSelectedCategory(selectedCategory === index ? 0 : index);
@@ -36,9 +71,7 @@ const MainPage = () => {
 
   useEffect(() => {
     if (markerData) setMarkerList(markerData);
-  }, [markerData]);
 
-  useEffect(() => {
     const categoryMap: { [key: number]: string } = {
       1: '문화재',
       2: '3·1운동',
@@ -85,6 +118,7 @@ const MainPage = () => {
           6·25전쟁
         </Button>
       </CategoryWrapper>
+
       {markerList === undefined ? (
         <MapMarker position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }} />
       ) : (
@@ -92,6 +126,16 @@ const MainPage = () => {
           <MapMarker position={{ lat: marker.lat, lng: marker.lng }} key={marker.id} />
         ))
       )}
+
+      <div css={carouselStyle(isVisible)}>
+        <BottomPanelArea>
+          <button type='button' css={PanelToggleButtonStyle} onClick={togglePanel}>
+            {isVisible ? <IconDown /> : <IconUp />}
+          </button>
+        </BottomPanelArea>
+        <h1>Carousel 영역</h1>
+        <p>여기에 하나씩 넣을거에요</p>
+      </div>
     </KakaoMap>
   );
 };

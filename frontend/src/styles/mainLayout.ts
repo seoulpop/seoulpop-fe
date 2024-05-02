@@ -11,6 +11,7 @@ const mainLayout = css`
     background-color: var(--white);
     font-size: 1.6rem;
     box-shadow: var(--shadow);
+    overflow: hidden;
   }
 `;
 
