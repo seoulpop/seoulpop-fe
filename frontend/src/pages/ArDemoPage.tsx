@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import 'aframe';
-import { AssetItem, Assets, Entity, Scene, Camera } from '@belivvr/aframe-react';
+import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import 'arjs';
+import { useEffect, useState } from 'react';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
