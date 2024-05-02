@@ -10,6 +10,7 @@ import { BORDER_RADIUS, Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/marker';
 import { slideIn, slideOut } from '@/styles/animation';
 import { IconDown, IconUp } from '#/svgs';
+import useCurrentLocation from '@/hooks/useCurrentLocation';
 
 import Button from '@/components/Button';
 
@@ -56,12 +57,15 @@ const PanelToggleButtonStyle = css`
 `;
 
 const MainPage = () => {
-  const { markerData } = useMaps();
+  const { lat, lng, error } = useCurrentLocation();
+  const { markerData, markerNearbyData } = useMaps(lat, lng);
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const togglePanel = () => {
+    console.log(lat, lng);
+    console.log(markerNearbyData);
     setIsVisible(!isVisible);
   };
 
@@ -86,6 +90,10 @@ const MainPage = () => {
 
     setMarkerList(filterMarkers());
   }, [selectedCategory, markerData]);
+
+  if (error) {
+    return <div>위치 정보 오류</div>;
+  }
 
   return (
     <KakaoMap center={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }}>

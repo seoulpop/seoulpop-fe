@@ -8,3 +8,8 @@ export interface MarkerInfo {
   category: category;
   visited?: boolean;
 }
+
+export interface MarkerNearbyInfo extends MarkerInfo {
+  thumbnail: string;
+  address: string;
+}

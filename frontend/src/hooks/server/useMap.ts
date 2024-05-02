@@ -1,17 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { MarkerInfo } from '@/types/marker';
-import { getMarkerInfo } from '@/api/markerInfo';
+import { MarkerInfo, MarkerNearbyInfo } from '@/types/marker';
+import { getMarkerInfo, getMarkerNearby } from '@/api/markerInfo';
+import { DEFAULT_MARKER_INFO } from '@/constants/map';
 
-const useMaps = () => {
-  const { data: markerData, isLoading } = useQuery<MarkerInfo[]>({
+const useMaps = (lat: number = DEFAULT_MARKER_INFO.lat, lng: number = DEFAULT_MARKER_INFO.lng) => {
+  const { data: markerData, isLoading: isMarkerLoading } = useQuery<MarkerInfo[]>({
     queryKey: ['marker'],
     queryFn: () => getMarkerInfo(),
   });
 
+  const { data: markerNearbyData, isLoading: isMarkerNearbyLoading } = useQuery<MarkerNearbyInfo[]>(
+    {
+      queryKey: ['markerNearby', lat, lng],
+      queryFn: () => getMarkerNearby(lat, lng),
+    },
+  );
+
   return {
     markerData,
-    isLoading,
+    isMarkerLoading,
+    markerNearbyData,
+    isMarkerNearbyLoading,
   };
 };
 
