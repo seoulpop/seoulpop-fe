@@ -8,12 +8,12 @@ RUN pnpm install --frozen-lockfile
 
 FROM deps AS builder
 COPY . .
+COPY .env ./
 RUN pnpm build
 
 FROM node:20.11.1-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app/dist ./dist
-
 COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile
 RUN npm install -g serve
