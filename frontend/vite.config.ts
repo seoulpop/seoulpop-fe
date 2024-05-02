@@ -17,13 +17,13 @@ export default defineConfig({
     ],
   },
   server: {
-    // pem 파일이 없으면 무시
-    https: fs.existsSync(path.resolve(__dirname, 'localhost-key.pem'))
-      ? undefined
-      : {
-          key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
-          cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
-        },
+    // pem 파일이 없는 경우 무시
+    ...(fs.existsSync(path.resolve(__dirname, 'localhost-key.pem')) && {
+      https: {
+        key: fs.readFileSync(path.resolve(__dirname, 'localhost-key.pem')),
+        cert: fs.readFileSync(path.resolve(__dirname, 'localhost.pem')),
+      },
+    }),
     // Make sure the server is accessible over the local network
     host: '0.0.0.0',
   },
