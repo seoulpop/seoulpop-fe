@@ -1,6 +1,5 @@
 import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
-import 'arjs';
 import { useEffect, useState } from 'react';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
@@ -62,9 +61,9 @@ const ArDemo = () => {
             gltfModel='#hamster'
             gps-new-entity-place='latitude: 37.50183539829876; longitude: 127.03968585351448'
             scale={{
-              x: 0.1,
-              y: 0.1,
-              z: 0.1,
+              x: 0.05,
+              y: 0.05,
+              z: 0.05,
             }}
             hamevent
             animation-mixer='clip: *;'
