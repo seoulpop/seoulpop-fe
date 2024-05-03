@@ -1,6 +1,5 @@
 import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
-import 'arjs';
 import { useEffect, useState } from 'react';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
