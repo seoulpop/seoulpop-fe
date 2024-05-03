@@ -26,6 +26,7 @@ const ButtonBlock = styled.div`
 `;
 
 const ArDemo = () => {
+  const [assetsReady, setAssetsReady] = useState(false);
   const [position, setPosition] = useState<Position>();
   const { markerNearbyData, isMarkerNearbyLoading: isLoading } = useArMarkers({
     lat: position?.latitude,
@@ -47,6 +48,11 @@ const ArDemo = () => {
     };
   }, []);
 
+  useEffect(() => {
+    setAssetsReady(true);
+  }, []);
+
+  // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
       <ButtonBlock>
@@ -65,9 +71,11 @@ const ArDemo = () => {
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
         </Assets>
-        {markerNearbyData &&
+
+        {assetsReady &&
+          markerNearbyData &&
           markerNearbyData?.length > 0 &&
-          markerNearbyData.map(({ id, lat, lng }) => (
+          markerNearbyData?.map(({ id, lat, lng }) => (
             <Entity
               key={id}
               id='hamster'
