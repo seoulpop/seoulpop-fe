@@ -28,3 +28,5 @@ dist-ssr
 # 로컬 https 설정
 localhost-key.pem
 localhost.pem
+
+/android

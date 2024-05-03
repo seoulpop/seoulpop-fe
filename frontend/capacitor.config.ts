@@ -5,8 +5,13 @@ const config: CapacitorConfig = {
   appName: 'seoul-pop',
   webDir: 'dist',
   cordova: {},
+  android: {
+    allowMixedContent: true,
+  },
   server: {
-    url: 'http://10.0.2.2:5173',
+    cleartext: true,
+    hostname: 'localhost:5173',
+    androidScheme: 'http',
   },
 };
 
