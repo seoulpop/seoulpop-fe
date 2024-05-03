@@ -7,6 +7,7 @@ import useArMarkers from '@/hooks/server/useArMarkers';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
+import { GeolocationCoordinates, Position } from '@/types/ar';
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -23,16 +24,6 @@ const ButtonBlock = styled.div`
 
   z-index: ${Z_INDEX.float};
 `;
-
-export interface Position {
-  longitude: number;
-  latitude: number;
-}
-export interface GeolocationCoordinates {
-  detail: {
-    position: Position;
-  };
-}
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();

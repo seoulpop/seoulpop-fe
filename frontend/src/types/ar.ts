@@ -8,3 +8,12 @@ export interface MarkerInfo {
   category: category;
   visited?: boolean;
 }
+export interface Position {
+  longitude: number;
+  latitude: number;
+}
+export interface GeolocationCoordinates {
+  detail: {
+    position: Position;
+  };
+}
