@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import 'aframe-extras';
 
+import useArMarkers from '@/hooks/server/useArMarkers';
+
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
 
@@ -22,20 +24,36 @@ const ButtonBlock = styled.div`
   z-index: ${Z_INDEX.float};
 `;
 
+export interface Position {
+  longitude: number;
+  latitude: number;
+}
+export interface GeolocationCoordinates {
+  detail: {
+    position: Position;
+  };
+}
+
 const ArDemo = () => {
-  const [assetsReady, setAssetsReady] = useState(false);
+  const [position, setPosition] = useState<Position>();
+  const { markerNearbyData, isMarkerNearbyLoading: isLoading } = useArMarkers({
+    lat: position?.latitude,
+    lng: position?.longitude,
+  });
 
   useEffect(() => {
-    setAssetsReady(true);
+    const onUpdateGps = (event: unknown) => {
+      // TODO: 위치 업데이트 최적화
+      const data = event as GeolocationCoordinates;
+      const { position: pos } = data.detail;
+      setPosition(pos);
+    };
 
-    AFRAME.registerComponent('hamevent', {
-      init() {
-        const { el } = this;
-        el.addEventListener('click', () => {
-          console.log('hello');
-        });
-      },
-    });
+    document.addEventListener('gps-camera-update-position', onUpdateGps);
+
+    return () => {
+      document.removeEventListener('gps-camera-update-positon', onUpdateGps);
+    };
   }, []);
 
   return (
@@ -56,20 +74,23 @@ const ArDemo = () => {
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
         </Assets>
-        {assetsReady && (
-          <Entity
-            id='hamster'
-            gltfModel='#hamster'
-            gps-new-entity-place='latitude: 37.50183539829876; longitude: 127.03968585351448'
-            scale={{
-              x: 0.05,
-              y: 0.05,
-              z: 0.05,
-            }}
-            hamevent
-            animation-mixer='clip: *;'
-          />
-        )}
+        {markerNearbyData &&
+          markerNearbyData?.length > 0 &&
+          markerNearbyData.map(({ id, lat, lng }) => (
+            <Entity
+              key={id}
+              id='hamster'
+              gltfModel='#hamster'
+              gps-new-entity-place={`latitude: ${lat}; longitude: ${lng}`}
+              scale={{
+                x: 0.05,
+                y: 0.05,
+                z: 0.05,
+              }}
+              hamevent
+              animation-mixer='clip: *;'
+            />
+          ))}
       </Scene>
     </SceneContainer>
   );
