@@ -9,8 +9,9 @@ import useMaps from '@/hooks/server/useMap';
 import { BORDER_RADIUS, Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/marker';
 import { slideIn, slideOut } from '@/styles/animation';
-import { IconDown, IconUp } from '#/svgs';
+import { IconCenter, IconDown, IconUp } from '#/svgs';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
+import useKakaoLoader from '@/hooks/useKakaoLoader';
 
 import Button from '@/components/Button';
 
@@ -41,7 +42,9 @@ const carouselStyle = (visible: boolean) => css`
 
 const BottomPanelArea = styled.div`
   position: fixed;
+  width: 100%;
   bottom: 10rem;
+  display: flex;
 `;
 
 // TODO: 버튼 공통 컴포넌트로 바꿔야 함
@@ -56,22 +59,57 @@ const PanelToggleButtonStyle = css`
   cursor: pointer;
 `;
 
+// TODO: 버튼 공통 컴포넌트로 바꿔야 함
+const CenterLocationButtonStyle = css`
+  width: 4.8rem;
+  height: 4.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  border: none;
+  border-radius: ${BORDER_RADIUS.circle};
+  box-shadow: var(--shadow);
+  cursor: pointer;
+`;
+
+const CameraButton = styled(Button)``;
+
 const MainPage = () => {
+  useKakaoLoader();
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
+  const [location, setLocation] = useState({
+    center: { lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng },
+    isPanto: false,
+  });
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const togglePanel = () => {
-    console.log(lat, lng);
     console.log(markerNearbyData);
     setIsVisible(!isVisible);
+  };
+
+  const handleCenterClick = () => {
+    console.log(lat, lng);
+    setLocation({
+      center: { lat, lng },
+      isPanto: true,
+    });
   };
 
   const handleMapCategoryClick = (index: number) => {
     setSelectedCategory(selectedCategory === index ? 0 : index);
   };
+
+  useEffect(() => {
+    setLocation({
+      center: { lat, lng },
+      isPanto: true,
+    });
+  }, [lat, lng]);
 
   useEffect(() => {
     if (markerData) setMarkerList(markerData);
@@ -96,7 +134,7 @@ const MainPage = () => {
   }
 
   return (
-    <KakaoMap center={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }}>
+    <KakaoMap center={location.center} isPanto={location.isPanto}>
       <CategoryWrapper>
         <Button
           type='button'
@@ -139,6 +177,12 @@ const MainPage = () => {
         <BottomPanelArea>
           <button type='button' css={PanelToggleButtonStyle} onClick={togglePanel}>
             {isVisible ? <IconDown /> : <IconUp />}
+          </button>
+          <CameraButton type='button' size='large' color='var(--primary)'>
+            카메라
+          </CameraButton>
+          <button type='button' css={CenterLocationButtonStyle} onClick={handleCenterClick}>
+            <IconCenter />
           </button>
         </BottomPanelArea>
         <h1>Carousel 영역</h1>
