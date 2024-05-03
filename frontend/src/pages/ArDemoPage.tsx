@@ -1,6 +1,7 @@
 import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import 'aframe-extras';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
@@ -50,22 +51,23 @@ const ArDemo = () => {
           alpha: true,
         }}
       >
-        <Camera cursor={{ rayOrigin: 'mouse' }} />
+        <Camera gps-new-camera='gpsMinDistance: 5' />
 
         <Assets>
-          <AssetItem id='hamster' src='/assets/hamster/scene.gltf' />
+          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
         </Assets>
         {assetsReady && (
           <Entity
             id='hamster'
             gltfModel='#hamster'
-            position={{ x: 0, y: 1.5, z: -0.2 }}
+            gps-new-entity-place='latitude: 37.50183539829876; longitude: 127.03968585351448'
             scale={{
-              x: 0.2,
-              y: 0.2,
-              z: 0.2,
+              x: 0.05,
+              y: 0.05,
+              z: 0.05,
             }}
             hamevent
+            animation-mixer='clip: *;'
           />
         )}
       </Scene>
