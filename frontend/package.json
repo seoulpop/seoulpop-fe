@@ -22,6 +22,7 @@
     "@tanstack/react-query": "^5.31.0",
     "@tanstack/react-query-devtools": "^5.31.0",
     "aframe": "^1.5.0",
+    "aframe-extras": "^7.4.0",
     "arjs": "https://github.com/AR-js-org/AR.js.git#595a5c1c7020d3dd46f7082f63b5b7cca6d376e3",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
@@ -52,5 +53,10 @@
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "vite-plugin-svgr": "^4.2.0"
+  },
+  "overrides": {
+    "@belivvr/aframe-react": {
+      "eslint": "^8.57.0"
+    }
   }
 }

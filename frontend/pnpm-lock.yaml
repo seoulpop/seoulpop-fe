@@ -35,6 +35,9 @@ dependencies:
   aframe:
     specifier: ^1.5.0
     version: 1.5.0
+  aframe-extras:
+    specifier: ^7.4.0
+    version: 7.4.0
   arjs:
     specifier: https://github.com/AR-js-org/AR.js.git#595a5c1c7020d3dd46f7082f63b5b7cca6d376e3
     version: github.com/AR-js-org/AR.js/595a5c1c7020d3dd46f7082f63b5b7cca6d376e3
@@ -2191,6 +2194,17 @@ packages:
       }
     engines: { node: '>=0.4.0' }
     hasBin: true
+
+  /aframe-extras@7.4.0:
+    resolution:
+      {
+        integrity: sha512-Yqn0DkDPJLyCc2OQ0QsvwJIHsrnyScQGarb59uO7aT3U2MmOttjEWuhzzB9yyovcpf4h5gMyE3hDTH78hI4ucA==,
+      }
+    dependencies:
+      nipplejs: 0.10.2
+      three: 0.159.0
+      three-pathfinding: 1.2.0(three@0.159.0)
+    dev: false
 
   /aframe@1.5.0:
     resolution:
@@ -5087,6 +5101,13 @@ packages:
       new-array: 1.0.0
     dev: false
 
+  /nipplejs@0.10.2:
+    resolution:
+      {
+        integrity: sha512-XGxFY8C2DOtobf1fK+MXINTzkkXJLjZDDpfQhOUZf4TSytbc9s4bmA0lB9eKKM8iDivdr9NQkO7DpIQfsST+9g==,
+      }
+    dev: false
+
   /no-case@3.0.4:
     resolution:
       {
@@ -6161,26 +6182,36 @@ packages:
     engines: { node: '>=6' }
     dev: true
 
-  /tar@6.2.1:
-    resolution:
-      {
-        integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==,
-      }
-    engines: { node: '>=10' }
-    dependencies:
-      chownr: 2.0.0
-      fs-minipass: 2.1.0
-      minipass: 5.0.0
-      minizlib: 2.1.2
-      mkdirp: 1.0.4
-      yallist: 4.0.0
-    dev: false
-
   /text-table@0.2.0:
     resolution:
       {
         integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==,
       }
+
+  /three-pathfinding@1.2.0(three@0.159.0):
+    resolution:
+      {
+        integrity: sha512-TlIfy+mLOdP7OhQG4Mn1dNONYbhu2Xe+AD7jL8SbdKdAHxH/TF68svpk2c8UrSfR/3YWQ87Tq/lp5HQO/QuaMw==,
+      }
+    peerDependencies:
+      three: 0.x.x
+    dependencies:
+      three: 0.159.0
+    dev: false
+
+  /three@0.125.2:
+    resolution:
+      {
+        integrity: sha512-7rIRO23jVKWcAPFdW/HREU2NZMGWPBZ4XwEMt0Ak0jwLUKVJhcKM55eCBWyGZq/KiQbeo1IeuAoo/9l2dzhTXA==,
+      }
+    dev: false
+
+  /three@0.159.0:
+    resolution:
+      {
+        integrity: sha512-eCmhlLGbBgucuo4VEA9IO3Qpc7dh8Bd4VKzr7WfW4+8hMcIfoAVi1ev0pJYN9PTTsCslbcKgBwr2wNZ1EvLInA==,
+      }
+    dev: false
 
   /to-fast-properties@2.0.0:
     resolution:
