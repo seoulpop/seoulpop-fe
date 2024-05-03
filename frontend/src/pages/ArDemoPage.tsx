@@ -1,8 +1,26 @@
+import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
+import styled from '@emotion/styled';
+import 'arjs';
 import { useEffect, useState } from 'react';
-import 'aframe';
-import { AssetItem, Assets, Entity, Scene, Camera } from '@belivvr/aframe-react';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
+import { Z_INDEX } from '@/styles/common';
+
+const SceneContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const ButtonBlock = styled.div`
+  position: fixed;
+  left: 50%;
+  bottom: 5.4rem;
+  transform: translate(-50%, 0);
+
+  min-width: 27.7rem;
+
+  z-index: ${Z_INDEX.float};
+`;
 
 const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
@@ -21,9 +39,18 @@ const ArDemo = () => {
   }, []);
 
   return (
-    <>
-      <FoundButton />
-      <Scene>
+    <SceneContainer>
+      <ButtonBlock>
+        <FoundButton />
+      </ButtonBlock>
+      <Scene
+        vrModeUI={{ enabled: false }}
+        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+        renderer={{
+          antialias: true,
+          alpha: true,
+        }}
+      >
         <Camera cursor={{ rayOrigin: 'mouse' }} />
 
         <Assets>
@@ -43,7 +70,7 @@ const ArDemo = () => {
           />
         )}
       </Scene>
-    </>
+    </SceneContainer>
   );
 };
 

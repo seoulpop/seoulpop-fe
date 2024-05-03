@@ -9,7 +9,7 @@ const base = css`
     --lightgray-transparent-50: rgb(205 205 205 / 50%);
     --black: #000;
     --white: #fff;
-    --shadow: 0 1px 16px 0 rgb(66 66 66 / 10%);
+    --shadow: 0 1px 8px 0 rgb(66 66 66 / 50%);
   }
 
   * {
@@ -27,18 +27,6 @@ const base = css`
       Roboto,
       sans-serif;
     font-size: 62.5%;
-  }
-
-  body {
-    position: relative;
-    width: auto;
-    max-width: 480px;
-    min-height: 100svh;
-    margin: 0 auto;
-    padding: 0;
-    background-color: var(--white);
-    font-size: 1.6rem;
-    box-shadow: var(--shadow);
   }
 
   h1 {

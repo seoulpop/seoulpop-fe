@@ -1,26 +1,27 @@
 import styled from '@emotion/styled';
 
-// TODO: style
-const Button = styled.button`
-  position: absolute;
-  bottom: 54px;
-  z-index: 1;
-  left: 50%;
-  transform: translate(-50%, 50%);
+import Button from '@/components/Button';
 
-  width: 288px;
-  padding: 8px 0;
-  border-radius: 24px;
-  background: #fff;
+const SearchIconWrapper = styled.span`
+  width: 2rem;
+  height: 2rem;
 
-  font-size: 16px;
-  color: black;
+  margin-right: 0.4rem;
+
+  background: url('/icons/search-ico.png') no-repeat;
+  background-size: cover;
+`;
+
+const Text = styled.span`
+  letter-spacing: -0.03rem;
+  color: var(--white);
 `;
 
 const FoundButton = () => {
   return (
-    <Button type='button' onClick={() => {}}>
-      새로운 문화재를 발견했습니다.
+    <Button type='button' color='#735cff' size='medium'>
+      <SearchIconWrapper />
+      <Text>새로운 문화재를 발견했습니다.</Text>
     </Button>
   );
 };
