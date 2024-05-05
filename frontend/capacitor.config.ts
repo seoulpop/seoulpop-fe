@@ -13,6 +13,16 @@ const config: CapacitorConfig = {
     hostname: 'localhost:5173',
     androidScheme: 'http',
   },
+  plugins: {
+    BackgroundRunner: {
+      label: 'com.ssafy.seoulpop.push',
+      src: 'background.js',
+      event: 'fetchGeolocation',
+      repeat: true,
+      interval: 1,
+      autoStart: true,
+    },
+  },
 };
 
 export default config;
