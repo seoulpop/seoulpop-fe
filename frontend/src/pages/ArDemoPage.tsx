@@ -1,11 +1,12 @@
-import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
+import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import 'aframe-extras';
+// import 'aframe-extras';
 
 import useArMarkers from '@/hooks/server/useArMarkers';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
+import InkTransition from '@/containers/ArDemo/InkTransition';
 import { Z_INDEX } from '@/styles/common';
 import { GeolocationCoordinates, Position } from '@/types/ar';
 
@@ -55,6 +56,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
+      <InkTransition />
       <ButtonBlock>
         <FoundButton />
       </ButtonBlock>
@@ -72,6 +74,7 @@ const ArDemo = () => {
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
         </Assets>
 
+        {/** 
         {assetsReady &&
           markerNearbyData &&
           markerNearbyData?.length > 0 &&
@@ -90,6 +93,7 @@ const ArDemo = () => {
               animation-mixer='clip: *;'
             />
           ))}
+           */}
       </Scene>
     </SceneContainer>
   );
