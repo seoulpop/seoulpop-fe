@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useState } from 'react';
 
 import { Z_INDEX } from '@/styles/common';
 
@@ -56,6 +57,17 @@ const InkTransitionContainer = styled.div`
   &.is-active::after {
     animation: ink-transition 2s steps(39) 0.5s forwards;
   }
+
+  /** 
+  TODO: 이미지 닫을 때 애니메이션 리버스 재생 
+  &.is-reverse-active {
+    animation: fadeIn 2s steps(39) reverse;
+  }
+
+  &.is-reverse-active::after {
+    animation: ink-transition 2s steps(39) 0.5s reverse;
+  }
+   */
 `;
 
 // TODO: width가 디바이스보다 큰 경우 터치해서 이미지 확인 가능
@@ -64,9 +76,36 @@ const Contents = styled.img`
   height: 100svh;
 `;
 
-const InkTransition = ({ isNearby }: { isNearby: boolean }) => {
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+const InkTransition = ({ isActive, onClose }: { isActive: boolean; onClose: () => void }) => {
+  const [isAnimationEnd, setIsAnimationEnd] = useState(false);
+  /** const [isReverseActive, setIsReverseActive] = useState(false); */
+
+  const handleClose = () => {
+    // 잉크 애니메이션 끝난 후 실행 가능
+    if (!isAnimationEnd) return;
+    /** setIsReverseActive(true); */
+    onClose();
+  };
+
+  let className = '';
+  if (isActive) {
+    className = 'is-active';
+  }
+  /**  
+  if (isReverseActive) {
+    className = 'is-reverse-active';
+  }
+  */
+
   return (
-    <InkTransitionContainer className={`${isNearby ? 'is-active' : ''}`}>
+    <InkTransitionContainer
+      className={className}
+      onAnimationEnd={() => setIsAnimationEnd(true)}
+      onTouchStart={isMobile ? handleClose : undefined}
+      onClick={!isMobile ? handleClose : undefined}
+    >
       <Contents src='/public/assets/images/test.png' />
     </InkTransitionContainer>
   );
