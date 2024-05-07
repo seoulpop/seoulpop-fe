@@ -13,10 +13,9 @@
   },
   "dependencies": {
     "@belivvr/aframe-react": "^0.4.2",
+    "@capacitor-community/background-geolocation": "^1.2.17",
     "@capacitor/android": "^6.0.0",
-    "@capacitor/cli": "^6.0.0",
     "@capacitor/core": "^6.0.0",
-    "@capacitor/geolocation": "^6.0.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@tanstack/react-query": "^5.31.0",
@@ -33,6 +32,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@capacitor/cli": "^6.0.0",
     "@tanstack/eslint-plugin-query": "^5.28.11",
     "@types/aframe": "^1.2.6",
     "@types/react": "^18.2.66",

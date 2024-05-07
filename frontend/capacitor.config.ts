@@ -7,6 +7,7 @@ const config: CapacitorConfig = {
   cordova: {},
   android: {
     allowMixedContent: true,
+    useLegacyBridge: true,
   },
   server: {
     cleartext: true,

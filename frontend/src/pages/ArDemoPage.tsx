@@ -28,7 +28,7 @@ const ButtonBlock = styled.div`
 const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
   const [position, setPosition] = useState<Position>();
-  const { markerNearbyData, isMarkerNearbyLoading: isLoading } = useArMarkers({
+  const { markerNearbyData } = useArMarkers({
     lat: position?.latitude,
     lng: position?.longitude,
   });
