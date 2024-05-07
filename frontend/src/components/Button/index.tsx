@@ -6,7 +6,7 @@ import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 const lightFontColors: string[] = ['var(--primary)', 'var(--secondary)', 'var(--black)'];
 
 const ButtonContent = styled.button`
-  height: 4.4rem;
+  height: 4.8rem;
   border: none;
   border-radius: ${BORDER_RADIUS.circle};
   margin: 0;
@@ -15,7 +15,9 @@ const ButtonContent = styled.button`
   box-shadow: var(--shadow);
   color: ${(props) => (lightFontColors.includes(props.color ?? 'none') ? '#fff' : '#000')};
   font-size: ${FONT_SIZE.md};
+  font-family: Pretendard;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 0.4rem;
 `;
@@ -25,7 +27,7 @@ const XLargeButton = styled(ButtonContent)`
 `;
 
 const LargeButton = styled(ButtonContent)`
-  width: calc(94% - 9.6rem);
+  width: calc(94% - 12.6rem);
 `;
 
 const MediumButton = styled(ButtonContent)`

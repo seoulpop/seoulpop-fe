@@ -45,13 +45,15 @@ const BottomPanelArea = styled.div`
   width: 100%;
   bottom: 10rem;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 // TODO: 버튼 공통 컴포넌트로 바꿔야 함
 const PanelToggleButtonStyle = css`
-  margin-left: 2rem;
   width: 4.8rem;
   height: 4.8rem;
+  margin-left: 2rem;
   background-color: var(--white);
   border: none;
   border-radius: ${BORDER_RADIUS.circle};
@@ -63,6 +65,7 @@ const PanelToggleButtonStyle = css`
 const CenterLocationButtonStyle = css`
   width: 4.8rem;
   height: 4.8rem;
+  margin-right: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -179,7 +182,8 @@ const MainPage = () => {
             {isVisible ? <IconDown /> : <IconUp />}
           </button>
           <CameraButton type='button' size='large' color='var(--primary)'>
-            카메라
+            <img src='/icons/camera_3d.webp' alt='camera' width={30} height={24} />
+            카메라로 찍어보기
           </CameraButton>
           <button type='button' css={CenterLocationButtonStyle} onClick={handleCenterClick}>
             <IconCenter />
