@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: any 타입 제거
 import axios from 'axios';
 import { registerPlugin, Capacitor } from '@capacitor/core';
 import { BackgroundGeolocationPlugin } from '@capacitor-community/background-geolocation';
@@ -25,6 +26,7 @@ export const backgroundGeolocation = () => {
         // 다음 위치와의 최소 미터 수 (default value: 0)
         distanceFilter: 1,
       },
+      // TODO: 타입 지정
       (location: any, error: any) => {
         if (error) {
           if (error.code === 'NOT_AUTHORIZED') {
