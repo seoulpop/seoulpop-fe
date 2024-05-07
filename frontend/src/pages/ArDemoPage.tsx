@@ -1,4 +1,4 @@
-import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
+import { AssetItem, Assets, Camera, Entity, Scene, Image, Box } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 // import 'aframe-extras';
@@ -8,6 +8,7 @@ import useArMarkers from '@/hooks/server/useArMarkers';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
+import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -68,14 +69,17 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
 const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
   const [position, setPosition] = useState<Position>();
-  const { _markerNearbyData, isMarkerNearbyLoading: isLoading } = useArMarkers({
-    lat: position?.latitude,
-    lng: position?.longitude,
-  });
+
   const [isNearby, setIsNearby] = useState(false);
 
   const markerNearbyData: MarkerInfo[] = [
-    { id: 1, lng: 127.0877147, lat: 37.4714547, name: 'asd', category: '문화재' },
+    {
+      id: 1,
+      lng: 127.0394685,
+      lat: 37.5017073,
+      name: 'test',
+      category: '문화재',
+    },
   ];
 
   useEffect(() => {
@@ -114,6 +118,8 @@ const ArDemo = () => {
         lon2: nearestMarker.lng,
       });
 
+      console.log(nearestMarker, pos);
+
       if (dist <= NEAR_METERS) setIsNearby(true);
       else setIsNearby(false);
     };
@@ -128,7 +134,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      {/* <InkTransition /> */}
+      {/* <InkTransition isActive={true} onClose={() => console.log('hi')} /> */}
       <ButtonBlock className={`${isNearby ? 'is-active' : ''}`}>
         <FoundButton />
       </ButtonBlock>
@@ -140,10 +146,11 @@ const ArDemo = () => {
           alpha: true,
         }}
       >
-        <Camera gps-new-camera='gpsMinDistance: 5' />
-
+        {/** TODO: 개발용 위경도 삭제 */}
+        <Camera gps-new-camera='gpsMinDistance: 5; simulateLatitude: 51.049; simulateLongitude: -0.723' />
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
+          <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
         </Assets>
 
         {assetsReady &&
@@ -164,6 +171,17 @@ const ArDemo = () => {
               animation-mixer='clip: *;'
             />
           ))}
+
+        <Box
+          src='/assets/images/test.png'
+          // TODO: 개발용 위경도 제거
+          gps-new-entity-place='latitude: 51.0596; longitude: -0.7170'
+          // gps-new-entity-place={`latitude: ${markerNearbyData[0].lat}; longitude: ${markerNearbyData[0].lng}`}
+          scale={{ x: 200, y: 200, z: 10 }}
+          clicker
+          width={16}
+          height={9}
+        />
       </Scene>
     </SceneContainer>
   );
