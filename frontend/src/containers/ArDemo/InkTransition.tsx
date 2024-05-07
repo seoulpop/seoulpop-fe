@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
 
 import { Z_INDEX } from '@/styles/common';
 
@@ -34,18 +33,8 @@ const InkTransitionContainer = styled.div`
   overflow: hidden;
   z-index: ${Z_INDEX.float};
 
-  width: 60%;
+  width: 100%;
   opacity: 0;
-
-  &::before {
-    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/ink-photo-frame.png');
-    background-size: 100% 100%;
-    background-position: 50% 50%;
-    content: '';
-    height: 100%;
-    position: absolute;
-    width: 100%;
-  }
 
   &::after {
     //animation: ink-transition 1.5s steps(39) 0.5s forwards;
@@ -69,27 +58,17 @@ const InkTransitionContainer = styled.div`
   }
 `;
 
+// TODO: width가 디바이스보다 큰 경우 터치해서 이미지 확인 가능
 const Contents = styled.img`
   width: 100%;
-  height: auto;
+  height: 100svh;
 `;
 
-const FooButton = styled.button`
-  position: absolute;
-  left: 50%;
-  z-index: ${Z_INDEX.float + 1};
-`;
-
-const InkTransition = () => {
-  const [isActive, setIsActive] = useState(false);
-
+const InkTransition = ({ isNearby }: { isNearby: boolean }) => {
   return (
-    <>
-      <FooButton onClick={() => setIsActive((prev) => !prev)}>버튼</FooButton>
-      <InkTransitionContainer className={`${isActive ? 'is-active' : ''}`}>
-        <Contents src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/204808/Hyewon-Wolha-jeongin.jpg' />
-      </InkTransitionContainer>
-    </>
+    <InkTransitionContainer className={`${isNearby ? 'is-active' : ''}`}>
+      <Contents src='/public/assets/images/test.png' />
+    </InkTransitionContainer>
   );
 };
 
