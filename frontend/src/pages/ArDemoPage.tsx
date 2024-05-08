@@ -95,6 +95,7 @@ const ArDemo = () => {
   // const [position, setPosition] = useState<Position>();
 
   const [isNearby] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const markerNearbyData: MarkerInfo[] = [
     {
@@ -158,6 +159,8 @@ const ArDemo = () => {
   */
 
   useEffect(() => {
+    const sceneEl = document.querySelector('a-scene');
+    console.log('bA?S?FV?', sceneEl.hasLoaded);
     AFRAME.registerComponent('clicker', {
       init() {
         const { el } = this;
@@ -167,6 +170,8 @@ const ArDemo = () => {
       },
     });
   }, []);
+
+  console.log('isActive', isActive);
 
   // TODO: 문화재가 없는 경우 UI
   return (
@@ -218,7 +223,7 @@ const ArDemo = () => {
           height={9}
         /> */}
 
-        <Spot />
+        <Spot onClickSpot={() => setIsActive((prev) => !prev)} />
       </Scene>
     </SceneContainer>
   );

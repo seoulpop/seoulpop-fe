@@ -1,7 +1,7 @@
 import { Circle, Ring } from '@belivvr/aframe-react';
+import { useEffect } from 'react';
 
 const gpsEntityPlace = 'latitude: 51.0596; longitude: -0.7170'; // fake gps
-const entityId = 'spot';
 
 const loopInfinity = 10000; // XXX: true가 먹지 않음
 const centerRadius = 60;
@@ -10,17 +10,28 @@ const maxRadius = 120;
 const ringDelta = 5;
 const duration = 2000;
 
-const Spot = () => {
+const Spot = ({ onClickSpot }: { onClickSpot: () => void }) => {
+  useEffect(() => {
+    const clickHandler = () => {
+      onClickSpot();
+    };
+
+    AFRAME.registerComponent('spot-click', {
+      init() {
+        const { el } = this;
+        el.addEventListener('click', clickHandler);
+      },
+      remove() {
+        const { el } = this;
+        el.removeEventListener('click', clickHandler);
+      },
+    });
+  }, []);
+
   return (
     <>
+      <Circle color='#fff' radius={centerRadius} gps-new-entity-place={gpsEntityPlace} spot-click />
       <Circle
-        id={entityId}
-        color='#fff'
-        radius={centerRadius}
-        gps-new-entity-place={gpsEntityPlace}
-      />
-      <Circle
-        id={entityId}
         color='#fff'
         radius={maxRadius}
         animation__opacity={{
@@ -39,10 +50,10 @@ const Spot = () => {
           dir: 'alternate',
           loop: loopInfinity,
         }}
+        spot-click
         gps-new-entity-place={gpsEntityPlace}
       />
       <Ring
-        id={entityId}
         color='#fff'
         radiusInner={115}
         radiusOuter={120}
@@ -62,6 +73,7 @@ const Spot = () => {
           dir: 'alternate',
           loop: loopInfinity, // XXX: true가 먹지 않음
         }}
+        spot-click
         gps-new-entity-place={gpsEntityPlace}
       />
     </>
