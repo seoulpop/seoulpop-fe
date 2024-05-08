@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
 
+import HistoryDetail from '@/pages/HistoryDetail';
+
 const Root = lazy(() => import('./Root'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 const MainPage = lazy(() => import('@/pages/MainPage'));
@@ -17,6 +19,7 @@ const Router = () => {
         { index: true, element: <MainPage /> },
         { path: '/example', element: <ExamplePage /> },
         { path: '/ardemo', element: <ArDemo /> },
+        { path: '/history/detail/:historyId', element: <HistoryDetail /> },
         // { path: '/category/:category', element: <CategoryResultPage /> },
       ],
     },
