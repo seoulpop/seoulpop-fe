@@ -57,6 +57,11 @@ const base = css`
   button {
     cursor: pointer;
   }
+
+  /* XXX: a-frame 클릭 이벤트가 발생하도록 video 요소 비표시  */
+  video {
+    display: none;
+  }
 `;
 
 export default base;
