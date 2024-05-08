@@ -21,8 +21,6 @@ const HistoryDetail = () => {
   const { historyDetailData } = useHistoryDetail(historyId ? +historyId : 1);
   console.log(historyDetailData);
 
-  styled;
-
   return <ComponentName>컴포넌트</ComponentName>;
 };
 
