@@ -1,12 +1,23 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { AssetItem, Assets, Box, Camera, Entity, Scene } from '@belivvr/aframe-react';
+import {
+  AssetItem,
+  Assets,
+  Box,
+  Camera,
+  Circle,
+  Entity,
+  Ring,
+  Scene,
+  Sphere,
+} from '@belivvr/aframe-react';
 
 // import useArMarkers from '@/hooks/server/useArMarkers';
 
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/ar';
+import Spot from '@/containers/ArDemo/Spot';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
@@ -68,6 +79,16 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
   return marekr;
 };
 */
+
+const Foo = styled.div`
+  display: inline-block;
+  background: lavenderblush;
+  color: #333333;
+  border-radius: 1em;
+  padding: 1em;
+  margin: 0;
+  accent-color: hotpink;
+`;
 
 const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
@@ -186,7 +207,7 @@ const ArDemo = () => {
             />
           ))}
 
-        <Box
+        {/* <Box
           src='/assets/images/test.png'
           // TODO: 개발용 위경도 제거
           gps-new-entity-place='latitude: 51.0596; longitude: -0.7170'
@@ -195,7 +216,9 @@ const ArDemo = () => {
           clicker
           width={16}
           height={9}
-        />
+        /> */}
+
+        <Spot />
       </Scene>
     </SceneContainer>
   );
