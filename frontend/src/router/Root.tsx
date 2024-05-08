@@ -11,7 +11,6 @@ const Root = () => {
     <>
       <>
         <Outlet />
-
         {/* {isMobile && <NavBar isHide={isListShowed && scrollDirection.y === 'down'} />} */}
       </>
       {/* <Modal portalElementId='portal' isBottom={isMobile} blockScrollOnMount /> */}
