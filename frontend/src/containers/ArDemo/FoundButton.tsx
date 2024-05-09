@@ -15,6 +15,7 @@ const SearchIconWrapper = styled.span`
 const Text = styled.span`
   letter-spacing: -0.03rem;
   color: var(--white);
+  white-space: nowrap;
 `;
 
 const FoundButton = () => {
