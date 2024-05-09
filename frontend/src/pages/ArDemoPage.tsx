@@ -76,16 +76,6 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
 };
 */
 
-const Foo = styled.div`
-  display: inline-block;
-  background: lavenderblush;
-  color: #333333;
-  border-radius: 1em;
-  padding: 1em;
-  margin: 0;
-  accent-color: hotpink;
-`;
-
 const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
   // const [position, setPosition] = useState<Position>();
