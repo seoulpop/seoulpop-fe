@@ -19,3 +19,8 @@ export const Z_INDEX = {
   layout: 2000,
   float: 1000,
 };
+
+export const AR_Z_INDEX = {
+  spot: -250,
+  contents: 100,
+};

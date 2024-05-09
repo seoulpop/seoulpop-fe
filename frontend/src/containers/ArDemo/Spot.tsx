@@ -1,5 +1,7 @@
-import { Circle, Ring } from '@belivvr/aframe-react';
+import { Circle, Entity, Ring } from '@belivvr/aframe-react';
 import { useEffect } from 'react';
+
+import { AR_Z_INDEX } from '@/styles/common';
 
 const gpsEntityPlace = 'latitude: 51.0596; longitude: -0.7170'; // fake gps
 
@@ -29,7 +31,7 @@ const Spot = ({ onClickSpot }: { onClickSpot: () => void }) => {
   }, []);
 
   return (
-    <>
+    <Entity position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}>
       <Circle color='#fff' radius={centerRadius} gps-new-entity-place={gpsEntityPlace} spot-click />
       <Circle
         color='#fff'
@@ -76,7 +78,7 @@ const Spot = ({ onClickSpot }: { onClickSpot: () => void }) => {
         spot-click
         gps-new-entity-place={gpsEntityPlace}
       />
-    </>
+    </Entity>
   );
 };
 
