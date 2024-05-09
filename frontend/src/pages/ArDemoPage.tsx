@@ -1,24 +1,22 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import {
-  AssetItem,
-  Assets,
-  Box,
-  Camera,
-  Circle,
-  Entity,
-  Ring,
-  Scene,
-  Sphere,
-} from '@belivvr/aframe-react';
+import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
+import { keyframes } from '@emotion/react';
 
 // import useArMarkers from '@/hooks/server/useArMarkers';
-
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/ar';
 import Spot from '@/containers/ArDemo/Spot';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
+
+const slideIn = keyframes`
+  from {
+  }
+  to {
+    bottom: 5.4rem;
+  }
+`;
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -26,15 +24,15 @@ const SceneContainer = styled.div`
 `;
 
 const ButtonBlock = styled.div`
-  position: fixed;
+  position: absolute;
   left: 50%;
-  bottom: 5.4rem;
+  bottom: -4.8em;
   transform: translate(-50%, 0);
 
   z-index: ${Z_INDEX.float};
-  display: none;
+
   &.is-active {
-    display: block;
+    animation: ${slideIn} 0.5s cubic-bezier(0.86, 0, 0.07, 1) forwards;
   }
 `;
 
@@ -175,7 +173,7 @@ const ArDemo = () => {
   return (
     <SceneContainer>
       {/* <InkTransition isActive={true} onClose={() => console.log('hi')} /> */}
-      <ButtonBlock className={`${isNearby ? 'is-active' : ''}`}>
+      <ButtonBlock className={`${isActive ? 'is-active' : ''}`}>
         <FoundButton />
       </ButtonBlock>
       <Scene
@@ -221,8 +219,19 @@ const ArDemo = () => {
           height={9}
         /> */}
 
+        {/* <Entity
+          geometry={{ primitive: 'box' }}
+          material={{ shader: 'html', target: '#htmlElement' }}
+          gps-new-entity-place='latitude: 51.0596; longitude: -0.7170'
+        /> */}
+
         <Spot onClickSpot={() => setIsActive((prev) => !prev)} />
+        {/* <RoundedPlane isActive={isActive} /> */}
       </Scene>
+
+      {/* <div>
+        <div id='htmlElement'>Hello, HTML!</div>
+      </div> */}
     </SceneContainer>
   );
 };
