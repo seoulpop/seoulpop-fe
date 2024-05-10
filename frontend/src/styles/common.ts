@@ -22,3 +22,8 @@ export const Z_INDEX = {
   layout: 2000,
   float: 1000,
 };
+
+export const AR_Z_INDEX = {
+  spot: 0, // MEMO: 터치할 수 있도록 최대값으로 설정
+  contents: -350,
+};

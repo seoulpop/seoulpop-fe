@@ -7,6 +7,7 @@ import useHistoryDetail from '@/hooks/server/useHistoryDetail';
 import { FONT_SIZE, BORDER_RADIUS } from '@/styles/common';
 import { HeritageInfo } from '@/types/history';
 import ImageCarousel from '@/containers/History/ImageCarousel';
+import DetailLayout from '@/Layouts/DetailLayout';
 
 import KakaoMap from '@/components/History/KakaoMap';
 import Header from '@/components/Header/Header';
@@ -124,50 +125,52 @@ const HeritageDetail = () => {
   const showTab = data.additionalInfo !== null; // null로 바꿔줘야 함~
 
   return (
-    <Container>
-      <Header pageName='문화재 정보' />
-      <BigTitle>{nameFormatting(data.name)}</BigTitle>
-      <AddressBox>
-        <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />
-        <Address>{data.address}</Address>
-      </AddressBox>
-      <Era>
-        <SmallTitle> 시대 </SmallTitle>
-        {data.era}
-      </Era>
-      <StyledImage src={data.thumbnail} alt={data.name} />
-      {showTab && (
-        <TabButtonArea>
-          <TabButton onClick={() => setActiveTab('tab1')} isActive={activeTab === 'tab1'}>
-            문화재 설명
-          </TabButton>
-          <TabButton onClick={() => setActiveTab('tab2')} isActive={activeTab === 'tab2'}>
-            안내판 설명
-          </TabButton>
-        </TabButtonArea>
-      )}
-      {!showTab && (
+    <DetailLayout>
+      <Container>
+        <Header pageName='문화재 정보' />
+        <BigTitle>{nameFormatting(data.name)}</BigTitle>
+        <AddressBox>
+          <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />
+          <Address>{data.address}</Address>
+        </AddressBox>
+        <Era>
+          <SmallTitle> 시대 </SmallTitle>
+          {data.era}
+        </Era>
+        <StyledImage src={data.thumbnail} alt={data.name} />
+        {showTab && (
+          <TabButtonArea>
+            <TabButton onClick={() => setActiveTab('tab1')} isActive={activeTab === 'tab1'}>
+              문화재 설명
+            </TabButton>
+            <TabButton onClick={() => setActiveTab('tab2')} isActive={activeTab === 'tab2'}>
+              안내판 설명
+            </TabButton>
+          </TabButtonArea>
+        )}
+        {!showTab && (
+          <div>
+            <MediumTitle>설명</MediumTitle>
+            <Text>{data.description}</Text>
+          </div>
+        )}
         <div>
-          <MediumTitle>설명</MediumTitle>
-          <Text>{data.description}</Text>
+          {showTab && activeTab === 'tab1' && <Text>{data.description}</Text>}
+          {showTab && activeTab === 'tab2' && <Text>{data.additionalInfo}</Text>}
         </div>
-      )}
-      <div>
-        {showTab && activeTab === 'tab1' && <Text>{data.description}</Text>}
-        {showTab && activeTab === 'tab2' && <Text>{data.additionalInfo}</Text>}
-      </div>
-      <div>
-        <ImageCarousel images={data.images} pluginOptions={plugin} />
-      </div>
-      <div>
-        <MediumTitle>위치</MediumTitle>
-        <KakaoMap
-          markerLat={data.lat}
-          markerLng={data.lng}
-          imageSrc='/assets/images/heritageMarker.png'
-        />
-      </div>
-    </Container>
+        <div>
+          <ImageCarousel images={data.images} pluginOptions={plugin} />
+        </div>
+        <div>
+          <MediumTitle>위치</MediumTitle>
+          <KakaoMap
+            markerLat={data.lat}
+            markerLng={data.lng}
+            imageSrc='/assets/images/heritageMarker.png'
+          />
+        </div>
+      </Container>
+    </DetailLayout>
   );
 };
 

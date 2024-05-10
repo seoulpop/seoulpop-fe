@@ -3,6 +3,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import { DEFAULT_MARKER_INFO } from '@/constants/map';
 import useMaps from '@/hooks/server/useMap';
@@ -14,6 +15,7 @@ import useCurrentLocation from '@/hooks/useCurrentLocation';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 
 import Button from '@/components/Button';
+import MainLayout from '@/Layouts/MainLayout';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -80,6 +82,7 @@ const CameraButton = styled(Button)``;
 
 const MainPage = () => {
   useKakaoLoader();
+  const navigate = useNavigate();
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
   const [location, setLocation] = useState({
@@ -137,62 +140,70 @@ const MainPage = () => {
   }
 
   return (
-    <KakaoMap center={location.center} isPanto={location.isPanto}>
-      <CategoryWrapper>
-        <Button
-          type='button'
-          size='medium'
-          onClick={() => handleMapCategoryClick(1)}
-          color={selectedCategory === 1 ? 'var(--primary)' : 'var(--white)'}
-        >
-          <img src='/icons/gyeongbokgung.webp' alt='gyeongbokgung' width={24} height={24} />
-          문화재
-        </Button>
-        <Button
-          type='button'
-          size='medium'
-          onClick={() => handleMapCategoryClick(2)}
-          color={selectedCategory === 2 ? 'var(--primary)' : 'var(--white)'}
-        >
-          <img src='/icons/korean_flag.webp' alt='korean-flag' width={24} height={24} />
-          3·1운동
-        </Button>
-        <Button
-          type='button'
-          size='medium'
-          onClick={() => handleMapCategoryClick(3)}
-          color={selectedCategory === 3 ? 'var(--primary)' : 'var(--white)'}
-        >
-          <img src='/icons/soldier.webp' alt='soldier' width={24} height={24} />
-          6·25전쟁
-        </Button>
-      </CategoryWrapper>
+    <MainLayout>
+      <KakaoMap center={location.center} isPanto={location.isPanto}>
+        <CategoryWrapper>
+          <Button
+            type='button'
+            size='medium'
+            onClick={() => handleMapCategoryClick(1)}
+            color={selectedCategory === 1 ? 'var(--primary)' : 'var(--white)'}
+          >
+            <img src='/icons/gyeongbokgung.webp' alt='gyeongbokgung' width={24} height={24} />
+            문화재
+          </Button>
+          <Button
+            type='button'
+            size='medium'
+            onClick={() => handleMapCategoryClick(2)}
+            color={selectedCategory === 2 ? 'var(--primary)' : 'var(--white)'}
+          >
+            <img src='/icons/korean_flag.webp' alt='korean-flag' width={24} height={24} />
+            3·1운동
+          </Button>
+          <Button
+            type='button'
+            size='medium'
+            onClick={() => handleMapCategoryClick(3)}
+            color={selectedCategory === 3 ? 'var(--primary)' : 'var(--white)'}
+          >
+            <img src='/icons/soldier.webp' alt='soldier' width={24} height={24} />
+            6·25전쟁
+          </Button>
+        </CategoryWrapper>
 
-      {markerList === undefined ? (
-        <MapMarker position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }} />
-      ) : (
-        markerList.map((marker) => (
-          <MapMarker position={{ lat: marker.lat, lng: marker.lng }} key={marker.id} />
-        ))
-      )}
+        {markerList === undefined ? (
+          <MapMarker position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }} />
+        ) : (
+          markerList.map((marker) => (
+            <MapMarker position={{ lat: marker.lat, lng: marker.lng }} key={marker.id} />
+          ))
+        )}
 
-      <div css={carouselStyle(isVisible)}>
-        <BottomPanelArea>
-          <button type='button' css={PanelToggleButtonStyle} onClick={togglePanel}>
-            {isVisible ? <IconDown /> : <IconUp />}
-          </button>
-          <CameraButton type='button' size='large' color='var(--primary)'>
-            <img src='/icons/camera_3d.webp' alt='camera' width={30} height={24} />
-            카메라로 찍어보기
-          </CameraButton>
-          <button type='button' css={CenterLocationButtonStyle} onClick={handleCenterClick}>
-            <IconCenter />
-          </button>
-        </BottomPanelArea>
-        <h1>Carousel 영역</h1>
-        <p>여기에 하나씩 넣을거에요</p>
-      </div>
-    </KakaoMap>
+        <div css={carouselStyle(isVisible)}>
+          <BottomPanelArea>
+            <button type='button' css={PanelToggleButtonStyle} onClick={togglePanel}>
+              {isVisible ? <IconDown /> : <IconUp />}
+            </button>
+            <CameraButton
+              type='button'
+              size='large'
+              color='var(--primary)'
+              // TODO: url 변경
+              onClick={() => navigate('/ardemo')}
+            >
+              <img src='/icons/camera_3d.webp' alt='camera' width={30} height={24} />
+              카메라로 찍어보기
+            </CameraButton>
+            <button type='button' css={CenterLocationButtonStyle} onClick={handleCenterClick}>
+              <IconCenter />
+            </button>
+          </BottomPanelArea>
+          <h1>Carousel 영역</h1>
+          <p>여기에 하나씩 넣을거에요</p>
+        </div>
+      </KakaoMap>
+    </MainLayout>
   );
 };
 
