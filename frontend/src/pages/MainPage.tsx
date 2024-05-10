@@ -3,6 +3,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { css } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import { DEFAULT_MARKER_INFO } from '@/constants/map';
 import useMaps from '@/hooks/server/useMap';
@@ -80,6 +81,7 @@ const CameraButton = styled(Button)``;
 
 const MainPage = () => {
   useKakaoLoader();
+  const navigate = useNavigate();
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
   const [location, setLocation] = useState({
@@ -181,7 +183,13 @@ const MainPage = () => {
           <button type='button' css={PanelToggleButtonStyle} onClick={togglePanel}>
             {isVisible ? <IconDown /> : <IconUp />}
           </button>
-          <CameraButton type='button' size='large' color='var(--primary)'>
+          <CameraButton
+            type='button'
+            size='large'
+            color='var(--primary)'
+            // TODO: url 변경
+            onClick={() => navigate('/ardemo')}
+          >
             <img src='/icons/camera_3d.webp' alt='camera' width={30} height={24} />
             카메라로 찍어보기
           </CameraButton>
