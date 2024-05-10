@@ -6,7 +6,7 @@ import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react'
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import { MarkerInfo } from '@/types/ar';
 import Spot from '@/containers/ArDemo/Spot';
-import RoundedPlane from '@/containers/ArDemo/ArContents';
+import ArContents from '@/containers/ArDemo/ArContents';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
@@ -58,7 +58,7 @@ const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
   // const [position, setPosition] = useState<Position>();
 
-  const [isActive, setIsActive] = useState<boolean>();
+  const [isOpen, setIsOpen] = useState<boolean>();
 
   const markerNearbyData: MarkerInfo[] = [
     {
@@ -125,7 +125,7 @@ const ArDemo = () => {
   return (
     <SceneContainer>
       {/* <InkTransition isActive={true} onClose={() => console.log('hi')} /> */}
-      <FoundButton isActive={isActive} />
+      <FoundButton isOpen={isOpen} />
       <Scene
         vr-mode-ui='enabled: false'
         cursor='rayOrigin: mouse'
@@ -158,8 +158,8 @@ const ArDemo = () => {
             />
           ))}
 
-        <Spot visible={!isActive} onClickSpot={() => setIsActive(true)} />
-        <RoundedPlane isActive={isActive} onClose={() => setIsActive(false)} />
+        <Spot visible={!isOpen} onClickSpot={() => setIsOpen(true)} />
+        <ArContents isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </Scene>
     </SceneContainer>
   );

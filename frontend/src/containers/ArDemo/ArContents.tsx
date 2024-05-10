@@ -6,16 +6,16 @@ import { AR_Z_INDEX } from '@/styles/common';
 const gpsEntityPlace = 'latitude: 51.0596; longitude: -0.7170'; // fake gps
 const duration = 200;
 
-const RoundedPlane = ({ isActive, onClose }: { isActive?: boolean; onClose: () => void }) => {
+const RoundedPlane = ({ isOpen, onClose }: { isOpen?: boolean; onClose: () => void }) => {
   const [isClosed, setIsClosed] = useState<boolean>();
   const [open, setOpen] = useState<boolean>();
   const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isActive) setVisible(true);
+    if (isOpen) setVisible(true);
 
-    setOpen(isActive);
-  }, [isActive]);
+    setOpen(isOpen);
+  }, [isOpen]);
 
   const clickHandler = () => {
     if (onClose) onClose();

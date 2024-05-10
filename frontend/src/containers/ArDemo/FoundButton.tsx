@@ -54,11 +54,11 @@ const Text = styled.span`
   white-space: nowrap;
 `;
 
-const FoundButton = ({ isActive }: { isActive?: boolean }) => {
+const FoundButton = ({ isOpen }: { isOpen?: boolean }) => {
   let className = '';
 
-  if (isActive === undefined) className = '';
-  else if (isActive) className = 'is-active';
+  if (isOpen === undefined) className = '';
+  else if (isOpen) className = 'is-active';
   else className = 'is-inactive';
 
   return (
