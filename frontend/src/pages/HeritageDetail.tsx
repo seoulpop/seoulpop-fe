@@ -9,6 +9,7 @@ import { HeritageInfo } from '@/types/history';
 import ImageCarousel from '@/containers/History/ImageCarousel';
 
 import KakaoMap from '@/components/History/KakaoMap';
+import Header from '@/components/Header/Header';
 
 const TabButtonArea = styled.div`
   display: flex;
@@ -124,6 +125,7 @@ const HeritageDetail = () => {
 
   return (
     <Container>
+      <Header pageName='문화재 정보' />
       <BigTitle>{nameFormatting(data.name)}</BigTitle>
       <AddressBox>
         <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />
