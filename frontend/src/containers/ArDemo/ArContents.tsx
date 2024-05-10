@@ -1,23 +1,86 @@
 import { Circle, Entity, Plane } from '@belivvr/aframe-react';
+import { useEffect, useState } from 'react';
 
 import { AR_Z_INDEX } from '@/styles/common';
 
 const gpsEntityPlace = 'latitude: 51.0596; longitude: -0.7170'; // fake gps
 const duration = 200;
 
-const RoundedPlane = ({ isActive = false }: { isActive?: boolean }) => {
-  if (!isActive) return null;
+const RoundedPlane = ({ isActive, onClose }: { isActive?: boolean; onClose: () => void }) => {
+  const [isClosed, setIsClosed] = useState<boolean>();
+  const [open, setOpen] = useState<boolean>();
+  const [visible, setVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isActive) setVisible(true);
+
+    setOpen(isActive);
+  }, [isActive]);
+
+  const clickHandler = () => {
+    if (onClose) onClose();
+    setIsClosed(true);
+  };
+
+  // 닫기 이벤트 등록
+  useEffect(() => {
+    AFRAME.registerComponent('close-btn', {
+      init() {
+        const { el } = this;
+        el.addEventListener('click', clickHandler);
+      },
+      remove() {
+        const { el } = this;
+        el.removeEventListener('click', clickHandler);
+      },
+    });
+  }, []);
+
+  // 닫기 애니메이션 종료 후 상태 업데이트
+  useEffect(() => {
+    if (!isClosed) return;
+
+    const timer = setTimeout(() => {
+      setIsClosed(false);
+      setVisible(false);
+    }, duration);
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isClosed]);
 
   return (
     <Entity
       gps-new-entity-place={gpsEntityPlace}
       position={{ x: 0, y: 0, z: AR_Z_INDEX.contents }}
-      animation__scale={{
+      scale={{
+        x: 0,
+        y: 0,
+        z: 0,
+      }}
+      animation__open={{
         property: 'scale',
-        from: '0.8 0.8 0.8',
+        from: '0.8 0.8  0.8',
         to: '1 1 1',
         dur: duration,
+        enabled: !!open,
       }}
+      animation__open_visible={{
+        property: 'material.opacity',
+        from: '0',
+        to: '1',
+        enabled: !!open,
+      }}
+      animation__close={{
+        property: 'scale',
+        from: '1 1 1',
+        to: '0 0 0',
+        dur: duration,
+        enabled: !!isClosed,
+      }}
+      visible={visible}
     >
       <Plane
         color='#ccc'
@@ -26,7 +89,12 @@ const RoundedPlane = ({ isActive = false }: { isActive?: boolean }) => {
         position={{ x: 0, y: 0, z: 0 }}
         src='/assets/images/test.png'
       />
-      <Circle color='#fff' radius={100} position={{ x: 1000 - 80, y: 1000 - 70, z: 100 }} />
+      <Circle
+        color='#fff'
+        radius={100}
+        position={{ x: 1000 - 80, y: 1000 - 70, z: 100 }}
+        close-btn
+      />
     </Entity>
   );
 };

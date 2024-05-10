@@ -12,7 +12,7 @@ const maxRadius = 120;
 const ringDelta = 5;
 const duration = 2000;
 
-const Spot = ({ onClickSpot }: { onClickSpot: () => void }) => {
+const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => void }) => {
   useEffect(() => {
     const clickHandler = () => {
       onClickSpot();
@@ -31,7 +31,7 @@ const Spot = ({ onClickSpot }: { onClickSpot: () => void }) => {
   }, []);
 
   return (
-    <Entity position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}>
+    <Entity position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }} visible={visible}>
       <Circle color='#fff' radius={centerRadius} gps-new-entity-place={gpsEntityPlace} spot-click />
       <Circle
         color='#fff'

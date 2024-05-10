@@ -1,39 +1,18 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
-import { keyframes } from '@emotion/react';
 
 // import useArMarkers from '@/hooks/server/useArMarkers';
 import FoundButton from '@/containers/ArDemo/FoundButton';
-import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/ar';
 import Spot from '@/containers/ArDemo/Spot';
+import RoundedPlane from '@/containers/ArDemo/ArContents';
+import Plate from '@/containers/ArDemo/Plate';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
-
-const slideIn = keyframes`
-  from {
-  }
-  to {
-    bottom: 5.4rem;
-  }
-`;
 
 const SceneContainer = styled.div`
   width: 100%;
   height: 100%;
-`;
-
-const ButtonBlock = styled.div`
-  position: absolute;
-  left: 50%;
-  bottom: -4.8em;
-  transform: translate(-50%, 0);
-
-  z-index: ${Z_INDEX.float};
-
-  &.is-active {
-    animation: ${slideIn} 0.5s cubic-bezier(0.86, 0, 0.07, 1) forwards;
-  }
 `;
 
 /** 
@@ -81,7 +60,7 @@ const ArDemo = () => {
   // const [position, setPosition] = useState<Position>();
 
   const [isNearby] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState<boolean>();
 
   const markerNearbyData: MarkerInfo[] = [
     {
@@ -163,9 +142,7 @@ const ArDemo = () => {
   return (
     <SceneContainer>
       {/* <InkTransition isActive={true} onClose={() => console.log('hi')} /> */}
-      <ButtonBlock className={`${isActive ? 'is-active' : ''}`}>
-        <FoundButton />
-      </ButtonBlock>
+      <FoundButton isActive={isActive} />
       <Scene
         vr-mode-ui='enabled: false'
         cursor='rayOrigin: mouse'
@@ -215,8 +192,9 @@ const ArDemo = () => {
           gps-new-entity-place='latitude: 51.0596; longitude: -0.7170'
         /> */}
 
-        <Spot onClickSpot={() => setIsActive((prev) => !prev)} />
-        {/* <RoundedPlane isActive={isActive} /> */}
+        <Spot visible={!isActive} onClickSpot={() => setIsActive(true)} />
+        <RoundedPlane isActive={isActive} onClose={() => setIsActive(false)} />
+        {/* <Plate /> */}
       </Scene>
 
       {/* <div>
