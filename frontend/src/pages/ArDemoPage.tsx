@@ -121,6 +121,12 @@ const ArDemo = () => {
   }, []);
   */
 
+  useEffect(() => {
+    return () => {
+      console.log('뀨?');
+    };
+  }, []);
+
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
