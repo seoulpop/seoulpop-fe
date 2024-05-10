@@ -8,6 +8,8 @@ import { FONT_SIZE } from '@/styles/common';
 import { SiteInfo } from '@/types/history';
 import ImageCarousel from '@/containers/History/ImageCarousel';
 
+import KakaoMap from '@/components/History/KakaoMap';
+
 const Container = styled.div`
   max-width: 90%;
   margin: 0 auto;
@@ -30,7 +32,8 @@ const BigTitle = styled.div`
 `;
 
 const StyledImage = styled.img`
-  width: 42rem;
+  width: 100%;
+  height: 100%;
   height: 25rem;
   border-radius: 2%;
   object-fit: cover;
@@ -78,9 +81,8 @@ const Status = styled.div`
 `;
 
 const Text = styled.div`
-  max-width: 94%;
   font-size: ${FONT_SIZE.md};
-  margin: 0 auto;
+  margin: 1rem;
   padding: 0.2rem;
   letter-spacing: 0.03rem;
   margin-bottom: 2.5rem;
@@ -88,14 +90,17 @@ const Text = styled.div`
   white-space: pre-wrap;
 `;
 
-// http://localhost:5173/site/detail/232 로 접속해주세요
 const SiteDetail = () => {
   const { historyId } = useParams();
   const { historyDetailData } = useHistoryDetail(historyId ? +historyId : 1);
+  console.log(historyDetailData);
   const data: SiteInfo = historyDetailData as SiteInfo;
   const plugin = [new AutoPlay({ duration: 4000, direction: 'NEXT', stopOnHover: false })];
 
   if (!data) return null;
+
+  let markerImgSrc = '/assets/images/siteMarker6.25.png';
+  if (data.category === '3·1운동') markerImgSrc = '/assets/images/siteMarker3.1.png';
 
   return (
     <Container>
@@ -120,6 +125,8 @@ const SiteDetail = () => {
       <MediumTitle>참고문헌</MediumTitle>
       <Text>{data.reference}</Text>
       <ImageCarousel images={data.images} pluginOptions={plugin} />
+      <MediumTitle>위치</MediumTitle>
+      <KakaoMap markerLat={data.lat} markerLng={data.lng} imageSrc={markerImgSrc} />
     </Container>
   );
 };
