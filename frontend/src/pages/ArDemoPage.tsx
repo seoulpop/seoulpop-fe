@@ -121,6 +121,13 @@ const ArDemo = () => {
   }, []);
   */
 
+  useEffect(() => {
+    return () => {
+      // aframe에 의한 클래스 스타일 제거
+      document.querySelector('html').classList.remove('a-fullscreen');
+    };
+  }, []);
+
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
