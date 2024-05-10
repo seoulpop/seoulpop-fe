@@ -7,7 +7,6 @@ import FoundButton from '@/containers/ArDemo/FoundButton';
 import { MarkerInfo } from '@/types/ar';
 import Spot from '@/containers/ArDemo/Spot';
 import RoundedPlane from '@/containers/ArDemo/ArContents';
-import Plate from '@/containers/ArDemo/Plate';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
@@ -59,7 +58,6 @@ const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
   // const [position, setPosition] = useState<Position>();
 
-  const [isNearby] = useState(false);
   const [isActive, setIsActive] = useState<boolean>();
 
   const markerNearbyData: MarkerInfo[] = [
@@ -123,21 +121,6 @@ const ArDemo = () => {
   }, []);
   */
 
-  useEffect(() => {
-    const sceneEl = document.querySelector('a-scene');
-    console.log('bA?S?FV?', sceneEl.hasLoaded);
-    AFRAME.registerComponent('clicker', {
-      init() {
-        const { el } = this;
-        el.addEventListener('click', () => {
-          alert('Box clicked!');
-        });
-      },
-    });
-  }, []);
-
-  console.log('isActive', isActive);
-
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
@@ -175,31 +158,9 @@ const ArDemo = () => {
             />
           ))}
 
-        {/* <Box
-          src='/assets/images/test.png'
-          // TODO: 개발용 위경도 제거
-          gps-new-entity-place='latitude: 51.0596; longitude: -0.7170'
-          // gps-new-entity-place={`latitude: ${markerNearbyData[0].lat}; longitude: ${markerNearbyData[0].lng}`}
-          scale={{ x: 200, y: 200, z: 10 }}
-          clicker
-          width={16}
-          height={9}
-        /> */}
-
-        {/* <Entity
-          geometry={{ primitive: 'box' }}
-          material={{ shader: 'html', target: '#htmlElement' }}
-          gps-new-entity-place='latitude: 51.0596; longitude: -0.7170'
-        /> */}
-
         <Spot visible={!isActive} onClickSpot={() => setIsActive(true)} />
         <RoundedPlane isActive={isActive} onClose={() => setIsActive(false)} />
-        {/* <Plate /> */}
       </Scene>
-
-      {/* <div>
-        <div id='htmlElement'>Hello, HTML!</div>
-      </div> */}
     </SceneContainer>
   );
 };
