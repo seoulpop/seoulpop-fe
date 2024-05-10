@@ -1,5 +1,5 @@
-import { Circle, Entity, Ring } from '@belivvr/aframe-react';
-import { useEffect } from 'react';
+import { Circle, Entity, Ring, Plane } from '@belivvr/aframe-react';
+import { useEffect, useState } from 'react';
 
 import { AR_Z_INDEX } from '@/styles/common';
 
@@ -13,6 +13,8 @@ const ringDelta = 5;
 const duration = 2000;
 
 const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => void }) => {
+  const [dist] = useState(333);
+
   useEffect(() => {
     const clickHandler = () => {
       onClickSpot();
@@ -30,9 +32,18 @@ const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => 
     });
   }, []);
 
+  useEffect(() => {
+    const el = document.getElementById('distance');
+    if (el) el.setAttribute('text', 'value', `${dist}m`); // setAttribute('material', 'color', 'red') https://aframe.io/docs/1.5.0/core/component.html
+  }, [dist]);
+
   return (
-    <Entity position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }} visible={visible}>
-      <Circle color='#fff' radius={centerRadius} gps-new-entity-place={gpsEntityPlace} spot-click />
+    <Entity
+      position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}
+      visible={visible}
+      gps-new-entity-place={gpsEntityPlace}
+    >
+      <Circle color='#fff' radius={centerRadius} spot-click />
       <Circle
         color='#fff'
         radius={maxRadius}
@@ -54,7 +65,6 @@ const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => 
           loop: loopInfinity,
         }}
         spot-click
-        gps-new-entity-place={gpsEntityPlace}
       />
       <Ring
         color='#fff'
@@ -78,8 +88,17 @@ const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => 
           loop: loopInfinity, // XXX: true가 먹지 않음
         }}
         spot-click
-        gps-new-entity-place={gpsEntityPlace}
       />
+
+      {/* 문화재명, 거리  */}
+      <Entity position={{ x: 0, y: 300, z: 0 }}>
+        <Plane
+          id='distance'
+          height={200}
+          width={1500}
+          text={{ value: '안asdasdj녕?', color: '#000' }}
+        />
+      </Entity>
     </Entity>
   );
 };
