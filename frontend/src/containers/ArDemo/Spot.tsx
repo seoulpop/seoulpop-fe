@@ -44,6 +44,7 @@ const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => 
           dir: 'alternate',
           loop: loopInfinity,
         }}
+        // XXX: scale로 변경
         animation__radius={{
           property: 'geometry.radius',
           from: `${minRadius}`,
@@ -59,6 +60,7 @@ const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => 
         color='#fff'
         radiusInner={115}
         radiusOuter={120}
+        // XXX: scale로 변경
         animation={{
           property: 'geometry.radiusInner',
           from: `${minRadius}`,
