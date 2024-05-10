@@ -8,13 +8,10 @@ const duration = 200;
 
 const ArContents = ({ isOpen, onClose }: { isOpen?: boolean; onClose: () => void }) => {
   const [isClosed, setIsClosed] = useState<boolean>();
-  const [open, setOpen] = useState<boolean>();
   const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (isOpen) setVisible(true);
-
-    setOpen(isOpen);
   }, [isOpen]);
 
   const clickHandler = () => {
@@ -65,13 +62,13 @@ const ArContents = ({ isOpen, onClose }: { isOpen?: boolean; onClose: () => void
         from: '0.8 0.8  0.8',
         to: '1 1 1',
         dur: duration,
-        enabled: !!open,
+        enabled: !!isOpen,
       }}
       animation__open_visible={{
         property: 'material.opacity',
         from: '0',
         to: '1',
-        enabled: !!open,
+        enabled: !!isOpen,
       }}
       animation__close={{
         property: 'scale',
