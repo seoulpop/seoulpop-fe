@@ -3,6 +3,9 @@ export const FONT_SIZE = {
   sm: '1.2rem',
   md: '1.6rem',
   lg: '2.0rem',
+  xl: '2.4rem',
+  xxl: '2.8rem',
+  xxxl: '3.2rem',
 };
 
 export const BORDER_RADIUS = {

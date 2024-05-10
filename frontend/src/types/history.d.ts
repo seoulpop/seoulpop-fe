@@ -17,6 +17,8 @@ export interface HeritageInfo {
   era: string;
   address: string;
   images: ImageInfo[];
+  lat: number;
+  lng: number;
 }
 
 export interface SiteInfo {
@@ -32,4 +34,6 @@ export interface SiteInfo {
   address: string;
   reference: string;
   images: ImageInfo[];
+  lat: number;
+  lng: number;
 }
