@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Button';
 
@@ -54,7 +55,11 @@ const Text = styled.span`
   white-space: nowrap;
 `;
 
+const historyId = 1; // TODO: api 연동
+
 const FoundButton = ({ isOpen }: { isOpen?: boolean }) => {
+  const navigate = useNavigate();
+
   let className = '';
 
   if (isOpen === undefined) className = '';
@@ -63,7 +68,14 @@ const FoundButton = ({ isOpen }: { isOpen?: boolean }) => {
 
   return (
     <ButtonBlock className={className}>
-      <Button type='button' color='#735cff' size='medium'>
+      <Button
+        type='button'
+        color='#735cff'
+        size='medium'
+        onClick={() => {
+          navigate(`/heritage/detail/${historyId}`);
+        }}
+      >
         <SearchIconWrapper />
         <Text>문화재 정보 보러가기</Text>
       </Button>
