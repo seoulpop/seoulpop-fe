@@ -1,30 +1,17 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { AssetItem, Assets, Box, Camera, Entity, Scene } from '@belivvr/aframe-react';
+import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
 
 // import useArMarkers from '@/hooks/server/useArMarkers';
-
 import FoundButton from '@/containers/ArDemo/FoundButton';
-import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/ar';
+import Spot from '@/containers/ArDemo/Spot';
+import ArContents from '@/containers/ArDemo/ArContents';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
   width: 100%;
   height: 100%;
-`;
-
-const ButtonBlock = styled.div`
-  position: fixed;
-  left: 50%;
-  bottom: 5.4rem;
-  transform: translate(-50%, 0);
-
-  z-index: ${Z_INDEX.float};
-  display: none;
-  &.is-active {
-    display: block;
-  }
 `;
 
 /** 
@@ -71,7 +58,7 @@ const ArDemo = () => {
   const [assetsReady, setAssetsReady] = useState(false);
   // const [position, setPosition] = useState<Position>();
 
-  const [isNearby] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>();
 
   const markerNearbyData: MarkerInfo[] = [
     {
@@ -134,24 +121,11 @@ const ArDemo = () => {
   }, []);
   */
 
-  useEffect(() => {
-    AFRAME.registerComponent('clicker', {
-      init() {
-        const { el } = this;
-        el.addEventListener('click', () => {
-          alert('Box clicked!');
-        });
-      },
-    });
-  }, []);
-
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
       {/* <InkTransition isActive={true} onClose={() => console.log('hi')} /> */}
-      <ButtonBlock className={`${isNearby ? 'is-active' : ''}`}>
-        <FoundButton />
-      </ButtonBlock>
+      <FoundButton isOpen={isOpen} />
       <Scene
         vr-mode-ui='enabled: false'
         cursor='rayOrigin: mouse'
@@ -184,16 +158,8 @@ const ArDemo = () => {
             />
           ))}
 
-        <Box
-          src='/assets/images/test.png'
-          // TODO: 개발용 위경도 제거
-          gps-new-entity-place='latitude: 51.0596; longitude: -0.7170'
-          // gps-new-entity-place={`latitude: ${markerNearbyData[0].lat}; longitude: ${markerNearbyData[0].lng}`}
-          scale={{ x: 200, y: 200, z: 10 }}
-          clicker
-          width={16}
-          height={9}
-        />
+        <Spot visible={!isOpen} onClickSpot={() => setIsOpen(true)} />
+        <ArContents isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </Scene>
     </SceneContainer>
   );
