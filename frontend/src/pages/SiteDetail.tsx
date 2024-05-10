@@ -9,6 +9,7 @@ import { SiteInfo } from '@/types/history';
 import ImageCarousel from '@/containers/History/ImageCarousel';
 
 import KakaoMap from '@/components/History/KakaoMap';
+import Header from '@/components/Header/Header';
 
 const Container = styled.div`
   max-width: 90%;
@@ -104,7 +105,7 @@ const SiteDetail = () => {
 
   return (
     <Container>
-      <HeaderTitle>사적지 정보</HeaderTitle>
+      <Header pageName='사적지 정보' />
       <BigTitle>{data.name}</BigTitle>
       <AddressBox>
         <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />
