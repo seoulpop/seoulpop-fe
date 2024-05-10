@@ -17,15 +17,6 @@ const Container = styled.div`
   padding: 0.2rem;
 `;
 
-const HeaderTitle = styled.div`
-  font-size: ${FONT_SIZE.xl};
-  font-weight: bold;
-  border-bottom: 0.2rem solid #ccc;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-  text-align: center;
-`;
-
 const BigTitle = styled.div`
   font-size: ${FONT_SIZE.xxxl};
   font-weight: bold;
