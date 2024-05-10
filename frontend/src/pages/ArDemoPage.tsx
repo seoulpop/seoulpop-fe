@@ -123,7 +123,8 @@ const ArDemo = () => {
 
   useEffect(() => {
     return () => {
-      console.log('뀨?');
+      // aframe에 의한 클래스 스타일 제거
+      document.querySelector('html').classList.remove('a-fullscreen');
     };
   }, []);
 
