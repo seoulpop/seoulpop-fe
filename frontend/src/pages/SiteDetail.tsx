@@ -34,7 +34,7 @@ const BigTitle = styled.div`
 const StyledImage = styled.img`
   width: 100%;
   height: 100%;
-  height: 25rem;
+  height: auto;
   border-radius: 2%;
   object-fit: cover;
   display: block;
