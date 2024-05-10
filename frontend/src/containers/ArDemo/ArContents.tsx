@@ -89,12 +89,12 @@ const RoundedPlane = ({ isActive, onClose }: { isActive?: boolean; onClose: () =
         position={{ x: 0, y: 0, z: 0 }}
         src='/assets/images/test.png'
       />
-      <Circle
-        color='#fff'
-        radius={100}
-        position={{ x: 1000 - 80, y: 1000 - 70, z: 100 }}
-        close-btn
-      />
+
+      <Entity close-btn position={{ x: 1000 - 200, y: 1000 - 160, z: 120 }}>
+        <Circle radius={120} visible={false} />
+        <Circle color='#fff' radius={60} />
+        <Circle radius={30} src='/svgs/cancel.svg' />
+      </Entity>
     </Entity>
   );
 };
