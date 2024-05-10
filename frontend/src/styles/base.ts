@@ -5,7 +5,9 @@ const base = css`
     --primary: #735cff;
     --secondary: #b2a5ff;
     --tertiary: #e9b43a;
+    --lightergray: #f3f3f3;
     --lightgray: #cdcdcd;
+    --gray: #bcbcbc;
     --lightgray-transparent-50: rgb(205 205 205 / 50%);
     --black: #000;
     --white: #fff;
