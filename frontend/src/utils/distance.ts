@@ -16,13 +16,26 @@ export const getDistanceFromLatLonInMeters = ({
   lat2: number;
   lon2: number;
 }) => {
-  const R = 6371 * 1000; // 지구의 반지름 (미터로 변환)
-  const dLat = deg2rad(lat2 - lat1); // 위도 차이
-  const dLon = deg2rad(lon2 - lon1); // 경도 차이
+  // 지구 반지름 (km)
+  const R = 6371.0;
+
+  // 라디안으로 변환
+  const radLat1 = deg2rad(lat1);
+  const radLon1 = deg2rad(lon1);
+  const radLat2 = deg2rad(lat2);
+  const radLon2 = deg2rad(lon2);
+
+  // 위도 및 경도 차이 계산
+  const dLon = radLon2 - radLon1;
+  const dLat = radLat2 - radLat1;
+
+  // Haversine 공식 계산
   const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    Math.sin(dLat / 2) ** 2 + Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(dLon / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const d = R * c; // 거리 (미터)
-  return d;
+
+  // 거리 계산
+  const distance = R * c;
+
+  return distance;
 };
