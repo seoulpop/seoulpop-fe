@@ -16,6 +16,8 @@ import useKakaoLoader from '@/hooks/useKakaoLoader';
 import MainLayout from '@/Layouts/MainLayout';
 
 import Button from '@/components/Button';
+import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
+import { NotificationData } from '@/types/notification';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -85,14 +87,14 @@ const MainPage = () => {
   const navigate = useNavigate();
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
-  const [location, setLocation] = useState({
-    center: { lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng },
-    isPanto: false,
+  const [center, setCenter] = useState({
+    lat: DEFAULT_MARKER_INFO.lat,
+    lng: DEFAULT_MARKER_INFO.lng,
   });
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
-  const [init, setInit] = useState(false);
+  const [isInit, setIsInit] = useState(false);
 
   const togglePanel = () => {
     console.log(markerNearbyData);
@@ -100,33 +102,12 @@ const MainPage = () => {
   };
 
   const handleCenterClick = () => {
-    console.log('center clicked: ', lat, ' ', lng);
-    setLocation({
-      center: { lat, lng },
-      isPanto: true,
-    });
+    setCenter({ lat, lng });
   };
 
   const handleMapCategoryClick = (index: number) => {
     setSelectedCategory(selectedCategory === index ? 0 : index);
   };
-
-  useEffect(() => {
-    if (!init && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
-      console.log('init map: ', lat, ' ', lng);
-      setLocation({
-        center: { lat, lng },
-        isPanto: true,
-      });
-      setInit(true);
-    } else if (init) {
-      console.log('move location: ', lat, ' ', lng, ' isPanto: ', location.isPanto);
-      setLocation({
-        center: { lat, lng },
-        isPanto: false,
-      });
-    }
-  }, [lat, lng, init]);
 
   useEffect(() => {
     if (markerData) setMarkerList(markerData);
@@ -146,13 +127,41 @@ const MainPage = () => {
     setMarkerList(filterMarkers());
   }, [selectedCategory, markerData]);
 
+  useEffect(() => {
+    if (!isInit && lat && lng) {
+      // BUG: 현 위치로 이동 안함
+      setCenter({ lat, lng });
+      setIsInit(true);
+    }
+  }, [lat, lng]);
+
+  useEffect(() => {
+    const data = localStorage.getItem(NOTIFICATION_DATA_KEY);
+    if (data) {
+      const notificationData: NotificationData = JSON.parse(data);
+      // 데이터 처리
+      setCenter({
+        lat: +notificationData.historyLat,
+        lng: +notificationData.historyLng,
+      });
+      localStorage.removeItem(NOTIFICATION_DATA_KEY);
+    }
+  }, []);
+
   if (error) {
     return <div>위치 정보 오류</div>;
   }
 
   return (
     <MainLayout>
-      <KakaoMap center={location.center} isPanto={location.isPanto}>
+      <KakaoMap
+        center={center}
+        isPanto={true}
+        onCenterChanged={(map) =>
+          // TODO: debounce 필요
+          setCenter({ lat: map.getCenter().getLat(), lng: map.getCenter().getLng() })
+        }
+      >
         <CategoryWrapper>
           <Button
             type='button'
