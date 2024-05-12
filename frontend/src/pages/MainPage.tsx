@@ -92,6 +92,7 @@ const MainPage = () => {
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [init, setInit] = useState(false);
 
   const togglePanel = () => {
     console.log(markerNearbyData);
@@ -99,7 +100,7 @@ const MainPage = () => {
   };
 
   const handleCenterClick = () => {
-    console.log(lat, lng);
+    console.log('center clicked: ', lat, ' ', lng);
     setLocation({
       center: { lat, lng },
       isPanto: true,
@@ -111,11 +112,21 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    setLocation({
-      center: { lat, lng },
-      isPanto: true,
-    });
-  }, [lat, lng]);
+    if (!init && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
+      console.log('init map: ', lat, ' ', lng);
+      setLocation({
+        center: { lat, lng },
+        isPanto: true,
+      });
+      setInit(true);
+    } else if (init) {
+      console.log('move location: ', lat, ' ', lng, ' isPanto: ', location.isPanto);
+      setLocation({
+        center: { lat, lng },
+        isPanto: false,
+      });
+    }
+  }, [lat, lng, init]);
 
   useEffect(() => {
     if (markerData) setMarkerList(markerData);

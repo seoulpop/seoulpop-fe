@@ -1,19 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Geolocation } from '@capacitor/geolocation';
 
 import { DEFAULT_MARKER_INFO } from '@/constants/map';
-
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
-
-interface Position {
-  coords: Coordinates;
-}
-
-interface GeoError {
-  message: string;
-}
 
 interface Coords {
   lat: number;
@@ -21,7 +9,7 @@ interface Coords {
   error: string | null;
 }
 
-const useCurrentLocation = () => {
+const useCurrentLocation = (): Coords => {
   const [location, setLocation] = useState<Coords>({
     lat: DEFAULT_MARKER_INFO.lat,
     lng: DEFAULT_MARKER_INFO.lng,
@@ -29,32 +17,21 @@ const useCurrentLocation = () => {
   });
 
   useEffect(() => {
-    if (!navigator.geolocation) {
-      setLocation((prevState) => ({
-        ...prevState,
-        error: 'Geolocation is not supported by your browser.',
-      }));
-      return undefined;
-    }
+    let id: string;
+    Geolocation.watchPosition({}, (position: any) => {
+      console.log('geolocation watched ', position?.coords.latitude, position?.coords.longitude);
+      if (position?.coords.latitude && position.coords.longitude) {
+        setLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          error: null,
+        });
+      }
+    }).then((id) => (id = id));
 
-    const handleSuccess = (position: Position) => {
-      setLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        error: null,
-      });
+    return () => {
+      Geolocation.clearWatch({ id });
     };
-
-    const handleError = (error: GeoError) => {
-      setLocation((prevState) => ({
-        ...prevState,
-        error: error.message,
-      }));
-    };
-
-    const geoId = navigator.geolocation.watchPosition(handleSuccess, handleError);
-
-    return () => navigator.geolocation.clearWatch(geoId);
   }, []);
 
   return location;
