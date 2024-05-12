@@ -1,56 +1,46 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: any 타입 제거
-import axios from 'axios';
-import { registerPlugin, Capacitor } from '@capacitor/core';
+import { registerPlugin } from '@capacitor/core';
 import { BackgroundGeolocationPlugin } from '@capacitor-community/background-geolocation';
+
+import { postNotifications } from '@/api/notification';
 
 const BackgroundGeolocation = registerPlugin<BackgroundGeolocationPlugin>('BackgroundGeolocation');
 
-export const backgroundGeolocation = () => {
-  if (Capacitor.getPlatform() === 'android') {
-    // addWatcher()로 watcher 추가
-    // watcher는 watcher를 제거하는데 필요한 id를 담은 promise를 반환
-    // 여러개의 watcher를 추가할 수 있음
-    BackgroundGeolocation.addWatcher(
-      {
-        // backgroundMessage가 정의되어야 background에서도 location을 추적함
-        backgroundMessage: '흔적이 발견되었습니다.',
-        backgroundTitle: '문화재 찍어보기',
-
-        // 사용자에게 권한 요청 여부
-        requestPermissions: true,
-
-        // false인 경우 항상 최신 상태임이 보장되고, true인 경우 이전 위치가 전송될 수 있음
-        stale: false,
-
-        // 다음 위치와의 최소 미터 수 (default value: 0)
-        distanceFilter: 1,
-      },
-      // TODO: 타입 지정
-      (location: any, error: any) => {
-        if (error) {
-          if (error.code === 'NOT_AUTHORIZED') {
-            if (
-              window.confirm(
-                'This app needs your location, ' +
-                  'but does not have permission.\n\n' +
-                  'Open settings now?',
-              )
-            ) {
-              // 위치 권한이 거부되었을 때, 사용자가 장치의 설정으로 이동할 수 있도록 함
-              BackgroundGeolocation.openSettings();
-            }
+export const addBackgroundGeolocationWatcher = () => {
+  BackgroundGeolocation.addWatcher(
+    {
+      backgroundMessage: '눌러서 흔적 찾기',
+      backgroundTitle: '내 주위의 역사 흔적을 찾고 있어요.',
+      requestPermissions: true,
+      stale: false,
+      // 다음 위치와의 최소 미터 수 (default value: 0)
+      // TODO: 최소 미터 수 늘리기
+      distanceFilter: 2,
+    },
+    // TODO: 타입 지정
+    (location: any, error: any) => {
+      if (error) {
+        if (error.code === 'NOT_AUTHORIZED') {
+          if (
+            window.confirm(
+              'This app needs your location, ' +
+                'but does not have permission.\n\n' +
+                'Open settings now?',
+            )
+          ) {
+            // 위치 권한이 거부되었을 때, 사용자가 장치의 설정으로 이동할 수 있도록 함
+            BackgroundGeolocation.openSettings();
           }
-          return console.error(error);
         }
+        return console.error(error);
+      }
 
-        // data fetch
-        axios.get(`${import.meta.env.VITE_BASE_URL}/ping`).then((response: any) => {
-          console.log(response.data);
-        });
+      // data fetch
+      // TODO: location.latitude, location.longitude 전송, 쓰로틀링
+      postNotifications({ lat: 37.57, lng: 126.9753598 });
 
-        return console.log(location);
-      },
-    );
-  }
+      return console.log(location);
+    },
+  );
 };

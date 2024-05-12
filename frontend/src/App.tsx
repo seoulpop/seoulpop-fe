@@ -1,11 +1,16 @@
 import { Suspense, useEffect } from 'react';
+import { Capacitor } from '@capacitor/core';
 
-import Router from './router/Router';
-import { backgroundGeolocation } from './utils/background-geolocation';
+import Router from '@/router/Router';
+import { addBackgroundGeolocationWatcher } from '@/utils/background-geolocation';
+import { initFCMListener } from '@/utils/firebase';
 
 const App = () => {
   useEffect(() => {
-    backgroundGeolocation();
+    if (Capacitor.getPlatform() === 'android') {
+      addBackgroundGeolocationWatcher();
+      initFCMListener();
+    }
   }, []);
 
   return (
