@@ -13,9 +13,9 @@ import { slideIn, slideOut } from '@/styles/animation';
 import { IconCenter, IconDown, IconUp } from '#/svgs';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
+import MainLayout from '@/Layouts/MainLayout';
 
 import Button from '@/components/Button';
-import MainLayout from '@/Layouts/MainLayout';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
