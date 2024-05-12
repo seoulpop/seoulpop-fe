@@ -19,7 +19,6 @@ const useCurrentLocation = (): Coords => {
   useEffect(() => {
     let id: string;
     Geolocation.watchPosition({}, (position: any) => {
-      console.log('geolocation watched ', position?.coords.latitude, position?.coords.longitude);
       if (position?.coords.latitude && position.coords.longitude) {
         setLocation({
           lat: position.coords.latitude,
