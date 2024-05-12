@@ -1,4 +1,4 @@
-import { Circle, Entity, Ring, Text } from '@belivvr/aframe-react';
+import { Circle, Entity, Plane, Ring, Text } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
@@ -75,7 +75,7 @@ const Spot = ({
       setLat(curPos.latitude);
       setLng(curPos.longitude);
 
-      console.log('curPㄴㄴos', curPos, lat, lng);
+      console.log('curPㄴㄴos', data, curPos, lat, lng);
 
       const dist = getDistanceFromLatLonInMeters({
         lat1: curPos.latitude,
@@ -153,6 +153,7 @@ const Spot = ({
         />
 
         {/* 문화재명, 거리  */}
+        <Plane position={{ x: 0, y: maxRadius, z: 0 }} width={5} height={300} color='#fff' />
         <Entity position={{ x: 0, y: 300, z: 0 }}>
           <Text id='distance' value='' color='#fff' scale={{ x: 500, y: 500, z: 500 }} />
         </Entity>
