@@ -3,3 +3,9 @@ export interface LocationInfo {
   lat: number;
   lng: number;
 }
+
+export interface NotificationData {
+  historyId: string;
+  historyLat: string;
+  historyLng: string;
+}
