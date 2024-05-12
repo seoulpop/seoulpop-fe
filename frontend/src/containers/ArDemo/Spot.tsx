@@ -1,9 +1,11 @@
-import { Circle, Entity, Ring, Plane } from '@belivvr/aframe-react';
+import { Circle, Entity, Plane, Ring } from '@belivvr/aframe-react';
 import { useEffect, useState } from 'react';
 
 import { AR_Z_INDEX } from '@/styles/common';
+import { getDistanceFromLatLonInMeters } from '@/utils/distance';
 
-const gpsEntityPlace = 'latitude: 51.0596; longitude: -0.7170'; // fake gps
+const formatGpsNewEntityPlace = ({ lat, lng }: { lat: number; lng: number }) =>
+  `latitude: ${lat}; longitude: ${lng}`;
 
 const loopInfinity = 10000; // XXX: true가 먹지 않음
 const centerRadius = 60;
@@ -12,8 +14,18 @@ const maxRadius = 120;
 const ringDelta = 5;
 const duration = 2000;
 
-const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => void }) => {
-  const [dist] = useState(333);
+const Spot = ({
+  visible,
+  onClickSpot,
+  lat = 51.0596, // fake gps
+  lng = -0.717,
+}: {
+  visible?: boolean;
+  lat?: number;
+  lng?: number;
+  onClickSpot: () => void;
+}) => {
+  const [distance, setDistance] = useState<number>();
 
   useEffect(() => {
     const clickHandler = () => {
@@ -34,14 +46,40 @@ const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => 
 
   useEffect(() => {
     const el = document.getElementById('distance');
-    if (el) el.setAttribute('text', 'value', `${dist}m`); // setAttribute('material', 'color', 'red') https://aframe.io/docs/1.5.0/core/component.html
-  }, [dist]);
+    if (el) el.setAttribute('text', 'value', `${distance}m`); // setAttribute('material', 'color', 'red') https://aframe.io/docs/1.5.0/core/component.html
+  }, [distance]);
+
+  useEffect(() => {
+    // 가까운 문화재, 역사를 포착
+    const onObserveTarget = (event: unknown) => {
+      const data = event as GeolocationCoordinates;
+      const { position: curPos } = data.detail;
+
+      console.log('curPos', curPos);
+
+      const dist = getDistanceFromLatLonInMeters({
+        lat1: curPos.latitude,
+        lon1: curPos.longitude,
+        lat2: lat,
+        lon2: lng,
+      });
+
+      setDistance(dist);
+      console.log(dist);
+    };
+
+    document.addEventListener('gps-camera-update-position', onObserveTarget);
+
+    return () => {
+      document.removeEventListener('gps-camera-update-positon', onObserveTarget);
+    };
+  }, []);
 
   return (
     <Entity
       position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}
       visible={visible}
-      gps-new-entity-place={gpsEntityPlace}
+      gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
     >
       <Circle color='#fff' radius={centerRadius} spot-click />
       <Circle
