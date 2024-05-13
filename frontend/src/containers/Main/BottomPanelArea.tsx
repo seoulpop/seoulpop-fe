@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
 
 import { IconCenter, IconDown, IconUp } from '#/svgs';
-import { slideIn, slideOut } from '@/styles/animation';
+import { bottomPanelSlideIn, bottomPanelSlideOut } from '@/styles/animation';
 import { BORDER_RADIUS, Z_INDEX } from '@/styles/common';
 import { MarkerNearbyInfo } from '@/types/marker';
 
@@ -17,7 +17,8 @@ const carouselStyle = (visible: boolean) => css`
   left: 0;
   right: 0;
   bottom: 0;
-  animation: ${visible ? slideIn : slideOut} 0.5s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+  animation: ${visible ? bottomPanelSlideIn : bottomPanelSlideOut} 0.5s
+    cubic-bezier(0.86, 0, 0.07, 1) forwards;
   z-index: ${Z_INDEX.float};
 `;
 
@@ -138,7 +139,6 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
 
       <Carousel>
         <StyledFlicking align='prev' bound>
-          <NearbyDataItem />
           <NearbyDataItem />
           <NearbyDataItem />
           <NearbyDataItem />
