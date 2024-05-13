@@ -203,8 +203,8 @@ const MainPage = () => {
           <h1>Carousel 영역</h1>
           <p>여기에 하나씩 넣을거에요</p>
         </div>
-        <TabBar />
       </KakaoMap>
+      <TabBar />
     </MainLayout>
   );
 };
