@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,11 +14,13 @@ import { IconCenter, IconDown, IconUp } from '#/svgs';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 import MainLayout from '@/Layouts/MainLayout';
+import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
+import { NotificationData } from '@/types/notification';
+import { getCarDirection } from '@/api/directions';
+import { CarDirectionData } from '@/types/directions';
 
 import Button from '@/components/Button';
 import TabBar from '@/components/TabBar';
-import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
-import { NotificationData } from '@/types/notification';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -88,10 +90,12 @@ const MainPage = () => {
   const navigate = useNavigate();
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
+  const mapRef = useRef(null);
   const [center, setCenter] = useState({
     lat: DEFAULT_MARKER_INFO.lat,
     lng: DEFAULT_MARKER_INFO.lng,
   });
+  const [destination, setDestination] = useState<{ lat: string; lng: string } | undefined>();
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -128,26 +132,64 @@ const MainPage = () => {
     setMarkerList(filterMarkers());
   }, [selectedCategory, markerData]);
 
+  const check = async () => {
+    if (destination) {
+      console.log('destination: ', destination.lat, destination.lng);
+      const data: CarDirectionData = await getCarDirection({
+        origin: { lat: center.lat.toString(), lng: center.lng.toString() },
+        destination,
+      });
+      if (data) {
+        console.log(center, destination);
+        const linePath: kakao.maps.LatLng[] = [];
+        data.routes[0].sections[0].roads.forEach((router) => {
+          router.vertexes.forEach((_, index) => {
+            if (index % 2 === 0) {
+              // 경도
+              linePath.push(
+                new kakao.maps.LatLng(router.vertexes[index + 1], router.vertexes[index]),
+              );
+            }
+          });
+        });
+        const polyline = new kakao.maps.Polyline({
+          path: linePath,
+          strokeWeight: 5,
+          strokeColor: 'var(--primary)',
+          strokeOpacity: 0.8,
+          strokeStyle: 'shortdash',
+        });
+        polyline.setMap(mapRef.current);
+      }
+    }
+  };
+
+  // 경로 안내
   useEffect(() => {
-    if (!isInit && lat && lng) {
-      // BUG: 현 위치로 이동 안함
+    if (destination && isInit) {
+      check();
+    }
+  }, [isInit, destination]);
+
+  // 알림 클릭으로 진입 시
+  useEffect(() => {
+    const data = sessionStorage.getItem(NOTIFICATION_DATA_KEY);
+    if (data) {
+      const notificationData: NotificationData = JSON.parse(data);
+      setDestination({
+        lat: notificationData.historyLat,
+        lng: notificationData.historyLng,
+      });
+    }
+  }, []);
+
+  // 현재 위치로 초기화
+  useEffect(() => {
+    if (!isInit && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
       setCenter({ lat, lng });
       setIsInit(true);
     }
-  }, [lat, lng]);
-
-  useEffect(() => {
-    const data = localStorage.getItem(NOTIFICATION_DATA_KEY);
-    if (data) {
-      const notificationData: NotificationData = JSON.parse(data);
-      // 데이터 처리
-      setCenter({
-        lat: +notificationData.historyLat,
-        lng: +notificationData.historyLng,
-      });
-      localStorage.removeItem(NOTIFICATION_DATA_KEY);
-    }
-  }, []);
+  }, [isInit, lat, lng]);
 
   if (error) {
     return <div>위치 정보 오류</div>;
@@ -157,11 +199,12 @@ const MainPage = () => {
     <MainLayout>
       <KakaoMap
         center={center}
-        isPanto={true}
+        isPanto
         onCenterChanged={(map) =>
           // TODO: debounce 필요
           setCenter({ lat: map.getCenter().getLat(), lng: map.getCenter().getLng() })
         }
+        ref={mapRef}
       >
         <CategoryWrapper>
           <Button
