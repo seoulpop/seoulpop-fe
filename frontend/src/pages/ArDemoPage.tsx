@@ -2,11 +2,12 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-// import useArMarkers from '@/hooks/server/useArMarkers';
-import ArContents from '@/containers/ArDemo/ArContents';
+import useArMarkers from '@/hooks/server/useArMarkers';
+
+// import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
-// import { MarkerInfo } from '@/types/ar';
+import { MarkerInfo, Position, GeolocationCoordinates } from '@/types/ar';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
@@ -28,29 +29,48 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
 };
 */
 
+// 테스트용 데이터
+const MOCK_DATA: MarkerInfo[] = [
+  {
+    id: 1,
+    lng: 127.03968585351448,
+    lat: 37.50183539829876,
+    name: '멀티캠퍼스',
+    category: '문화재',
+  },
+  {
+    id: 2,
+    lng: 127.04035642747931,
+    lat: 37.50073757660469,
+    name: '메머드커피',
+    category: '문화재',
+  },
+];
+
 const ArDemo = () => {
   const [, setAssetsReady] = useState(false);
-  // const [position, setPosition] = useState<Position>();
+  const [position, setPosition] = useState<Position>();
 
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  /** TODO: api 연동
-    const markerNearbyData: MarkerInfo[] = [
-    {
-      id: 1,
-      lng: 127.0394685,
-      lat: 37.5017073,
-      name: 'test',
-      category: '문화재',
-    },
-  ];
+  const { markerNearbyData: data } = useArMarkers({
+    lat: position?.latitude,
+    lng: position?.longitude,
+  });
+  const markerNearbyData = data?.map((d) => d);
+  MOCK_DATA.forEach((d) => markerNearbyData?.push(d));
+
+  console.log(markerNearbyData);
+
+  useEffect(() => {
+    setAssetsReady(true);
+  }, []);
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
-      console.log('hiiii');
       // TODO: 위치 업데이트 최적화
-      const data = event as GeolocationCoordinates;
-      const { position: pos } = data.detail;
+      const geolocationCoordinates = event as GeolocationCoordinates;
+      const { position: pos } = geolocationCoordinates.detail;
       setPosition(pos);
     };
 
@@ -60,40 +80,6 @@ const ArDemo = () => {
       document.removeEventListener('gps-camera-update-positon', onUpdateGps);
     };
   }, []);
-*/
-
-  useEffect(() => {
-    setAssetsReady(true);
-  }, []);
-
-  /** TODO: api 연동
-  useEffect(() => {
-    // 가까운 문화재, 역사를 포착
-    const onObserveTarget = (event: unknown) => {
-      const data = event as GeolocationCoordinates;
-      const { position: pos } = data.detail;
-      const nearestMarker = getNearestMarker({ markers: markerNearbyData, position: pos });
-
-      const dist = getDistanceFromLatLonInMeters({
-        lat1: pos.latitude,
-        lon1: pos.longitude,
-        lat2: nearestMarker.lat,
-        lon2: nearestMarker.lng,
-      });
-
-      console.log(nearestMarker, pos);
-
-      if (dist <= NEAR_METERS) setIsNearby(true);
-      else setIsNearby(false);
-    };
-
-    document.addEventListener('gps-camera-update-position', onObserveTarget);
-
-    return () => {
-      document.removeEventListener('gps-camera-update-positon', onObserveTarget);
-    };
-  }, []);
-  */
 
   useEffect(() => {
     return () => {
@@ -120,26 +106,19 @@ const ArDemo = () => {
           <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
         </Assets>
 
-        {/** 
-        {assetsReady &&
-          markerNearbyData &&
+        {markerNearbyData &&
           markerNearbyData?.length > 0 &&
           markerNearbyData?.map(({ id, lat, lng }) => (
-            <Entity
+            <Spot
               key={id}
-              id='hamster'
-              gltfModel='#hamster'
-              gps-new-entity-place={`latitude: ${lat}; longitude: ${lng}`}
-              scale={{
-                x: 0.05,
-                y: 0.05,
-                z: 0.05,
-              }}
-              hamevent
-              animation-mixer='clip: *;'
+              visible={!isOpen}
+              lat={lat}
+              lng={lng}
+              onClickSpot={() => setIsOpen(true)}
             />
           ))}
-*/}
+
+        {/** 
         <Spot
           visible={!isOpen}
           // 멀티캠퍼스 gps
@@ -154,6 +133,7 @@ const ArDemo = () => {
           lng={127.03968585351448}
           onClose={() => setIsOpen(false)}
         />
+        */}
       </Scene>
     </SceneContainer>
   );
