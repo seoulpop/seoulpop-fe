@@ -157,7 +157,7 @@ const Spot = ({
         {/* 문화재명, 거리  */}
         <Plane position={{ x: 0, y: maxRadius, z: 0 }} width={1} height={6} color='#fff' />
         <Entity position={{ x: 0, y: 3, z: 0 }}>
-          <Text id='distance' value='' color='#fff' scale={{ x: 100, y: 100, z: 100 }} />
+          <Text id='distance' value='' color='#fff' scale={{ x: 500, y: 500, z: 500 }} />
         </Entity>
       </Entity>
     </>
