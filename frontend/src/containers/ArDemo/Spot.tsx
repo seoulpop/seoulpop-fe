@@ -19,10 +19,10 @@ const DebugUI = styled.div`
 `;
 
 const loopInfinity = 10000; // XXX: true가 먹지 않음
-const centerRadius = 60;
-const minRadius = centerRadius + 30;
-const maxRadius = 120;
-const ringDelta = 5;
+const centerRadius = 3;
+const minRadius = centerRadius + 4;
+const maxRadius = 6;
+const ringDelta = 1;
 const duration = 2000;
 
 const Spot = ({
@@ -155,9 +155,9 @@ const Spot = ({
         />
 
         {/* 문화재명, 거리  */}
-        <Plane position={{ x: 0, y: maxRadius, z: 0 }} width={5} height={300} color='#fff' />
-        <Entity position={{ x: 0, y: 300, z: 0 }}>
-          <Text id='distance' value='' color='#fff' scale={{ x: 500, y: 500, z: 500 }} />
+        <Plane position={{ x: 0, y: maxRadius, z: 0 }} width={1} height={6} color='#fff' />
+        <Entity position={{ x: 0, y: 3, z: 0 }}>
+          <Text id='distance' value='' color='#fff' scale={{ x: 100, y: 100, z: 100 }} />
         </Entity>
       </Entity>
     </>
