@@ -16,6 +16,7 @@ import useKakaoLoader from '@/hooks/useKakaoLoader';
 import MainLayout from '@/Layouts/MainLayout';
 
 import Button from '@/components/Button';
+import TabBar from '@/components/TabBar';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -203,6 +204,7 @@ const MainPage = () => {
           <p>여기에 하나씩 넣을거에요</p>
         </div>
       </KakaoMap>
+      <TabBar />
     </MainLayout>
   );
 };
