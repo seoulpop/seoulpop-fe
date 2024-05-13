@@ -1,12 +1,12 @@
+import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
 
 // import useArMarkers from '@/hooks/server/useArMarkers';
-import FoundButton from '@/containers/ArDemo/FoundButton';
-import { MarkerInfo } from '@/types/ar';
-import Spot from '@/containers/ArDemo/Spot';
 import ArContents from '@/containers/ArDemo/ArContents';
+import FoundButton from '@/containers/ArDemo/FoundButton';
+import Spot from '@/containers/ArDemo/Spot';
+// import { MarkerInfo } from '@/types/ar';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
@@ -16,32 +16,6 @@ const SceneContainer = styled.div`
 
 /** 
 const NEAR_METERS = 5;
-
-const deg2rad = (deg: number) => {
-  return deg * (Math.PI / 180);
-};
-
-const getDistanceFromLatLonInMeters = ({
-  lat1,
-  lon1,
-  lat2,
-  lon2,
-}: {
-  lat1: number;
-  lon1: number;
-  lat2: number;
-  lon2: number;
-}) => {
-  const R = 6371 * 1000; // 지구의 반지름 (미터로 변환)
-  const dLat = deg2rad(lat2 - lat1); // 위도 차이
-  const dLon = deg2rad(lon2 - lon1); // 경도 차이
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const d = R * c; // 거리 (미터)
-  return d;
-};
 */
 
 /**
@@ -55,12 +29,13 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
 */
 
 const ArDemo = () => {
-  const [assetsReady, setAssetsReady] = useState(false);
+  const [, setAssetsReady] = useState(false);
   // const [position, setPosition] = useState<Position>();
 
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  const markerNearbyData: MarkerInfo[] = [
+  /** TODO: api 연동
+    const markerNearbyData: MarkerInfo[] = [
     {
       id: 1,
       lng: 127.0394685,
@@ -70,7 +45,6 @@ const ArDemo = () => {
     },
   ];
 
-  /** TODO: api 연동
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
       console.log('hiiii');
@@ -140,12 +114,13 @@ const ArDemo = () => {
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer={{ antialias: true, alpha: true }}
       >
-        <Camera gps-new-camera='simulateLatitude: 51.049; simulateLongitude: -0.723' />
+        <Camera gps-new-camera='' />
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
           <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
         </Assets>
 
+        {/** 
         {assetsReady &&
           markerNearbyData &&
           markerNearbyData?.length > 0 &&
@@ -164,9 +139,21 @@ const ArDemo = () => {
               animation-mixer='clip: *;'
             />
           ))}
-
-        <Spot visible={!isOpen} onClickSpot={() => setIsOpen(true)} />
-        <ArContents isOpen={isOpen} onClose={() => setIsOpen(false)} />
+*/}
+        <Spot
+          visible={!isOpen}
+          // 멀티캠퍼스 gps
+          lat={37.50183539829876}
+          lng={127.03968585351448}
+          onClickSpot={() => setIsOpen(true)}
+        />
+        <ArContents
+          isOpen={isOpen}
+          // fake gps
+          lat={37.50183539829876}
+          lng={127.03968585351448}
+          onClose={() => setIsOpen(false)}
+        />
       </Scene>
     </SceneContainer>
   );
