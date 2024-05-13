@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import Flicking from '@egjs/react-flicking';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
@@ -62,11 +63,40 @@ const Carousel = styled.div`
   padding-bottom: 8.8rem; // TabBar 높이 + 마진
 `;
 
+const StyledFlicking = styled(Flicking)`
+  overflow-x: hidden;
+  .flicking-viewport {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    align-items: center;
+  }
+  .flicking-camera {
+    display: flex;
+  }
+
+  &:first-child {
+    padding-left: 2rem;
+  }
+  &:last-child {
+    padding-right: 2rem;
+  }
+`;
+
 const NearbyDataItem = styled.div`
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
   width: 20rem;
   height: 20rem;
-
+  margin: 0.3rem 2rem 0.3rem 0;
   border-radius: ${BORDER_RADIUS.lg};
+
   background: var(--white);
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
 `;
@@ -107,7 +137,12 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
       </BottomPanelAreaContainer>
 
       <Carousel>
-        <NearbyDataItem />
+        <StyledFlicking align='prev' bound>
+          <NearbyDataItem />
+          <NearbyDataItem />
+          <NearbyDataItem />
+          <NearbyDataItem />
+        </StyledFlicking>
       </Carousel>
     </div>
   );
