@@ -3,7 +3,7 @@ const deg2rad = (deg: number) => {
 };
 
 /**
- * 두 위경도 지점의 거리(미터) 반환
+ * 두 위경도 지점의 거리(km) 반환
  */
 export const getDistanceFromLatLonInMeters = ({
   lat1,

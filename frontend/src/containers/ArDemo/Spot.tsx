@@ -68,7 +68,7 @@ const Spot = ({
   }, [distance]);
 
   useEffect(() => {
-    // 가까운 문화재, 역사를 포착
+    // 현재 좌표와의 거리 계산
     const onObserveTarget = (event: unknown) => {
       const data = event as GeolocationCoordinates;
       const { position: curPos } = data.detail;
