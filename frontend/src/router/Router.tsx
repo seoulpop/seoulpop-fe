@@ -9,6 +9,8 @@ const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 const MainPage = lazy(() => import('@/pages/MainPage'));
 const ExamplePage = lazy(() => import('@/pages/ExamplePage'));
 const ArDemo = lazy(() => import('@/pages/ArDemoPage')); // ar 테스트 후 삭제 예정
+const SettingPage = lazy(() => import('@/pages/SettingPage'));
+const SigninPage = lazy(() => import('@/pages/SigninPage'));
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -22,6 +24,8 @@ const Router = () => {
         { path: '/ardemo', element: <ArDemo /> },
         { path: '/heritage/detail/:historyId', element: <HeritageDetail /> },
         { path: '/site/detail/:historyId', element: <SiteDetail /> },
+        { path: '/setting', element: <SettingPage /> },
+        { path: '/signin', element: <SigninPage /> },
         // { path: '/category/:category', element: <CategoryResultPage /> },
       ],
     },
