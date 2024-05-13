@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 import { AR_Z_INDEX } from '@/styles/common';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
+import { GeolocationCoordinates } from '@/types/ar';
+import { formatGpsNewEntityPlace } from '@/utils/ar';
 
 const DebugUI = styled.div`
   position: fixed;
@@ -16,9 +18,6 @@ const DebugUI = styled.div`
   font-size: 2rem;
 `;
 
-const formatGpsNewEntityPlace = ({ lat, lng }: { lat: number; lng: number }) =>
-  `latitude: ${lat}; longitude: ${lng}`;
-
 const loopInfinity = 10000; // XXX: true가 먹지 않음
 const centerRadius = 60;
 const minRadius = centerRadius + 30;
@@ -29,19 +28,19 @@ const duration = 2000;
 const Spot = ({
   visible,
   onClickSpot,
-  lat = 51.0596, // fake gps
-  lng = -0.717,
-  // lat = 127.0877293, // fake gps
-  // lng = 37.4714395,
+  // lat = 51.0596, // fake gps
+  // lng = -0.717,
+  lng,
+  lat,
 }: {
   visible?: boolean;
-  lat?: number;
-  lng?: number;
+  lat: number;
+  lng: number;
   onClickSpot: () => void;
 }) => {
   const [distance, setDistance] = useState('');
-  const [latt, setLat] = useState<number>();
-  const [lngg, setLng] = useState<number>();
+  const [latt, setLat] = useState<number>(); // TODO: 디버깅 후 삭제
+  const [lngg, setLng] = useState<number>(); // TODO: 디버깅 후 삭제
 
   useEffect(() => {
     const clickHandler = () => {
@@ -62,7 +61,10 @@ const Spot = ({
 
   useEffect(() => {
     const el = document.getElementById('distance');
-    if (el) el.setAttribute('text', 'value', `${distance}km`); // setAttribute('material', 'color', 'red') https://aframe.io/docs/1.5.0/core/component.html
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    if (el) el.setAttribute('text', { value: `${distance}km` }); // https://aframe.io/docs/0.8.0/introduction/javascript-events-dom-apis.html#adding-a-component-with-setattribute
   }, [distance]);
 
   useEffect(() => {
@@ -74,8 +76,6 @@ const Spot = ({
       console.log(curPos, lat, lng);
       setLat(curPos.latitude);
       setLng(curPos.longitude);
-
-      console.log('curPㄴㄴos', data, curPos, lat, lng);
 
       const dist = getDistanceFromLatLonInMeters({
         lat1: curPos.latitude,

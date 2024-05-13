@@ -2,11 +2,21 @@ import { Circle, Entity, Plane } from '@belivvr/aframe-react';
 import { useEffect, useState } from 'react';
 
 import { AR_Z_INDEX } from '@/styles/common';
+import { formatGpsNewEntityPlace } from '@/utils/ar';
 
-const gpsEntityPlace = 'latitude: 51.0596; longitude: -0.7170'; // fake gps
 const duration = 200;
 
-const ArContents = ({ isOpen, onClose }: { isOpen?: boolean; onClose: () => void }) => {
+const ArContents = ({
+  isOpen,
+  lng,
+  lat,
+  onClose,
+}: {
+  isOpen?: boolean;
+  lat: number;
+  lng: number;
+  onClose: () => void;
+}) => {
   const [isClosed, setIsClosed] = useState<boolean>();
   const [visible, setVisible] = useState<boolean>(false);
 
@@ -50,7 +60,7 @@ const ArContents = ({ isOpen, onClose }: { isOpen?: boolean; onClose: () => void
 
   return (
     <Entity
-      gps-new-entity-place={gpsEntityPlace}
+      gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
       position={{ x: 0, y: 0, z: AR_Z_INDEX.contents }}
       scale={{
         x: 0,

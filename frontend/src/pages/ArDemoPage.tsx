@@ -1,4 +1,4 @@
-import { AssetItem, Assets, Camera, Entity, Scene } from '@belivvr/aframe-react';
+import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
-import { MarkerInfo } from '@/types/ar';
+// import { MarkerInfo } from '@/types/ar';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
@@ -29,12 +29,13 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
 */
 
 const ArDemo = () => {
-  const [assetsReady, setAssetsReady] = useState(false);
+  const [, setAssetsReady] = useState(false);
   // const [position, setPosition] = useState<Position>();
 
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  const markerNearbyData: MarkerInfo[] = [
+  /** TODO: api 연동
+    const markerNearbyData: MarkerInfo[] = [
     {
       id: 1,
       lng: 127.0394685,
@@ -44,7 +45,6 @@ const ArDemo = () => {
     },
   ];
 
-  /** TODO: api 연동
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
       console.log('hiiii');
@@ -114,12 +114,13 @@ const ArDemo = () => {
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer={{ antialias: true, alpha: true }}
       >
-        <Camera gps-new-camera='simulateLatitude: 51.049; simulateLongitude: -0.723' />
+        <Camera gps-new-camera='' />
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
           <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
         </Assets>
 
+        {/** 
         {assetsReady &&
           markerNearbyData &&
           markerNearbyData?.length > 0 &&
@@ -138,9 +139,21 @@ const ArDemo = () => {
               animation-mixer='clip: *;'
             />
           ))}
-
-        <Spot visible={!isOpen} onClickSpot={() => setIsOpen(true)} />
-        <ArContents isOpen={isOpen} onClose={() => setIsOpen(false)} />
+*/}
+        <Spot
+          visible={!isOpen}
+          // 멀티캠퍼스 gps
+          lat={37.50183539829876}
+          lng={127.03968585351448}
+          onClickSpot={() => setIsOpen(true)}
+        />
+        <ArContents
+          isOpen={isOpen}
+          // fake gps
+          lat={37.50183539829876}
+          lng={127.03968585351448}
+          onClose={() => setIsOpen(false)}
+        />
       </Scene>
     </SceneContainer>
   );
