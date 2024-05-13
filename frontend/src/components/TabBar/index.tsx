@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { BORDER_RADIUS, Z_INDEX } from '@/styles/common';
+import { Z_INDEX } from '@/styles/common';
 import { IconBook, IconSetting, IconNotification, IconMap } from '#/svgs';
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ const Container = styled.div`
   z-index: ${Z_INDEX.float};
 `;
 
-const NavigationButton = styled.button`
+const NavigationButton = styled.button<{ isActive: boolean }>`
   width: 4.8rem;
   height: 5.8rem;
   display: flex;
@@ -26,7 +26,7 @@ const NavigationButton = styled.button`
   justify-content: center;
   background-color: var(--white);
   border: none;
-  color: gray;
+  color: ${(props) => (props.isActive ? ' var(--darkgray)' : ' var(--gray)')};
   cursor: pointer;
 
   svg {
@@ -37,30 +37,29 @@ const NavigationButton = styled.button`
     margin-top: 0.5rem;
     font-size: 0.8rem;
   }
-
-  &:hover {
-    color: black;
-  }
 `;
 
 const TabBar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path: string): boolean => location.pathname === path;
 
   return (
     <Container>
-      <NavigationButton onClick={() => navigate('/example')}>
+      <NavigationButton isActive={isActive('/')} onClick={() => navigate('/')}>
         <IconMap />
         <span>지도</span>
       </NavigationButton>
-      <NavigationButton onClick={() => navigate('/')}>
+      <NavigationButton isActive={isActive('/example')} onClick={() => navigate('/example')}>
         <IconBook />
         <span>도감</span>
       </NavigationButton>
-      <NavigationButton onClick={() => navigate('/ardemo')}>
+      <NavigationButton isActive={isActive('/ardemo')} onClick={() => navigate('/ardemo')}>
         <IconNotification />
         <span>알림</span>
       </NavigationButton>
-      <NavigationButton onClick={() => navigate('/example')}>
+      <NavigationButton isActive={isActive('/setting')} onClick={() => navigate('/setting')}>
         <IconSetting />
         <span>환경설정</span>
       </NavigationButton>
