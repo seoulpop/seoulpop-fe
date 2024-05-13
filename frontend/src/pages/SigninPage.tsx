@@ -1,10 +1,9 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
 
 import DefaultLayout from '@/Layouts/DetailLayout';
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 
-const LoginButton = styled.button`
+const LoginButton = styled.a`
   position: relative;
   display: flex;
   align-items: center;
@@ -25,17 +24,9 @@ const LoginButton = styled.button`
 `;
 
 const SigninPage = () => {
-  const navigate = useNavigate();
-
   return (
     <DefaultLayout>
-      <LoginButton
-        onClick={() => {
-          navigate('');
-        }}
-      >
-        카카오 로그인
-      </LoginButton>
+      <LoginButton href={import.meta.env.VITE_KAKAO_REDIRECT_URI}>카카오 로그인</LoginButton>
     </DefaultLayout>
   );
 };
