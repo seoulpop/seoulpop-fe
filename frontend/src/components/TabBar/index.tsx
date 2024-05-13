@@ -14,7 +14,7 @@ const Container = styled.div`
   align-items: center;
   padding: 1rem 0;
   background-color: var(--white);
-  z-index: ${Z_INDEX.float};
+  z-index: ${Z_INDEX.layout};
 `;
 
 const NavigationButton = styled.button<{ isActive: boolean }>`
