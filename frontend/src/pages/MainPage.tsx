@@ -1,22 +1,19 @@
 /** @jsxImportSource @emotion/react */
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
-import { css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
+import MainLayout from '@/Layouts/MainLayout';
 import { DEFAULT_MARKER_INFO } from '@/constants/map';
 import useMaps from '@/hooks/server/useMap';
-import { BORDER_RADIUS, Z_INDEX } from '@/styles/common';
-import { MarkerInfo } from '@/types/marker';
-import { slideIn, slideOut } from '@/styles/animation';
-import { IconCenter, IconDown, IconUp } from '#/svgs';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
-import MainLayout from '@/Layouts/MainLayout';
+import { Z_INDEX } from '@/styles/common';
+import { MarkerInfo } from '@/types/marker';
 
 import Button from '@/components/Button';
 import TabBar from '@/components/TabBar';
+import BottomPanelArea from '@/containers/Main/BottomPanelArea';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -34,56 +31,8 @@ const CategoryWrapper = styled.div`
   z-index: ${Z_INDEX.float};
 `;
 
-const carouselStyle = (visible: boolean) => css`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  animation: ${visible ? slideIn : slideOut} 0.5s cubic-bezier(0.86, 0, 0.07, 1) forwards;
-  z-index: ${Z_INDEX.float};
-`;
-
-const BottomPanelArea = styled.div`
-  position: fixed;
-  width: 100%;
-  bottom: 10rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-// TODO: 버튼 공통 컴포넌트로 바꿔야 함
-const PanelToggleButtonStyle = css`
-  width: 4.8rem;
-  height: 4.8rem;
-  margin-left: 2rem;
-  background-color: var(--white);
-  border: none;
-  border-radius: ${BORDER_RADIUS.circle};
-  box-shadow: var(--shadow);
-  cursor: pointer;
-`;
-
-// TODO: 버튼 공통 컴포넌트로 바꿔야 함
-const CenterLocationButtonStyle = css`
-  width: 4.8rem;
-  height: 4.8rem;
-  margin-right: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--white);
-  border: none;
-  border-radius: ${BORDER_RADIUS.circle};
-  box-shadow: var(--shadow);
-  cursor: pointer;
-`;
-
-const CameraButton = styled(Button)``;
-
 const MainPage = () => {
   useKakaoLoader();
-  const navigate = useNavigate();
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
   const [location, setLocation] = useState({
@@ -92,15 +41,8 @@ const MainPage = () => {
   });
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-
-  const togglePanel = () => {
-    console.log(markerNearbyData);
-    setIsVisible(!isVisible);
-  };
 
   const handleCenterClick = () => {
-    console.log(lat, lng);
     setLocation({
       center: { lat, lng },
       isPanto: true,
@@ -181,28 +123,7 @@ const MainPage = () => {
           ))
         )}
 
-        <div css={carouselStyle(isVisible)}>
-          <BottomPanelArea>
-            <button type='button' css={PanelToggleButtonStyle} onClick={togglePanel}>
-              {isVisible ? <IconDown /> : <IconUp />}
-            </button>
-            <CameraButton
-              type='button'
-              size='large'
-              color='var(--primary)'
-              // TODO: url 변경
-              onClick={() => navigate('/ardemo')}
-            >
-              <img src='/icons/camera_3d.webp' alt='camera' width={30} height={24} />
-              카메라로 찍어보기
-            </CameraButton>
-            <button type='button' css={CenterLocationButtonStyle} onClick={handleCenterClick}>
-              <IconCenter />
-            </button>
-          </BottomPanelArea>
-          <h1>Carousel 영역</h1>
-          <p>여기에 하나씩 넣을거에요</p>
-        </div>
+        <BottomPanelArea markerNearbyData={markerNearbyData} onCenterClick={handleCenterClick} />
       </KakaoMap>
       <TabBar />
     </MainLayout>
