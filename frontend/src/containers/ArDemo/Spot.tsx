@@ -14,6 +14,8 @@ const duration = 2000;
 
 const Spot = ({ visible, onClickSpot }: { visible?: boolean; onClickSpot: () => void }) => {
   useEffect(() => {
+    if (AFRAME.components['spot-click']) return;
+
     const clickHandler = () => {
       onClickSpot();
     };
