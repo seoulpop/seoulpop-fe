@@ -43,6 +43,8 @@ const Spot = ({
   const [lngg, setLng] = useState<number>(); // TODO: 디버깅 후 삭제
 
   useEffect(() => {
+    if (AFRAME.components['spot-click']) return;
+
     const clickHandler = () => {
       onClickSpot();
     };

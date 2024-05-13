@@ -12,7 +12,12 @@ const config: CapacitorConfig = {
   server: {
     cleartext: true,
     hostname: 'localhost:5173',
-    androidScheme: 'http',
+    androidScheme: 'https',
+  },
+  plugins: {
+    PushNotifications: {
+      presentationOptions: ['badge', 'sound', 'alert'],
+    },
   },
 };
 

@@ -31,6 +31,8 @@ const ArContents = ({
 
   // 닫기 이벤트 등록
   useEffect(() => {
+    if (AFRAME.components['close-btn']) return;
+
     AFRAME.registerComponent('close-btn', {
       init() {
         const { el } = this;

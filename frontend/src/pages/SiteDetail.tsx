@@ -9,20 +9,12 @@ import { SiteInfo } from '@/types/history';
 import ImageCarousel from '@/containers/History/ImageCarousel';
 
 import KakaoMap from '@/components/History/KakaoMap';
+import Header from '@/components/Header/Header';
 
 const Container = styled.div`
   max-width: 90%;
   margin: 0 auto;
   padding: 0.2rem;
-`;
-
-const HeaderTitle = styled.div`
-  font-size: ${FONT_SIZE.xl};
-  font-weight: bold;
-  border-bottom: 0.2rem solid #ccc;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-  text-align: center;
 `;
 
 const BigTitle = styled.div`
@@ -104,7 +96,7 @@ const SiteDetail = () => {
 
   return (
     <Container>
-      <HeaderTitle>사적지 정보</HeaderTitle>
+      <Header pageName='사적지 정보' />
       <BigTitle>{data.name}</BigTitle>
       <AddressBox>
         <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />

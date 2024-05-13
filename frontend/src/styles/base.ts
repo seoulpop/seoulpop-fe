@@ -8,6 +8,7 @@ const base = css`
     --lightergray: #f3f3f3;
     --lightgray: #cdcdcd;
     --gray: #bcbcbc;
+    --darkgray: #354052;
     --lightgray-transparent-50: rgb(205 205 205 / 50%);
     --black: #000;
     --white: #fff;
