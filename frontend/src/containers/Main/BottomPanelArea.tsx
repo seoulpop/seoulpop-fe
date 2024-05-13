@@ -23,7 +23,7 @@ const carouselStyle = (visible: boolean) => css`
 const BottomPanelAreaContainer = styled.div`
   position: fixed;
   width: 100%;
-  bottom: 10rem;
+  bottom: 30rem; // carosel 아이템 높이
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,6 +57,19 @@ const CenterLocationButtonStyle = css`
 `;
 
 const CameraButton = styled(Button)``;
+
+const Carousel = styled.div`
+  padding-bottom: 8.8rem; // TabBar 높이 + 마진
+`;
+
+const NearbyDataItem = styled.div`
+  width: 20rem;
+  height: 20rem;
+
+  border-radius: ${BORDER_RADIUS.lg};
+  background: var(--white);
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+`;
 
 interface BottomPanelAreaProps {
   markerNearbyData?: MarkerNearbyInfo[];
@@ -92,8 +105,10 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
           <IconCenter />
         </button>
       </BottomPanelAreaContainer>
-      <h1>Carousel 영역</h1>
-      <p>여기에 하나씩 넣을거에요</p>
+
+      <Carousel>
+        <NearbyDataItem />
+      </Carousel>
     </div>
   );
 };
