@@ -9,7 +9,7 @@ import Button from '@/components/Button';
 
 import { IconCenter, IconDown, IconUp } from '#/svgs';
 import { bottomPanelSlideIn, bottomPanelSlideOut } from '@/styles/animation';
-import { BORDER_RADIUS, Z_INDEX } from '@/styles/common';
+import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { MarkerNearbyInfo } from '@/types/marker';
 
 const carouselStyle = (visible: boolean) => css`
@@ -85,21 +85,51 @@ const StyledFlicking = styled(Flicking)`
 `;
 
 const NearbyDataItem = styled.div`
-  position: relative;
-  flex: 0 0 auto;
   display: flex;
+  gap: 1.2rem;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-betweent;
   align-items: center;
   overflow: hidden;
 
-  width: 20rem;
-  height: 20rem;
+  width: 20.6rem;
+  height: 19.5rem;
   margin: 0.3rem 2rem 0.3rem 0;
   border-radius: ${BORDER_RADIUS.lg};
 
   background: var(--white);
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+`;
+
+const ThumbnailWrapper = styled.div`
+  width: 100%;
+  height: 9.8rem;
+
+  overflow: hidden;
+`;
+
+const Thumbnail = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.6rem;
+  padding: 0 14px;
+
+  font-size: ${FONT_SIZE.md};
+
+  .name {
+    font-weight: 600;
+  }
+
+  .address {
+    color: var(--darkgray);
+  }
 `;
 
 interface BottomPanelAreaProps {
@@ -116,6 +146,7 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
     setIsVisible(!isVisible);
   };
 
+  // TODO: markerNearbyData 없는 ui
   return (
     <div css={carouselStyle(isVisible)}>
       <BottomPanelAreaContainer>
@@ -139,9 +170,17 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
 
       <Carousel>
         <StyledFlicking align='prev' bound>
-          <NearbyDataItem />
-          <NearbyDataItem />
-          <NearbyDataItem />
+          {markerNearbyData?.map(({ id, thumbnail, name, address }) => (
+            <NearbyDataItem key={id}>
+              <ThumbnailWrapper>
+                <Thumbnail src={thumbnail} alt={name} />
+              </ThumbnailWrapper>
+              <Info>
+                <p className='name'>{name}</p>
+                <p className='address'>{address}</p>
+              </Info>
+            </NearbyDataItem>
+          ))}
         </StyledFlicking>
       </Carousel>
     </div>
