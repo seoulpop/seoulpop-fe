@@ -14,20 +14,6 @@ const SceneContainer = styled.div`
   height: 100%;
 `;
 
-/** 
-const NEAR_METERS = 5;
-*/
-
-/**
- * 현재 위치에서 가장 가까운 마커를 반환
- */
-/** 
-const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; position: Position }) => {
-  const marekr = markers[0];
-  return marekr;
-};
-*/
-
 // 테스트용 데이터
 const MOCK_DATA: MarkerInfo[] = [
   {
@@ -83,7 +69,6 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      {/* <InkTransition isActive={true} onClose={() => console.log('hi')} /> */}
       <FoundButton isOpen={isOpen} />
       <Scene
         vr-mode-ui='enabled: false'
