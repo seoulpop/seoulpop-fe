@@ -95,6 +95,7 @@ const MainPage = () => {
   useEffect(() => {
     if (!isInit && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
       setCenter({ lat, lng });
+      setOrigin({ lat, lng });
       setIsInit(true);
     }
   }, [isInit, lat, lng]);
