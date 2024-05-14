@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
 
 import { Z_INDEX } from '@/styles/common';
+import { MarkerInfo } from '@/types/ar';
 
 const slideIn = keyframes`
   from {
@@ -55,9 +56,7 @@ const Text = styled.span`
   white-space: nowrap;
 `;
 
-const historyId = 1; // TODO: api 연동
-
-const FoundButton = ({ isOpen }: { isOpen?: boolean }) => {
+const FoundButton = ({ heritage, isOpen }: { heritage?: MarkerInfo; isOpen?: boolean }) => {
   const navigate = useNavigate();
 
   let className = '';
@@ -73,7 +72,13 @@ const FoundButton = ({ isOpen }: { isOpen?: boolean }) => {
         color='#735cff'
         size='medium'
         onClick={() => {
-          navigate(`/heritage/detail/${historyId}`);
+          if (!heritage) return;
+
+          if (heritage?.category === '문화재') {
+            navigate(`/heritage/detail/${heritage.id}`);
+            return;
+          }
+          navigate(`/site/detail/${heritage.id}`);
         }}
       >
         <SearchIconWrapper />
