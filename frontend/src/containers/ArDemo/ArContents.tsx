@@ -22,70 +22,17 @@ const ArContents = ({
   lng: number;
   onClose: () => void;
 }) => {
-  const [startCloseAnimation, setStartCloseAnimation] = useState<boolean>(false);
+  const [isClosed, setIsClosed] = useState<boolean>();
   const [visible, setVisible] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(!!isOpen);
 
-  const openModal = () => {
-    console.log('open');
-    setOpen(true);
-    setVisible(true);
-  };
-
-  const closeModal = () => {
-    console.log('close modal');
-    if (onClose) onClose();
-    setOpen(false);
-    setVisible(false);
-    // setStartCloseAnimation(true);
-  };
-
-  const initAnimationStart = () =>
-    setTimeout(() => {
-      setStartCloseAnimation(false);
-      setVisible(false);
-      console.log('애니메이션 끝');
-    }, duration);
-
-  // 모달 오픈
   useEffect(() => {
-    if (isOpen) {
-      openModal();
-    } else {
-      setVisible(false);
-    }
+    if (isOpen) setVisible(true);
   }, [isOpen]);
 
-  // 닫기 애니메이션 종료 후 상태 초기화
-  // useEffect(() => {
-  //   if (!startCloseAnimation) return;
-
-  //   const timer = initAnimationStart();
-
-  //   // eslint-disable-next-line consistent-return
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [startCloseAnimation]);
-
-  /** 
-  useEffect(() => {
-    console.log('open useEffect');
-    console.log('open', open, 'startCloseAnimation', startCloseAnimation, 'visible', visible);
-  }, [open]);
-
-  useEffect(() => {
-    console.log('startCloseAnimation useEffect');
-    console.log('open', open, 'startCloseAnimation', startCloseAnimation, 'visible', visible);
-  }, [startCloseAnimation]);
-
-  useEffect(() => {
-    console.log('visible useEffect');
-    console.log('open', open, 'startCloseAnimation', startCloseAnimation, 'visible', visible);
-  }, [visible]);
-  */
-
-  console.log('visible', visible);
+  const closeModal = () => {
+    if (onClose) onClose();
+    setIsClosed(true);
+  };
 
   // 닫기 이벤트 등록
   useEffect(() => {
@@ -103,6 +50,21 @@ const ArContents = ({
     });
   }, []);
 
+  // 닫기 애니메이션 종료 후 상태 업데이트
+  useEffect(() => {
+    if (!isClosed) return;
+
+    const timer = setTimeout(() => {
+      setIsClosed(false);
+      setVisible(false);
+    }, duration);
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isClosed]);
+
   return (
     <Entity
       gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
@@ -117,21 +79,21 @@ const ArContents = ({
         from: '0.8 0.8  0.8',
         to: '1 1 1',
         dur: duration,
-        enabled: !!open,
+        enabled: !!isOpen,
       }}
       animation__open_visible={{
         property: 'material.opacity',
         from: '0',
         to: '1',
-        enabled: !!open,
+        enabled: !!isOpen,
       }}
-      // animation__close={{
-      //   property: 'scale',
-      //   from: '1 1 1',
-      //   to: '0 0 0',
-      //   dur: duration,
-      //   enabled: startCloseAnimation,
-      // }}
+      animation__close={{
+        property: 'scale',
+        from: '1 1 1',
+        to: '0 0 0',
+        dur: duration,
+        enabled: !!isClosed,
+      }}
       visible={visible}
     >
       <Plane
@@ -142,8 +104,7 @@ const ArContents = ({
         src='/assets/images/test.png'
       />
 
-      <Entity close-btn position={{ x: buttonOffsetX, y: buttonOffsetY, z: 5 }}>
-        <Circle visible={visible} />
+      <Entity close-btn position={{ x: buttonOffsetX, y: buttonOffsetY, z: 5 }} visible={visible}>
         <Circle color='#fff' radius={closeBtnRadius} />
         <Circle radius={closeBtnRadius - 2} src='/svgs/cancel.svg' />
       </Entity>

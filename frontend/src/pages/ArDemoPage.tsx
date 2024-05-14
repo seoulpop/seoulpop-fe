@@ -2,14 +2,12 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import useArMarkers from '@/hooks/server/useArMarkers';
+// import useArMarkers from '@/hooks/server/useArMarkers';
 
-// import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
 import { MarkerInfo, Position, GeolocationCoordinates } from '@/types/ar';
 import ArContents from '@/containers/ArDemo/ArContents';
-// import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -33,20 +31,6 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
 // 테스트용 데이터
 const MOCK_DATA: MarkerInfo[] = [
   {
-    id: 9876,
-    lng: 127.03968585351448,
-    lat: 37.50183539829876,
-    name: '멀티캠퍼스',
-    category: '문화재',
-  },
-  {
-    id: 98765,
-    lng: 127.04035642747931,
-    lat: 37.50073757660469,
-    name: '메머드커피',
-    category: '문화재',
-  },
-  {
     id: 987654,
     lng: -0.7165,
     lat: 51.0595,
@@ -61,12 +45,14 @@ const ArDemo = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  const { markerNearbyData: data } = useArMarkers({
+  /** TODO: 기능 개발 후 실제 데이터 연결  
+  const { markerNearbyData } = useArMarkers({
     lat: position?.latitude,
     lng: position?.longitude,
   });
-  const markerNearbyData = [MOCK_DATA[2]]; // data?.map((d) => d);
-  // MOCK_DATA.forEach((d) => markerNearbyData?.push(d));
+  */
+
+  const markerNearbyData = MOCK_DATA;
 
   useEffect(() => {
     setAssetsReady(true);
@@ -112,7 +98,6 @@ const ArDemo = () => {
           <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
         </Assets>
 
-        {/* 
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&
           markerNearbyData?.map(({ id, lat, lng }) => (
@@ -128,28 +113,12 @@ const ArDemo = () => {
               <ArContents
                 key={id}
                 isOpen={isOpen}
-                // fake gps
                 lat={lat}
                 lng={lng}
                 onClose={() => setIsOpen(false)}
               />
             </>
           ))}
-*/}
-        <Spot
-          visible={!isOpen}
-          // 멀티캠퍼스 gps
-          lat={markerNearbyData[0].lat}
-          lng={markerNearbyData[0].lng}
-          onClickSpot={() => setIsOpen(true)}
-        />
-        <ArContents
-          isOpen={isOpen}
-          // fake gps
-          lat={markerNearbyData[0].lat}
-          lng={markerNearbyData[0].lng}
-          onClose={() => setIsOpen(false)}
-        />
       </Scene>
     </SceneContainer>
   );
