@@ -26,7 +26,6 @@ const MOCK_DATA: MarkerInfo[] = [
 ];
 
 const ArDemo = () => {
-  const [, setAssetsReady] = useState(false);
   const [position, setPosition] = useState<Position>();
 
   const [isOpen, setIsOpen] = useState<boolean>();
@@ -39,10 +38,6 @@ const ArDemo = () => {
   */
 
   const markerNearbyData = MOCK_DATA;
-
-  useEffect(() => {
-    setAssetsReady(true);
-  }, []);
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
@@ -66,6 +61,7 @@ const ArDemo = () => {
     };
   }, []);
 
+  // FIXME: 여러 문화재가 뜨는 경우 클릭이 안됨
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
