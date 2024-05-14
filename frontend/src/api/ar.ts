@@ -8,6 +8,6 @@ import { MarkerInfo } from '@/types/ar';
  * @returns
  */
 export const getArMarkerNearby = async (lat: number, lng: number): Promise<MarkerInfo[]> => {
-  const response = await api.get(`/v1/histories/carousels?lat=${lat}&lng=${lng}&level=7`);
+  const response = await api.get(`/v1/histories/ar?lat=${lat}&lng=${lng}&level=7`);
   return response.data;
 };

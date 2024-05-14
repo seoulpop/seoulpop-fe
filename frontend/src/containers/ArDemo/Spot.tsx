@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { AR_Z_INDEX } from '@/styles/common';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
-import { GeolocationCoordinates } from '@/types/ar';
+import { Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
 
 const DebugUI = styled.div`
@@ -26,16 +26,18 @@ const ringDelta = 1;
 const duration = 2000;
 
 const Spot = ({
+  position,
   visible,
   onClickSpot,
-  // lat = 51.0596, // fake gps
-  // lng = -0.717,
   lng,
   lat,
+  hasArContents,
 }: {
+  position?: Position;
   visible?: boolean;
   lat: number;
   lng: number;
+  hasArContents?: boolean;
   onClickSpot: () => void;
 }) => {
   const [distance, setDistance] = useState('');
@@ -62,49 +64,31 @@ const Spot = ({
   }, []);
 
   useEffect(() => {
-    const el = document.getElementById('distance');
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    if (el) el.setAttribute('text', { value: `${distance}km` }); // https://aframe.io/docs/0.8.0/introduction/javascript-events-dom-apis.html#adding-a-component-with-setattribute
-  }, [distance]);
-
-  useEffect(() => {
     // 현재 좌표와의 거리 계산
-    const onObserveTarget = (event: unknown) => {
-      const data = event as GeolocationCoordinates;
-      const { position: curPos } = data.detail;
+    if (!position) return;
 
-      console.log(curPos, lat, lng);
-      setLat(curPos.latitude);
-      setLng(curPos.longitude);
+    setLat(position.latitude);
+    setLng(position.longitude);
 
-      const dist = getDistanceFromLatLonInMeters({
-        lat1: curPos.latitude,
-        lon1: curPos.longitude,
-        lat2: lat,
-        lon2: lng,
-      });
+    const dist = getDistanceFromLatLonInMeters({
+      lat1: position.latitude,
+      lon1: position.longitude,
+      lat2: lat,
+      lon2: lng,
+    });
 
-      setDistance(dist?.toFixed(2));
-      console.log(dist);
-    };
-
-    document.addEventListener('gps-camera-update-position', onObserveTarget);
-
-    return () => {
-      document.removeEventListener('gps-camera-update-positon', onObserveTarget);
-    };
-  }, []);
+    setDistance(dist?.toFixed(2));
+  }, [position]);
 
   return (
     <>
       <DebugUI>
         {latt} {lngg}
       </DebugUI>
+
       <Entity
         position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}
-        visible={visible}
+        {...(hasArContents ? { visible } : {})}
         gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
       >
         <Circle color='#fff' radius={centerRadius} spot-click />
@@ -154,10 +138,17 @@ const Spot = ({
           spot-click
         />
 
-        {/* 문화재명, 거리  */}
-        <Plane position={{ x: 0, y: maxRadius, z: 0 }} width={1} height={6} color='#fff' />
-        <Entity position={{ x: 0, y: 3, z: 0 }}>
-          <Text id='distance' value='' color='#fff' scale={{ x: 500, y: 500, z: 500 }} />
+        {/* 문화재명, 거리 */}
+        <Entity position={{ x: 0, y: maxRadius + 5, z: 0 }}>
+          <Plane width={1} height={20} color='#fff' />
+          <Entity position={{ x: 0, y: 15, z: 0 }}>
+            <Text
+              id='distance'
+              value={`${distance}km`}
+              color='#fff'
+              scale={{ x: 50, y: 50, z: 50 }}
+            />
+          </Entity>
         </Entity>
       </Entity>
     </>

@@ -2,69 +2,43 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import useArMarkers from '@/hooks/server/useArMarkers';
+// import useArMarkers from '@/hooks/server/useArMarkers';
 
-// import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
 import { MarkerInfo, Position, GeolocationCoordinates } from '@/types/ar';
-// import InkTransition from '@/containers/ArDemo/InkTransition';
+import ArContents from '@/containers/ArDemo/ArContents';
 
 const SceneContainer = styled.div`
   width: 100%;
   height: 100%;
 `;
 
-/** 
-const NEAR_METERS = 5;
-*/
-
-/**
- * 현재 위치에서 가장 가까운 마커를 반환
- */
-/** 
-const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; position: Position }) => {
-  const marekr = markers[0];
-  return marekr;
-};
-*/
-
 // 테스트용 데이터
 const MOCK_DATA: MarkerInfo[] = [
   {
-    id: 1,
-    lng: 127.03968585351448,
-    lat: 37.50183539829876,
-    name: '멀티캠퍼스',
+    id: 987654,
+    lng: -0.7165,
+    lat: 51.0595,
+    name: '테스트',
     category: '문화재',
-  },
-  {
-    id: 2,
-    lng: 127.04035642747931,
-    lat: 37.50073757660469,
-    name: '메머드커피',
-    category: '문화재',
+    // arImage: '/assets/images/test.png',
   },
 ];
 
 const ArDemo = () => {
-  const [, setAssetsReady] = useState(false);
   const [position, setPosition] = useState<Position>();
-
+  const [clickItem, setClickItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  const { markerNearbyData: data } = useArMarkers({
+  /** TODO: 기능 개발 후 실제 데이터 연결  
+  const { markerNearbyData } = useArMarkers({
     lat: position?.latitude,
     lng: position?.longitude,
   });
-  const markerNearbyData = data?.map((d) => d);
-  MOCK_DATA.forEach((d) => markerNearbyData?.push(d));
+  */
 
-  console.log(markerNearbyData);
-
-  useEffect(() => {
-    setAssetsReady(true);
-  }, []);
+  const markerNearbyData = MOCK_DATA;
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
@@ -88,11 +62,11 @@ const ArDemo = () => {
     };
   }, []);
 
+  // FIXME: 여러 문화재가 뜨는 경우 클릭이 안됨
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      {/* <InkTransition isActive={true} onClose={() => console.log('hi')} /> */}
-      <FoundButton isOpen={isOpen} />
+      <FoundButton isOpen={isOpen} heritage={clickItem} />
       <Scene
         vr-mode-ui='enabled: false'
         cursor='rayOrigin: mouse'
@@ -100,7 +74,7 @@ const ArDemo = () => {
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer={{ antialias: true, alpha: true }}
       >
-        <Camera gps-new-camera='' />
+        <Camera gps-new-camera='gpsMinDistance: 1; simulateLatitude: 51.059; simulateLongitude: -0.717' />
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
           <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
@@ -108,32 +82,34 @@ const ArDemo = () => {
 
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&
-          markerNearbyData?.map(({ id, lat, lng }) => (
-            <Spot
-              key={id}
-              visible={!isOpen}
-              lat={lat}
-              lng={lng}
-              onClickSpot={() => setIsOpen(true)}
-            />
-          ))}
-
-        {/** 
-        <Spot
-          visible={!isOpen}
-          // 멀티캠퍼스 gps
-          lat={37.50183539829876}
-          lng={127.03968585351448}
-          onClickSpot={() => setIsOpen(true)}
-        />
-        <ArContents
-          isOpen={isOpen}
-          // fake gps
-          lat={37.50183539829876}
-          lng={127.03968585351448}
-          onClose={() => setIsOpen(false)}
-        />
-        */}
+          markerNearbyData?.map((heritage) => {
+            const { id, lat, lng, arImage } = heritage;
+            return (
+              <>
+                <Spot
+                  key={id}
+                  visible={!isOpen}
+                  lat={lat}
+                  lng={lng}
+                  onClickSpot={() => {
+                    setIsOpen(true);
+                    setClickItem(heritage);
+                  }}
+                  position={position}
+                  hasArContents={!!arImage}
+                />
+                {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
+                <ArContents
+                  key={id}
+                  isOpen={isOpen}
+                  lat={lat}
+                  lng={lng}
+                  arImage={arImage}
+                  onClose={() => setIsOpen(false)}
+                />
+              </>
+            );
+          })}
       </Scene>
     </SceneContainer>
   );

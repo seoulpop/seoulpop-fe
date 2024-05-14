@@ -5,16 +5,23 @@ import { AR_Z_INDEX } from '@/styles/common';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
 
 const duration = 200;
+const width = 200;
+const height = 200;
+const closeBtnRadius = 8;
+const buttonOffsetX = width / 2 - closeBtnRadius / 2;
+const buttonOffsetY = height / 2 - closeBtnRadius / 2;
 
 const ArContents = ({
   isOpen,
   lng,
   lat,
+  arImage,
   onClose,
 }: {
   isOpen?: boolean;
   lat: number;
   lng: number;
+  arImage?: string;
   onClose: () => void;
 }) => {
   const [isClosed, setIsClosed] = useState<boolean>();
@@ -24,7 +31,7 @@ const ArContents = ({
     if (isOpen) setVisible(true);
   }, [isOpen]);
 
-  const clickHandler = () => {
+  const closeModal = () => {
     if (onClose) onClose();
     setIsClosed(true);
   };
@@ -36,11 +43,11 @@ const ArContents = ({
     AFRAME.registerComponent('close-btn', {
       init() {
         const { el } = this;
-        el.addEventListener('click', clickHandler);
+        el.addEventListener('click', closeModal);
       },
       remove() {
         const { el } = this;
-        el.removeEventListener('click', clickHandler);
+        el.removeEventListener('click', closeModal);
       },
     });
   }, []);
@@ -59,6 +66,8 @@ const ArContents = ({
       clearTimeout(timer);
     };
   }, [isClosed]);
+
+  if (!arImage) return null;
 
   return (
     <Entity
@@ -93,16 +102,15 @@ const ArContents = ({
     >
       <Plane
         color='#ccc'
-        height={2000}
-        width={2000}
+        height={height}
+        width={width}
         position={{ x: 0, y: 0, z: 0 }}
-        src='/assets/images/test.png'
+        src={arImage}
       />
 
-      <Entity close-btn position={{ x: 1000 - 200, y: 1000 - 160, z: 120 }}>
-        <Circle radius={120} visible={false} />
-        <Circle color='#fff' radius={60} />
-        <Circle radius={30} src='/svgs/cancel.svg' />
+      <Entity close-btn position={{ x: buttonOffsetX, y: buttonOffsetY, z: 5 }} visible={visible}>
+        <Circle color='#fff' radius={closeBtnRadius} />
+        <Circle radius={closeBtnRadius - 2} src='/svgs/cancel.svg' />
       </Entity>
     </Entity>
   );
