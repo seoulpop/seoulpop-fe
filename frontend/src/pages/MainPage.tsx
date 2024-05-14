@@ -7,18 +7,17 @@ import { DEFAULT_MARKER_INFO } from '@/constants/map';
 import useMaps from '@/hooks/server/useMap';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
-import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
-
-import Button from '@/components/Button';
-import TabBar from '@/components/TabBar';
-
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/marker';
 import MainLayout from '@/Layouts/MainLayout';
 import { NotificationData } from '@/types/notification';
-import { getCarDirection } from '@/api/directions';
-import { CarDirectionData } from '@/types/directions';
 import BottomPanelArea from '@/containers/Main/BottomPanelArea';
+import Navigation from '@/containers/Main/Navigation';
+import { Coords, DestinationInfo } from '@/types/location';
+import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
+
+import TabBar from '@/components/TabBar';
+import Button from '@/components/Button';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -45,7 +44,8 @@ const MainPage = () => {
     lat: DEFAULT_MARKER_INFO.lat,
     lng: DEFAULT_MARKER_INFO.lng,
   });
-  const [destination, setDestination] = useState<{ lat: string; lng: string } | undefined>();
+  const [origin, setOrigin] = useState<Coords>({ lat, lng });
+  const [destination, setDestination] = useState<DestinationInfo | null>(null);
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [isInit, setIsInit] = useState(false);
@@ -76,53 +76,18 @@ const MainPage = () => {
     setMarkerList(filterMarkers());
   }, [selectedCategory, markerData]);
 
-  const drawCarDirection = async () => {
-    if (destination) {
-      console.log('destination: ', destination.lat, destination.lng);
-      const data: CarDirectionData = await getCarDirection({
-        origin: { lat: center.lat.toString(), lng: center.lng.toString() },
-        destination,
-      });
-      if (data) {
-        console.log(center, destination);
-        const linePath: kakao.maps.LatLng[] = [];
-        data.routes[0].sections[0].roads.forEach((router) => {
-          router.vertexes.forEach((_vertex, index) => {
-            if (index % 2 === 0) {
-              linePath.push(
-                new kakao.maps.LatLng(router.vertexes[index + 1], router.vertexes[index]),
-              );
-            }
-          });
-        });
-        const polyline = new kakao.maps.Polyline({
-          path: linePath,
-          strokeWeight: 5,
-          strokeColor: 'var(--primary)',
-          strokeOpacity: 0.8,
-          strokeStyle: 'shortdash',
-        });
-        polyline.setMap(mapRef.current);
-      }
-    }
-  };
-
-  // 경로 안내
-  useEffect(() => {
-    if (destination && isInit) {
-      drawCarDirection();
-    }
-  }, [isInit, destination]);
-
   // 알림 클릭으로 진입 시
   useEffect(() => {
     const data = sessionStorage.getItem(NOTIFICATION_DATA_KEY);
     if (data) {
       const notificationData: NotificationData = JSON.parse(data);
+      // 데이터 처리
       setDestination({
+        name: notificationData.historyName,
         lat: notificationData.historyLat,
         lng: notificationData.historyLng,
       });
+      setOrigin({ lat, lng });
     }
   }, []);
 
@@ -149,6 +114,14 @@ const MainPage = () => {
         }
         ref={mapRef}
       >
+        {!!destination && isInit && mapRef.current && (
+          <Navigation
+            map={mapRef.current}
+            origin={origin}
+            destination={destination}
+            setDestination={setDestination}
+          />
+        )}
         <CategoryWrapper>
           <Button
             type='button'
@@ -186,7 +159,10 @@ const MainPage = () => {
             <MapMarker position={{ lat: marker.lat, lng: marker.lng }} key={marker.id} />
           ))
         )}
-
+        <MapMarker
+          position={{ lat, lng }}
+          image={{ src: '/assets/images/currMarker.png', size: { width: 50, height: 50 } }}
+        />
         <BottomPanelArea markerNearbyData={markerNearbyData} onCenterClick={handleCenterClick} />
       </KakaoMap>
       <TabBar />
