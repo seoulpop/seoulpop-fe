@@ -95,6 +95,7 @@ const ArDemo = () => {
                 onClickSpot={() => setIsOpen(true)}
                 position={position}
               />
+              {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
               <ArContents
                 key={id}
                 isOpen={isOpen}
