@@ -17,6 +17,9 @@ dependencies:
   '@capacitor/core':
     specifier: ^6.0.0
     version: 6.0.0
+  '@capacitor/geolocation':
+    specifier: ^6.0.0
+    version: 6.0.0(@capacitor/core@6.0.0)
   '@capacitor/push-notifications':
     specifier: ^6.0.0
     version: 6.0.0(@capacitor/core@6.0.0)
@@ -422,6 +425,14 @@ packages:
     resolution: {integrity: sha512-NvxIQsJcMiIV+Le1DilR2GGyQQbDInfXK1UywGROQ5mycdFlW5XoAPZ+MKnFGB123RoEgE3uhDGgwTXUmSlX9A==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@capacitor/geolocation@6.0.0(@capacitor/core@6.0.0):
+    resolution: {integrity: sha512-8wrZe6gqfZmsCdvOvrqmezi2Pa8Nz6bQUFbDWsjUKHRzs+qreYNXngzhgKO83GEhHvodiJMnoDJrD2JeQt7FZg==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
+    dependencies:
+      '@capacitor/core': 6.0.0
     dev: false
 
   /@capacitor/push-notifications@6.0.0(@capacitor/core@6.0.0):
