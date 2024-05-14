@@ -65,7 +65,9 @@ const Carousel = styled.div`
 `;
 
 const StyledFlicking = styled(Flicking)`
-  overflow-x: hidden;
+  height: 19.5rem;
+  overflow: hidden;
+
   .flicking-viewport {
     display: flex;
     flex-direction: row;
@@ -74,6 +76,8 @@ const StyledFlicking = styled(Flicking)`
   }
   .flicking-camera {
     display: flex;
+
+    height: 100%;
   }
 
   &:first-child {
@@ -93,7 +97,6 @@ const NearbyDataItem = styled.div`
   overflow: hidden;
 
   width: 20.6rem;
-  height: 19.5rem;
   margin: 0.3rem 2rem 0.3rem 0;
   border-radius: ${BORDER_RADIUS.lg};
 
