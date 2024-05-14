@@ -28,7 +28,7 @@ const MOCK_DATA: MarkerInfo[] = [
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
-
+  const [clickItem, setClickItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
   /** TODO: 기능 개발 후 실제 데이터 연결  
@@ -66,7 +66,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      <FoundButton isOpen={isOpen} />
+      <FoundButton isOpen={isOpen} heritage={clickItem} />
       <Scene
         vr-mode-ui='enabled: false'
         cursor='rayOrigin: mouse'
@@ -82,30 +82,34 @@ const ArDemo = () => {
 
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&
-          markerNearbyData?.map(({ id, lat, lng, arImage }) => (
-            <>
-              <Spot
-                key={id}
-                visible={!isOpen}
-                lat={lat}
-                lng={lng}
-                onClickSpot={() => {
-                  setIsOpen(true);
-                }}
-                position={position}
-                hasArContents={!!arImage}
-              />
-              {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
-              <ArContents
-                key={id}
-                isOpen={isOpen}
-                lat={lat}
-                lng={lng}
-                arImage={arImage}
-                onClose={() => setIsOpen(false)}
-              />
-            </>
-          ))}
+          markerNearbyData?.map((heritage) => {
+            const { id, lat, lng, arImage } = heritage;
+            return (
+              <>
+                <Spot
+                  key={id}
+                  visible={!isOpen}
+                  lat={lat}
+                  lng={lng}
+                  onClickSpot={() => {
+                    setIsOpen(true);
+                    setClickItem(heritage);
+                  }}
+                  position={position}
+                  hasArContents={!!arImage}
+                />
+                {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
+                <ArContents
+                  key={id}
+                  isOpen={isOpen}
+                  lat={lat}
+                  lng={lng}
+                  arImage={arImage}
+                  onClose={() => setIsOpen(false)}
+                />
+              </>
+            );
+          })}
       </Scene>
     </SceneContainer>
   );
