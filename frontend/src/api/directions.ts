@@ -1,9 +1,10 @@
-import { CarDirectionData, CoordsInfo } from '@/types/directions';
+import { CarDirectionsData } from '@/types/directions';
+import { DirectionsInfo } from '@/types/location';
 
-export const getCarDirection = async ({
+export const getCarDirections = async ({
   origin,
   destination,
-}: CoordsInfo): Promise<CarDirectionData> => {
+}: DirectionsInfo): Promise<CarDirectionsData> => {
   const url = 'https://apis-navi.kakaomobility.com/v1/directions';
 
   const headers = {
@@ -27,6 +28,6 @@ export const getCarDirection = async ({
     throw new Error(`HTTP error! Status: ${response.status}`);
   }
 
-  const data: CarDirectionData = await response.json();
+  const data: CarDirectionsData = await response.json();
   return data;
 };

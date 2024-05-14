@@ -22,13 +22,11 @@ export const initFCMListener = async () => {
     });
     // notification을 클릭했을 때 실행되는 listener
     await PushNotifications.addListener('pushNotificationActionPerformed', async (notification) => {
-      const { historyId, historyLat, historyLng } = notification.notification.data;
-      const data: NotificationData = { historyId, historyLat, historyLng };
-      // data: {"historyId":"267","historyLat":"37.56908041","historyLng":"126.9746559"}
+      const { historyCategory, historyName, historyLat, historyLng } =
+        notification.notification.data;
+      const data: NotificationData = { historyCategory, historyName, historyLat, historyLng };
       sessionStorage.setItem(NOTIFICATION_DATA_KEY, JSON.stringify(data));
       window.location.href = '/';
-      // 나머지 notification 모두 삭제
-      await PushNotifications.removeAllDeliveredNotifications();
     });
   } else {
     console.log('User denied permissions!');

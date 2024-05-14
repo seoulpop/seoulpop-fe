@@ -3,11 +3,6 @@ interface Coords {
   lng: string;
 }
 
-export interface CoordsInfo {
-  origin: Coords;
-  destination: Coords;
-}
-
 type Bound = {
   min_x: number;
   min_y: number;
@@ -68,7 +63,7 @@ type Route = {
   sections: Section[];
 };
 
-export interface CarDirectionData {
+export interface CarDirectionsData {
   trans_id: string;
   routes: Route[];
 }

@@ -36,7 +36,7 @@ const MediumButton = styled(ButtonContent)`
 `;
 
 const SmallButton = styled(ButtonContent)`
-  width: 4.4rem;
+  width: 4.8rem;
 `;
 
 const SvgButton = styled(ButtonContent)`

@@ -17,3 +17,21 @@ export const bottomPanelSlideOut = keyframes`
     transform: translateY(calc(100% - 7.5rem));
   }
 `;
+
+export const directionPanelSlideIn = keyframes`
+  from {
+    transform: translateY(-8.8rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+
+export const directionPanelSlideOut = keyframes`
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8.8rem);
+  }
+`;
