@@ -3,6 +3,7 @@ import { lazy } from 'react';
 
 import SiteDetail from '@/pages/SiteDetail';
 import HeritageDetail from '@/pages/HeritageDetail';
+import KakaoCallbackPage from '@/pages/KakaoCallbackPage';
 
 const Root = lazy(() => import('./Root'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
@@ -26,6 +27,7 @@ const Router = () => {
         { path: '/site/detail/:historyId', element: <SiteDetail /> },
         { path: '/setting', element: <SettingPage /> },
         { path: '/signin', element: <SigninPage /> },
+        { path: '/v1/oauth/redirected/kakao', element: <KakaoCallbackPage /> },
         // { path: '/category/:category', element: <CategoryResultPage /> },
       ],
     },
