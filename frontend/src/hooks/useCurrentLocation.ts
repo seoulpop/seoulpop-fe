@@ -17,7 +17,7 @@ const useCurrentLocation = (): Coords => {
   });
 
   useEffect(() => {
-    let id: string = '0';
+    let id: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Geolocation.watchPosition({}, (position: any) => {
       if (position?.coords.latitude && position.coords.longitude) {
