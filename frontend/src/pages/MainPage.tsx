@@ -132,7 +132,7 @@ const MainPage = () => {
     setMarkerList(filterMarkers());
   }, [selectedCategory, markerData]);
 
-  const check = async () => {
+  const drawCarDirection = async () => {
     if (destination) {
       console.log('destination: ', destination.lat, destination.lng);
       const data: CarDirectionData = await getCarDirection({
@@ -143,9 +143,8 @@ const MainPage = () => {
         console.log(center, destination);
         const linePath: kakao.maps.LatLng[] = [];
         data.routes[0].sections[0].roads.forEach((router) => {
-          router.vertexes.forEach((_, index) => {
+          router.vertexes.forEach((_vertex, index) => {
             if (index % 2 === 0) {
-              // 경도
               linePath.push(
                 new kakao.maps.LatLng(router.vertexes[index + 1], router.vertexes[index]),
               );
@@ -167,7 +166,7 @@ const MainPage = () => {
   // 경로 안내
   useEffect(() => {
     if (destination && isInit) {
-      check();
+      drawCarDirection();
     }
   }, [isInit, destination]);
 
