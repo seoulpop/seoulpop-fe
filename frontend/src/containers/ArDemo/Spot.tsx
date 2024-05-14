@@ -63,23 +63,19 @@ const Spot = ({
 
   useEffect(() => {
     // 현재 좌표와의 거리 계산
-    const onObserveTarget = () => {
-      if (!position) return;
+    if (!position) return;
 
-      setLat(position.latitude);
-      setLng(position.longitude);
+    setLat(position.latitude);
+    setLng(position.longitude);
 
-      const dist = getDistanceFromLatLonInMeters({
-        lat1: position.latitude,
-        lon1: position.longitude,
-        lat2: lat,
-        lon2: lng,
-      });
+    const dist = getDistanceFromLatLonInMeters({
+      lat1: position.latitude,
+      lon1: position.longitude,
+      lat2: lat,
+      lon2: lng,
+    });
 
-      setDistance(dist?.toFixed(2));
-    };
-
-    onObserveTarget();
+    setDistance(dist?.toFixed(2));
   }, [position]);
 
   return (
