@@ -7,3 +7,6 @@ project(':capacitor-community-background-geolocation').projectDir = new File('..
 
 include ':capacitor-push-notifications'
 project(':capacitor-push-notifications').projectDir = new File('../node_modules/.pnpm/@capacitor+push-notifications@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/push-notifications/android')
+
+include ':capacitor-geolocation'
+project(':capacitor-geolocation').projectDir = new File('../node_modules/.pnpm/@capacitor+geolocation@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/geolocation/android')

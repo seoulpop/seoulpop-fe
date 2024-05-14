@@ -4,7 +4,6 @@
     <string name="title_activity_main">seoul-pop</string>
     <string name="package_name">com.ssafy.seoulpop</string>
     <string name="custom_url_scheme">com.ssafy.seoulpop</string>
-    <string name="default_notification_channel_id">Channel ID</string>
     <string name="capacitor_background_geolocation_notification_icon">
         mipmap/notification_icon
     </string>
