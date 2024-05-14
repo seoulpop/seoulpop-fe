@@ -8,6 +8,7 @@ import useArMarkers from '@/hooks/server/useArMarkers';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
 import { MarkerInfo, Position, GeolocationCoordinates } from '@/types/ar';
+import ArContents from '@/containers/ArDemo/ArContents';
 // import InkTransition from '@/containers/ArDemo/InkTransition';
 
 const SceneContainer = styled.div`
@@ -32,17 +33,24 @@ const getNearestMarker = ({ markers, position }: { markers: MarkerInfo[]; positi
 // 테스트용 데이터
 const MOCK_DATA: MarkerInfo[] = [
   {
-    id: 1,
+    id: 9876,
     lng: 127.03968585351448,
     lat: 37.50183539829876,
     name: '멀티캠퍼스',
     category: '문화재',
   },
   {
-    id: 2,
+    id: 98765,
     lng: 127.04035642747931,
     lat: 37.50073757660469,
     name: '메머드커피',
+    category: '문화재',
+  },
+  {
+    id: 987654,
+    lng: -0.7165,
+    lat: 51.0595,
+    name: '테스트',
     category: '문화재',
   },
 ];
@@ -57,10 +65,8 @@ const ArDemo = () => {
     lat: position?.latitude,
     lng: position?.longitude,
   });
-  const markerNearbyData = data?.map((d) => d);
-  MOCK_DATA.forEach((d) => markerNearbyData?.push(d));
-
-  console.log(markerNearbyData);
+  const markerNearbyData = [MOCK_DATA[2]]; // data?.map((d) => d);
+  // MOCK_DATA.forEach((d) => markerNearbyData?.push(d));
 
   useEffect(() => {
     setAssetsReady(true);
@@ -100,40 +106,50 @@ const ArDemo = () => {
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer={{ antialias: true, alpha: true }}
       >
-        <Camera gps-new-camera='' />
+        <Camera gps-new-camera='simulateLatitude: 51.059; simulateLongitude: -0.717' />
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
           <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
         </Assets>
 
+        {/* 
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&
           markerNearbyData?.map(({ id, lat, lng }) => (
-            <Spot
-              key={id}
-              visible={!isOpen}
-              lat={lat}
-              lng={lng}
-              onClickSpot={() => setIsOpen(true)}
-            />
+            <>
+              <Spot
+                key={id}
+                visible={!isOpen}
+                lat={lat}
+                lng={lng}
+                onClickSpot={() => setIsOpen(true)}
+                position={position}
+              />
+              <ArContents
+                key={id}
+                isOpen={isOpen}
+                // fake gps
+                lat={lat}
+                lng={lng}
+                onClose={() => setIsOpen(false)}
+              />
+            </>
           ))}
-
-        {/** 
+*/}
         <Spot
           visible={!isOpen}
           // 멀티캠퍼스 gps
-          lat={37.50183539829876}
-          lng={127.03968585351448}
+          lat={markerNearbyData[0].lat}
+          lng={markerNearbyData[0].lng}
           onClickSpot={() => setIsOpen(true)}
         />
         <ArContents
           isOpen={isOpen}
           // fake gps
-          lat={37.50183539829876}
-          lng={127.03968585351448}
+          lat={markerNearbyData[0].lat}
+          lng={markerNearbyData[0].lng}
           onClose={() => setIsOpen(false)}
         />
-        */}
       </Scene>
     </SceneContainer>
   );

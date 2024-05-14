@@ -43,9 +43,10 @@ const Spot = ({
   const [lngg, setLng] = useState<number>(); // TODO: 디버깅 후 삭제
 
   useEffect(() => {
-    if (AFRAME.components['spot-click']) return;
+    // if (AFRAME.components['spot-click']) return;
 
     const clickHandler = () => {
+      console.log('spot click!');
       onClickSpot();
     };
 
@@ -135,7 +136,7 @@ const Spot = ({
           spot-click
         />
 
-        {/* 문화재명, 거리  */}
+        {/* 문화재명, 거리 */}
         <Entity position={{ x: 0, y: maxRadius + 5, z: 0 }}>
           <Plane width={1} height={20} color='#fff' />
           <Entity position={{ x: 0, y: 15, z: 0 }}>
