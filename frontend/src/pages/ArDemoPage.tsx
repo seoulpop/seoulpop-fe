@@ -22,6 +22,7 @@ const MOCK_DATA: MarkerInfo[] = [
     lat: 51.0595,
     name: '테스트',
     category: '문화재',
+    // arImage: '/assets/images/test.png',
   },
 ];
 
@@ -81,15 +82,18 @@ const ArDemo = () => {
 
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&
-          markerNearbyData?.map(({ id, lat, lng }) => (
+          markerNearbyData?.map(({ id, lat, lng, arImage }) => (
             <>
               <Spot
                 key={id}
                 visible={!isOpen}
                 lat={lat}
                 lng={lng}
-                onClickSpot={() => setIsOpen(true)}
+                onClickSpot={() => {
+                  setIsOpen(true);
+                }}
                 position={position}
+                hasArContents={!!arImage}
               />
               {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
               <ArContents
@@ -97,6 +101,7 @@ const ArDemo = () => {
                 isOpen={isOpen}
                 lat={lat}
                 lng={lng}
+                arImage={arImage}
                 onClose={() => setIsOpen(false)}
               />
             </>

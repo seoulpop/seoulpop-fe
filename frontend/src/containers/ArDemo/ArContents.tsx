@@ -15,11 +15,13 @@ const ArContents = ({
   isOpen,
   lng,
   lat,
+  arImage,
   onClose,
 }: {
   isOpen?: boolean;
   lat: number;
   lng: number;
+  arImage?: string;
   onClose: () => void;
 }) => {
   const [isClosed, setIsClosed] = useState<boolean>();
@@ -65,6 +67,8 @@ const ArContents = ({
     };
   }, [isClosed]);
 
+  if (!arImage) return null;
+
   return (
     <Entity
       gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
@@ -101,7 +105,7 @@ const ArContents = ({
         height={height}
         width={width}
         position={{ x: 0, y: 0, z: 0 }}
-        src='/assets/images/test.png'
+        src={arImage}
       />
 
       <Entity close-btn position={{ x: buttonOffsetX, y: buttonOffsetY, z: 5 }} visible={visible}>

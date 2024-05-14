@@ -31,11 +31,13 @@ const Spot = ({
   onClickSpot,
   lng,
   lat,
+  hasArContents,
 }: {
   position?: Position;
   visible?: boolean;
   lat: number;
   lng: number;
+  hasArContents?: boolean;
   onClickSpot: () => void;
 }) => {
   const [distance, setDistance] = useState('');
@@ -83,9 +85,10 @@ const Spot = ({
       <DebugUI>
         {latt} {lngg}
       </DebugUI>
+
       <Entity
         position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}
-        visible={visible}
+        {...(hasArContents ? { visible } : {})}
         gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
       >
         <Circle color='#fff' radius={centerRadius} spot-click />
