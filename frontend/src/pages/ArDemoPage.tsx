@@ -77,7 +77,7 @@ const ArDemo = () => {
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer={{ antialias: true, alpha: true }}
       >
-        <Camera gps-new-camera='simulateLatitude: 51.059; simulateLongitude: -0.717' />
+        <Camera gps-new-camera='gpsMinDistance: 1; simulateLatitude: 51.059; simulateLongitude: -0.717' />
         <Assets>
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
           <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
