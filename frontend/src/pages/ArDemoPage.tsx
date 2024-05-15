@@ -36,7 +36,7 @@ const MOCK_DATA: MarkerInfo[] = [
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
-  const [clickItem, setClickItem] = useState<MarkerInfo>();
+  const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
   /** TODO: 기능 개발 후 실제 데이터 연결  
@@ -74,7 +74,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      <FoundButton isOpen={isOpen} heritage={clickItem} />
+      <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
         vr-mode-ui='enabled: false'
         cursor='rayOrigin: mouse'
@@ -99,7 +99,6 @@ const ArDemo = () => {
                   onClickSpot={(heritageId) => {
                     console.log(heritageId);
                     setIsOpen(true);
-                    setClickItem(heritage);
                   }}
                   position={position}
                   hasArContents={!!arImage}
