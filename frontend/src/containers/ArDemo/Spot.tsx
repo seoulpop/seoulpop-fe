@@ -3,11 +3,12 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
 import HERITAGE_FONT from '@/constants/msdfs';
+
+import HeritageName from '@/containers/ArDemo/HeritageName';
 import { AR_Z_INDEX } from '@/styles/common';
 import { MarkerInfo, Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
-import HeritageName from './HeritageName';
 
 const DebugUI = styled.div`
   position: fixed;
