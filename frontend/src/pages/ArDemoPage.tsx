@@ -83,8 +83,8 @@ const ArDemo = () => {
       >
         <Camera gps-new-camera='gpsMinDistance: 1; simulateLatitude: 51.059; simulateLongitude: -0.717' />
         <Assets>
-          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
-          <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
+          {/** XXX: 아래 코드 삭제하지 마세요. 삭제시 spot과의 거리가 보이지 않음 */}
+          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />{' '}
         </Assets>
 
         {markerNearbyData &&
