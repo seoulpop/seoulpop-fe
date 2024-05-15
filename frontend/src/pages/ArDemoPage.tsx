@@ -1,4 +1,4 @@
-import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
+import { Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
@@ -83,10 +83,6 @@ const ArDemo = () => {
         renderer={{ antialias: true, alpha: true }}
       >
         <Camera gps-new-camera='gpsMinDistance: 1; simulateLatitude: 51.059; simulateLongitude: -0.717' />
-        <Assets>
-          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
-          <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
-        </Assets>
 
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&

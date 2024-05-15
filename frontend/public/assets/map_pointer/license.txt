@@ -1,8 +1,0 @@
-Model Information:
-* title:	Map Pointer - Animated
-* source:	https://sketchfab.com/3d-models/map-pointer-animated-c2cdfd88ae444f3c8c7111af03019899
-* author:	Ritordp (https://sketchfab.com/ritordp)
-
-Model License:
-* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
-* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
