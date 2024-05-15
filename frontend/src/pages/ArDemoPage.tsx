@@ -22,7 +22,7 @@ const MOCK_DATA: MarkerInfo[] = [
     lat: 51.0595,
     name: '테스트',
     category: '문화재',
-    // arImage: '/assets/images/test.png',
+    arImage: '/assets/images/test.png',
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const MOCK_DATA: MarkerInfo[] = [
     lat: 51.0595,
     name: '테스트',
     category: '문화재',
-    // arImage: '/assets/images/test.png',
+    arImage: '/assets/images/test2.png',
   },
 ];
 
@@ -70,7 +70,6 @@ const ArDemo = () => {
     };
   }, []);
 
-  // FIXME: 여러 문화재가 뜨는 경우 클릭이 안됨
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
@@ -93,32 +92,29 @@ const ArDemo = () => {
           markerNearbyData?.map((heritage) => {
             const { id, lat, lng, arImage } = heritage;
             return (
-              <>
-                <Spot
-                  key={id}
-                  visible={!isOpen}
-                  lat={lat}
-                  lng={lng}
-                  heritage={heritage}
-                  onClickSpot={(heritageId) => {
-                    console.log(heritageId);
-                    setIsOpen(true);
-                  }}
-                  position={position}
-                  hasArContents={!!arImage}
-                />
-                {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
-                <ArContents
-                  key={id}
-                  isOpen={isOpen}
-                  lat={lat}
-                  lng={lng}
-                  arImage={arImage}
-                  onClose={() => setIsOpen(false)}
-                />
-              </>
+              <Spot
+                key={id}
+                visible={!isOpen}
+                lat={lat}
+                lng={lng}
+                heritage={heritage}
+                onClickSpot={(heritageId) => {
+                  setIsOpen(true);
+                  setSelectItem(markerNearbyData.find((data) => data.id === heritageId));
+                }}
+                position={position}
+                hasArContents={!!arImage}
+              />
             );
           })}
+        {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
+        <ArContents
+          isOpen={isOpen}
+          lat={selectItem?.lat}
+          lng={selectItem?.lng}
+          arImage={selectItem?.arImage}
+          onClose={() => setIsOpen(false)}
+        />
       </Scene>
     </SceneContainer>
   );

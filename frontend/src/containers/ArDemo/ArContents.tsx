@@ -19,8 +19,8 @@ const ArContents = ({
   onClose,
 }: {
   isOpen?: boolean;
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   arImage?: string;
   onClose: () => void;
 }) => {
@@ -71,7 +71,7 @@ const ArContents = ({
 
   return (
     <Entity
-      gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
+      gps-new-entity-place={formatGpsNewEntityPlace({ lat: lat!, lng: lng! })}
       position={{ x: 0, y: 0, z: AR_Z_INDEX.contents }}
       scale={{
         x: 0,
