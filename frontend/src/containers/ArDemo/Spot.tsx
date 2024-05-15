@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
 import { AR_Z_INDEX } from '@/styles/common';
-import { getDistanceFromLatLonInMeters } from '@/utils/distance';
-import { Position } from '@/types/ar';
+import { MarkerInfo, Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
+import { getDistanceFromLatLonInMeters } from '@/utils/distance';
 
 const DebugUI = styled.div`
   position: fixed;
@@ -32,13 +32,15 @@ const Spot = ({
   lng,
   lat,
   hasArContents,
+  heritage,
 }: {
   position?: Position;
   visible?: boolean;
   lat: number;
   lng: number;
   hasArContents?: boolean;
-  onClickSpot: () => void;
+  heritage: MarkerInfo;
+  onClickSpot: (heritageId: number) => void;
 }) => {
   const [distance, setDistance] = useState('');
   const [latt, setLat] = useState<number>(); // TODO: 디버깅 후 삭제
@@ -47,18 +49,15 @@ const Spot = ({
   useEffect(() => {
     if (AFRAME.components['spot-click']) return;
 
-    const clickHandler = () => {
-      onClickSpot();
+    const clickHandler = (heritageId: string) => {
+      onClickSpot(Number(heritageId));
     };
 
     AFRAME.registerComponent('spot-click', {
       init() {
         const { el } = this;
-        el.addEventListener('click', clickHandler);
-      },
-      remove() {
-        const { el } = this;
-        el.removeEventListener('click', clickHandler);
+        const { id } = el;
+        el.addEventListener('click', () => clickHandler(id));
       },
     });
   }, []);
@@ -90,6 +89,8 @@ const Spot = ({
         position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}
         {...(hasArContents ? { visible } : {})}
         gps-new-entity-place={formatGpsNewEntityPlace({ lat, lng })}
+        id={heritage.id.toString()}
+        spot-click
       >
         <Circle color='#fff' radius={centerRadius} spot-click />
         <Circle
@@ -112,7 +113,6 @@ const Spot = ({
             dir: 'alternate',
             loop: loopInfinity,
           }}
-          spot-click
         />
         <Ring
           color='#fff'
@@ -135,7 +135,6 @@ const Spot = ({
             dir: 'alternate',
             loop: loopInfinity, // XXX: true가 먹지 않음
           }}
-          spot-click
         />
 
         {/* 문화재명, 거리 */}

@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 
 // import useArMarkers from '@/hooks/server/useArMarkers';
 
+import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
-import { MarkerInfo, Position, GeolocationCoordinates } from '@/types/ar';
-import ArContents from '@/containers/ArDemo/ArContents';
+import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -17,8 +17,16 @@ const SceneContainer = styled.div`
 // 테스트용 데이터
 const MOCK_DATA: MarkerInfo[] = [
   {
-    id: 987654,
+    id: 1,
     lng: -0.7165,
+    lat: 51.0595,
+    name: '테스트',
+    category: '문화재',
+    // arImage: '/assets/images/test.png',
+  },
+  {
+    id: 2,
+    lng: -0.716,
     lat: 51.0595,
     name: '테스트',
     category: '문화재',
@@ -91,7 +99,9 @@ const ArDemo = () => {
                   visible={!isOpen}
                   lat={lat}
                   lng={lng}
-                  onClickSpot={() => {
+                  heritage={heritage}
+                  onClickSpot={(heritageId) => {
+                    console.log(heritageId);
                     setIsOpen(true);
                     setClickItem(heritage);
                   }}
