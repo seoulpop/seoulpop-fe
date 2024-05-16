@@ -15,7 +15,7 @@ export const api = axios.create({
   },
 });
 
-api.interceptors.request.use(
+apiUser.interceptors.request.use(
   (config) => {
     const token = document.cookie.split('; ').find((row) => row.startsWith('accessToken='));
     if (token) {

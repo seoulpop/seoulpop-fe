@@ -14,7 +14,6 @@ const KakaoCallback = () => {
         try {
           const data = await getOauthId({ serverType: 'KAKAO', code });
           document.cookie = `accessToken=${data.accessToken}; max-age=86400; path=/; secure; SameSite=Strict`;
-          console.log(data);
           // 로그인 성공 시 메인 페이지로 이동
           navigate('/');
         } catch (error) {
