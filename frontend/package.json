@@ -16,8 +16,8 @@
     "@capacitor-community/background-geolocation": "^1.2.17",
     "@capacitor/android": "^6.0.0",
     "@capacitor/core": "^6.0.0",
-    "@capacitor/push-notifications": "^6.0.0",
     "@capacitor/geolocation": "^6.0.0",
+    "@capacitor/push-notifications": "^6.0.0",
     "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/react-flicking": "^4.11.2",
     "@emotion/react": "^11.11.4",
@@ -34,6 +34,7 @@
     "react-dom": "^18.2.0",
     "react-kakao-maps-sdk": "^1.1.26",
     "react-router-dom": "^6.22.3",
+    "react-spinners": "^0.13.8",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
