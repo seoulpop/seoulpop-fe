@@ -35,3 +35,21 @@ export const directionPanelSlideOut = keyframes`
     transform: translateY(-8.8rem);
   }
 `;
+
+export const grantedPermission = keyframes`
+  from {
+    transform: translateX(-2.2rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
+
+export const deniedPermission = keyframes`
+  from {
+    transform: translateX(2.2rem);
+  }
+  to {
+    transform: translateX(0);
+  }
+`;
