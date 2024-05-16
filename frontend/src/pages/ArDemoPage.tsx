@@ -2,7 +2,7 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-// import useArMarkers from '@/hooks/server/useArMarkers';
+import useArMarkers from '@/hooks/server/useArMarkers';
 
 import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
@@ -15,6 +15,7 @@ const SceneContainer = styled.div`
 `;
 
 // 테스트용 데이터
+/** 
 const MOCK_DATA: MarkerInfo[] = [
   {
     id: 1,
@@ -33,20 +34,17 @@ const MOCK_DATA: MarkerInfo[] = [
     arImage: '/assets/images/test2.png',
   },
 ];
+*/
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
   const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  /** TODO: 기능 개발 후 실제 데이터 연결  
   const { markerNearbyData } = useArMarkers({
     lat: position?.latitude,
     lng: position?.longitude,
   });
-  */
-
-  const markerNearbyData = MOCK_DATA;
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
@@ -61,6 +59,15 @@ const ArDemo = () => {
     return () => {
       document.removeEventListener('gps-camera-update-positon', onUpdateGps);
     };
+  }, []);
+
+  useEffect(() => {
+    // 페이지 로드시 현재 좌표값 세팅
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((_position) => {
+        setPosition({ latitude: _position.coords.latitude, longitude: _position.coords.longitude });
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -81,7 +88,10 @@ const ArDemo = () => {
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer={{ antialias: true, alpha: true }}
       >
-        <Camera gps-new-camera='gpsMinDistance: 1; simulateLatitude: 51.059; simulateLongitude: -0.717' />
+        <Camera
+          gps-new-camera='gpsMinDistance: 1;'
+          // simulateLatitude: 51.059; simulateLongitude: -0.717'
+        />
         <Assets>
           {/** XXX: 아래 코드 삭제하지 마세요. 삭제시 spot과의 거리가 보이지 않음 */}
           <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />{' '}
