@@ -89,7 +89,7 @@ const ArDemo = () => {
         renderer={{ antialias: true, alpha: true }}
       >
         <Camera
-          gps-new-camera='gpsMinDistance: 1;'
+          gps-new-camera='gpsMinDistance: 5;'
           // simulateLatitude: 51.059; simulateLongitude: -0.717'
         />
         <Assets>
