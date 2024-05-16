@@ -3,6 +3,7 @@ import { lazy } from 'react';
 
 import SiteDetail from '@/pages/SiteDetail';
 import HeritageDetail from '@/pages/HeritageDetail';
+import NotificationPage from '@/pages/NotificationPage';
 
 const Root = lazy(() => import('./Root'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
@@ -24,6 +25,7 @@ const Router = () => {
         { path: '/ardemo', element: <ArDemo /> },
         { path: '/heritage/detail/:historyId', element: <HeritageDetail /> },
         { path: '/site/detail/:historyId', element: <SiteDetail /> },
+        { path: '/notifications', element: <NotificationPage /> },
         { path: '/setting', element: <SettingPage /> },
         { path: '/signin', element: <SigninPage /> },
         // { path: '/category/:category', element: <CategoryResultPage /> },

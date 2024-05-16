@@ -69,6 +69,13 @@ const Navigation = ({ map, origin, destination, setDestination }: Props) => {
     if (polyLine) polyLine.setMap(map);
   }, [polyLine]);
 
+  useEffect(() => {
+    return () => {
+      polyLine?.setMap(null);
+      setDestination(null);
+    };
+  }, []);
+
   return (
     <div css={directionStyle(isVisible)}>
       <div>

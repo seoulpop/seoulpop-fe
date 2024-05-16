@@ -24,3 +24,14 @@ export const patchNotifications = async (notificationId: string) => {
     return '';
   }
 };
+
+export const getNotifications = async () => {
+  try {
+    const response = await api.get(`/v1/notifications`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Get notifications error: ', error);
+    return [];
+  }
+};

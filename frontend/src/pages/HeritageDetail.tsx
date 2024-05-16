@@ -127,7 +127,7 @@ const HeritageDetail = () => {
   return (
     <DetailLayout>
       <Container>
-        <Header pageName='문화재 정보' />
+        <Header pageName='문화재 정보' hasPrevious={false} />
         <BigTitle>{nameFormatting(data.name)}</BigTitle>
         <AddressBox>
           <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />
