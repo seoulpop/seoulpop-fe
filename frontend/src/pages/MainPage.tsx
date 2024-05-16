@@ -165,7 +165,14 @@ const MainPage = () => {
           <MapMarker position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }} />
         ) : (
           markerList.map((marker) => (
-            <MapMarker position={{ lat: marker.lat, lng: marker.lng }} key={marker.id} />
+            <MapMarker
+              position={{ lat: marker.lat, lng: marker.lng }}
+              key={marker.id}
+              image={{
+                src: `/assets/images/${marker.category}-${marker.visited}.webp`,
+                size: { width: 40, height: 50 },
+              }}
+            />
           ))
         )}
         <MapMarker
