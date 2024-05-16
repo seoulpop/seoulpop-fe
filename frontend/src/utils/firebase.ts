@@ -1,6 +1,6 @@
 import { PushNotifications } from '@capacitor/push-notifications';
 
-import { patchNotifications, postToken } from '@/api/notification';
+import { postToken } from '@/api/notification';
 import { NotificationData } from '@/types/notification';
 import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
 
@@ -24,10 +24,14 @@ export const initFCMListener = async () => {
     await PushNotifications.addListener('pushNotificationActionPerformed', async (notification) => {
       const { notificationId, historyCategory, historyName, historyLat, historyLng } =
         notification.notification.data;
-      const data: NotificationData = { historyCategory, historyName, historyLat, historyLng };
+      const data: NotificationData = {
+        notificationId,
+        historyCategory,
+        historyName,
+        historyLat,
+        historyLng,
+      };
       try {
-        const response = await patchNotifications(notificationId);
-        console.log('Patch notificationId success: ', response);
         sessionStorage.setItem(NOTIFICATION_DATA_KEY, JSON.stringify(data));
         window.location.href = '/';
       } catch (error) {
