@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { FONT_SIZE } from '@/styles/common';
+import { FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { IconLeftArrow } from '#/svgs';
 
 const HeaderContainer = styled.header`
@@ -16,6 +16,7 @@ const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   width: 100%;
+  z-index: ${Z_INDEX.layout};
 `;
 
 const BackButton = styled.button`

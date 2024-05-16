@@ -13,6 +13,7 @@ const ExamplePage = lazy(() => import('@/pages/ExamplePage'));
 const ArDemo = lazy(() => import('@/pages/ArDemoPage')); // ar 테스트 후 삭제 예정
 const SettingPage = lazy(() => import('@/pages/SettingPage'));
 const SigninPage = lazy(() => import('@/pages/SigninPage'));
+const CollectionPage = lazy(() => import('@/pages/CollectionPage'));
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const Router = () => {
         { path: '/heritage/detail/:historyId', element: <HeritageDetail /> },
         { path: '/site/detail/:historyId', element: <SiteDetail /> },
         { path: '/notifications', element: <NotificationPage /> },
+        { path: '/collection', element: <CollectionPage /> },
         { path: '/setting', element: <SettingPage /> },
         { path: '/signin', element: <SigninPage /> },
         { path: '/v1/oauth/redirected/kakao', element: <KakaoCallbackPage /> },
