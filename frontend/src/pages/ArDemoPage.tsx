@@ -8,6 +8,7 @@ import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
+import CoorDebug from '@/containers/ArDemo/CoorDebug';
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -80,6 +81,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
+      <CoorDebug lat={position?.latitude} lng={position?.longitude} />
       <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
         vr-mode-ui='enabled: false'
@@ -89,8 +91,8 @@ const ArDemo = () => {
         renderer={{ antialias: true, alpha: true }}
       >
         <Camera
-          gps-new-camera='gpsMinDistance: 5; simulateLatitude: 51.059; simulateLongitude: -0.717'
-          //
+          gps-new-camera='gpsMinDistance: 5;'
+          // simulateLatitude: 51.059; simulateLongitude: -0.717'
         />
         <Assets>
           {/** XXX: 아래 코드 삭제하지 마세요. 삭제시 spot과의 거리가 보이지 않음 */}
