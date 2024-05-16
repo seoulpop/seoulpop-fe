@@ -2,6 +2,9 @@ import { Circle, Entity, Plane, Ring, Text } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
+import HERITAGE_FONT from '@/constants/msdfs';
+
+import HeritageName from '@/containers/ArDemo/HeritageName';
 import { AR_Z_INDEX } from '@/styles/common';
 import { MarkerInfo, Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
@@ -79,6 +82,8 @@ const Spot = ({
     setDistance(dist?.toFixed(2));
   }, [position]);
 
+  const hasFontFile = heritage.id in HERITAGE_FONT;
+
   return (
     <>
       <DebugUI>
@@ -147,6 +152,11 @@ const Spot = ({
               color='#fff'
               scale={{ x: 50, y: 50, z: 50 }}
             />
+            {hasFontFile && (
+              <Entity position={{ x: 1, y: 10, z: 0 }}>
+                <HeritageName name={heritage.name} font={HERITAGE_FONT[heritage.id]} />
+              </Entity>
+            )}
           </Entity>
         </Entity>
       </Entity>
