@@ -14,14 +14,14 @@ const SceneContainer = styled.div`
   height: 100%;
 `;
 
-// 테스트용 데이터
 /** 
+// 테스트용 데이터
 const MOCK_DATA: MarkerInfo[] = [
   {
-    id: 1,
+    id: -1,
     lng: -0.7165,
     lat: 51.0595,
-    name: '멀티캠퍼스',
+    name: '서울 숭례문(',
     category: '문화재',
     arImage: '/assets/images/test.png',
   },
