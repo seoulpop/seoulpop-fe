@@ -14,3 +14,16 @@ export const api = axios.create({
     'Content-type': 'application/json',
   },
 });
+
+apiUser.interceptors.request.use(
+  (config) => {
+    const token = document.cookie.split('; ').find((row) => row.startsWith('accessToken='));
+    if (token) {
+      config.headers.Authorization = `Bearer ${token.split('=')[1]}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
