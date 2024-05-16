@@ -144,6 +144,13 @@ const reset = css`
     border-collapse: collapse;
     border-spacing: 0;
   }
+
+  button {
+    border: none;
+    outline: none;
+    background-color: inherit;
+    cursor: pointer;
+  }
 `;
 
 export default reset;

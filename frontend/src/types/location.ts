@@ -10,4 +10,5 @@ export interface DirectionsInfo {
 
 export interface DestinationInfo extends Coords {
   name: string;
+  category: string;
 }

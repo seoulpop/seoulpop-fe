@@ -96,7 +96,7 @@ const SiteDetail = () => {
 
   return (
     <Container>
-      <Header pageName='사적지 정보' />
+      <Header pageName='사적지 정보' hasPrevious={false} />
       <BigTitle>{data.name}</BigTitle>
       <AddressBox>
         <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />
