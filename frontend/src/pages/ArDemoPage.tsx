@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 
 // import useArMarkers from '@/hooks/server/useArMarkers';
 
+import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import Spot from '@/containers/ArDemo/Spot';
-import { MarkerInfo, Position, GeolocationCoordinates } from '@/types/ar';
-import ArContents from '@/containers/ArDemo/ArContents';
+import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -17,18 +17,26 @@ const SceneContainer = styled.div`
 // 테스트용 데이터
 const MOCK_DATA: MarkerInfo[] = [
   {
-    id: 987654,
+    id: 1,
     lng: -0.7165,
     lat: 51.0595,
     name: '테스트',
     category: '문화재',
-    // arImage: '/assets/images/test.png',
+    arImage: '/assets/images/test.png',
+  },
+  {
+    id: 2,
+    lng: -0.716,
+    lat: 51.0595,
+    name: '테스트',
+    category: '문화재',
+    arImage: '/assets/images/test2.png',
   },
 ];
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
-  const [clickItem, setClickItem] = useState<MarkerInfo>();
+  const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
   /** TODO: 기능 개발 후 실제 데이터 연결  
@@ -62,11 +70,10 @@ const ArDemo = () => {
     };
   }, []);
 
-  // FIXME: 여러 문화재가 뜨는 경우 클릭이 안됨
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      <FoundButton isOpen={isOpen} heritage={clickItem} />
+      <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
         vr-mode-ui='enabled: false'
         cursor='rayOrigin: mouse'
@@ -76,8 +83,8 @@ const ArDemo = () => {
       >
         <Camera gps-new-camera='gpsMinDistance: 1; simulateLatitude: 51.059; simulateLongitude: -0.717' />
         <Assets>
-          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />
-          <img alt='asd' id='my-image' src='/public/assets/images/test.png' />
+          {/** XXX: 아래 코드 삭제하지 마세요. 삭제시 spot과의 거리가 보이지 않음 */}
+          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />{' '}
         </Assets>
 
         {markerNearbyData &&
@@ -85,31 +92,29 @@ const ArDemo = () => {
           markerNearbyData?.map((heritage) => {
             const { id, lat, lng, arImage } = heritage;
             return (
-              <>
-                <Spot
-                  key={id}
-                  visible={!isOpen}
-                  lat={lat}
-                  lng={lng}
-                  onClickSpot={() => {
-                    setIsOpen(true);
-                    setClickItem(heritage);
-                  }}
-                  position={position}
-                  hasArContents={!!arImage}
-                />
-                {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
-                <ArContents
-                  key={id}
-                  isOpen={isOpen}
-                  lat={lat}
-                  lng={lng}
-                  arImage={arImage}
-                  onClose={() => setIsOpen(false)}
-                />
-              </>
+              <Spot
+                key={id}
+                visible={!isOpen}
+                lat={lat}
+                lng={lng}
+                heritage={heritage}
+                onClickSpot={(heritageId) => {
+                  setIsOpen(true);
+                  setSelectItem(markerNearbyData.find((data) => data.id === heritageId));
+                }}
+                position={position}
+                hasArContents={!!arImage}
+              />
             );
           })}
+        {/** TODO: 50미터 이내에서만 컨텐츠 확인 가능 */}
+        <ArContents
+          isOpen={isOpen}
+          lat={selectItem?.lat}
+          lng={selectItem?.lng}
+          arImage={selectItem?.arImage}
+          onClose={() => setIsOpen(false)}
+        />
       </Scene>
     </SceneContainer>
   );
