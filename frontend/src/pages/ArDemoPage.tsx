@@ -21,7 +21,7 @@ const MOCK_DATA: MarkerInfo[] = [
     id: -1,
     lng: -0.7165,
     lat: 51.0595,
-    name: '서울 숭례문(',
+    name: '탑골공원',
     category: '문화재',
     arImage: '/assets/images/test.png',
   },
@@ -89,8 +89,8 @@ const ArDemo = () => {
         renderer={{ antialias: true, alpha: true }}
       >
         <Camera
-          gps-new-camera='gpsMinDistance: 5;'
-          // simulateLatitude: 51.059; simulateLongitude: -0.717'
+          gps-new-camera='gpsMinDistance: 5; simulateLatitude: 51.059; simulateLongitude: -0.717'
+          //
         />
         <Assets>
           {/** XXX: 아래 코드 삭제하지 마세요. 삭제시 spot과의 거리가 보이지 않음 */}

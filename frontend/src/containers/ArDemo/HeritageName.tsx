@@ -8,7 +8,7 @@ const HeritageName = ({ name, font }: { name: string; font: string }) => {
       shader='msdf'
       negate='false'
       color='#fff'
-      scale={{ x: 50, y: 50, z: 50 }}
+      scale={{ x: 30, y: 30, z: 30 }}
     />
   );
 };
