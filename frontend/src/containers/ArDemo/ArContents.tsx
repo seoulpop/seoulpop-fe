@@ -5,9 +5,9 @@ import { AR_Z_INDEX } from '@/styles/common';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
 
 const duration = 200;
-const width = 200;
-const height = 200;
-const closeBtnRadius = 8;
+const width = 20;
+const height = 20;
+const closeBtnRadius = 2;
 const buttonOffsetX = width / 2 - closeBtnRadius / 2;
 const buttonOffsetY = height / 2 - closeBtnRadius / 2;
 
@@ -109,9 +109,9 @@ const ArContents = ({
         src={arImage}
       />
 
-      <Entity close-btn position={{ x: buttonOffsetX, y: buttonOffsetY, z: 5 }} visible={visible}>
+      <Entity close-btn position={{ x: buttonOffsetX, y: buttonOffsetY, z: 0.3 }} visible={visible}>
         <Circle color='#fff' radius={closeBtnRadius} />
-        <Circle radius={closeBtnRadius - 2} src='/svgs/cancel.svg' />
+        <Circle radius={closeBtnRadius / 1.5} src='/svgs/cancel.svg' />
       </Entity>
     </Entity>
   );

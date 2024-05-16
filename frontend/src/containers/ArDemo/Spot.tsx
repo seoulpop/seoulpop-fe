@@ -22,10 +22,10 @@ const DebugUI = styled.div`
 `;
 
 const loopInfinity = 10000; // XXX: true가 먹지 않음
-const centerRadius = 3;
-const minRadius = centerRadius + 4;
-const maxRadius = 6;
-const ringDelta = 1;
+const centerRadius = 1;
+const minRadius = centerRadius + 1.5;
+const maxRadius = minRadius + 1;
+const ringDelta = 0.5;
 const duration = 2000;
 
 const Spot = ({
@@ -143,17 +143,17 @@ const Spot = ({
         />
 
         {/* 문화재명, 거리 */}
-        <Entity position={{ x: 0, y: maxRadius + 5, z: 0 }}>
-          <Plane width={1} height={20} color='#fff' />
-          <Entity position={{ x: 0, y: 15, z: 0 }}>
+        <Entity position={{ x: 0, y: maxRadius, z: 0 }}>
+          <Plane width={0.5} height={8} color='#fff' />
+          <Entity position={{ x: 0, y: 6, z: 0 }}>
             <Text
               id='distance'
               value={`${distance}km`}
               color='#fff'
-              scale={{ x: 50, y: 50, z: 50 }}
+              scale={{ x: 20, y: 20, z: 20 }}
             />
             {hasFontFile && (
-              <Entity position={{ x: 1, y: 10, z: 0 }}>
+              <Entity position={{ x: 0, y: 6, z: 0 }}>
                 <HeritageName name={heritage.name} font={HERITAGE_FONT[heritage.id]} />
               </Entity>
             )}
