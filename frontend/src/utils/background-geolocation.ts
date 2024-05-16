@@ -22,13 +22,7 @@ export const addBackgroundGeolocationWatcher = () => {
     (location: any, error: any) => {
       if (error) {
         if (error.code === 'NOT_AUTHORIZED') {
-          if (
-            window.confirm(
-              'This app needs your location, ' +
-                'but does not have permission.\n\n' +
-                'Open settings now?',
-            )
-          ) {
+          if (window.confirm('이 서비스는 위치 권한이 필요합니다.\n설정으로 이동하시겠습니까?')) {
             // 위치 권한이 거부되었을 때, 사용자가 장치의 설정으로 이동할 수 있도록 함
             BackgroundGeolocation.openSettings();
           }

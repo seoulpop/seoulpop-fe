@@ -32,6 +32,7 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
 
   svg {
     fill: currentColor;
+    width: 4.8rem;
   }
 
   span {
