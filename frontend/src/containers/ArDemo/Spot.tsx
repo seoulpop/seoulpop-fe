@@ -5,21 +5,24 @@ import styled from '@emotion/styled';
 import HERITAGE_FONT from '@/constants/msdfs';
 
 import HeritageName from '@/containers/ArDemo/HeritageName';
-import { AR_Z_INDEX } from '@/styles/common';
+import { AR_Z_INDEX, Z_INDEX } from '@/styles/common';
 import { MarkerInfo, Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
 
 const NearMessage = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: ${Z_INDEX.float};
+  left: 0;
   right: 0;
 
-  width: 200px;
-  height: 30px;
-  background: #fff;
+  padding: 0.6rem 0;
 
+  background: var(--primary);
+
+  text-align: center;
   font-size: 2rem;
+  color: var(--white);
 `;
 
 const loopInfinity = 10000; // XXX: true가 먹지 않음
@@ -90,7 +93,8 @@ const Spot = ({
 
   return (
     <>
-      {isNear && <NearMessage> {heritage.name} 가까운 곳에 있습니다. </NearMessage>}
+      {/* TODO: 이,가 */}
+      {isNear && <NearMessage> {heritage.name}이 가까운 곳에 있습니다! </NearMessage>}
       <Entity
         position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}
         {...(hasArContents ? { visible } : {})}

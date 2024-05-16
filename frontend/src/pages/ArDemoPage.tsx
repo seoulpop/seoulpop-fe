@@ -81,7 +81,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      <CoorDebug lat={position?.latitude} lng={position?.longitude} />
+      {/* <CoorDebug lat={position?.latitude} lng={position?.longitude} /> */}
       <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
         vr-mode-ui='enabled: false'
