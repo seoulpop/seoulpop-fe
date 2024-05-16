@@ -1,6 +1,6 @@
 import { Circle, Entity, Plane, Ring, Text } from '@belivvr/aframe-react';
-import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 
 import HERITAGE_FONT from '@/constants/msdfs';
 
@@ -10,9 +10,10 @@ import { MarkerInfo, Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
 
-const DebugUI = styled.div`
+const NearMessage = styled.div`
   position: fixed;
   z-index: 1;
+  right: 0;
 
   width: 200px;
   height: 30px;
@@ -27,6 +28,8 @@ const minRadius = centerRadius + 1.5;
 const maxRadius = minRadius + 1;
 const ringDelta = 0.5;
 const duration = 2000;
+
+const minDistance = 0.06;
 
 const Spot = ({
   position,
@@ -46,8 +49,7 @@ const Spot = ({
   onClickSpot: (heritageId: number) => void;
 }) => {
   const [distance, setDistance] = useState('');
-  const [latt, setLat] = useState<number>(); // TODO: 디버깅 후 삭제
-  const [lngg, setLng] = useState<number>(); // TODO: 디버깅 후 삭제
+  const [isNear, setIsNear] = useState(false);
 
   useEffect(() => {
     if (AFRAME.components['spot-click']) return;
@@ -69,15 +71,17 @@ const Spot = ({
     // 현재 좌표와의 거리 계산
     if (!position) return;
 
-    setLat(position.latitude);
-    setLng(position.longitude);
-
     const dist = getDistanceFromLatLonInMeters({
       lat1: position.latitude,
       lon1: position.longitude,
       lat2: lat,
       lon2: lng,
     });
+
+    console.log(dist, heritage.name);
+
+    if (dist < minDistance) setIsNear(true);
+    else setIsNear(false);
 
     setDistance(dist?.toFixed(2));
   }, [position]);
@@ -86,10 +90,7 @@ const Spot = ({
 
   return (
     <>
-      <DebugUI>
-        {latt} {lngg}
-      </DebugUI>
-
+      {isNear && <NearMessage> {heritage.name} 가까운 곳에 있습니다. </NearMessage>}
       <Entity
         position={{ x: 0, y: 0, z: AR_Z_INDEX.spot }}
         {...(hasArContents ? { visible } : {})}
