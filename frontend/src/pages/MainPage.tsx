@@ -115,43 +115,51 @@ const MainPage = () => {
         }
         ref={mapRef}
       >
-        {!!destination && isInit && mapRef.current && (
+        {!!destination && isInit && mapRef.current ? (
           <Navigation
             map={mapRef.current}
             origin={origin}
             destination={destination}
             setDestination={setDestination}
           />
+        ) : (
+          <>
+            <CategoryWrapper>
+              <Button
+                type='button'
+                size='medium'
+                onClick={() => handleMapCategoryClick(1)}
+                color={selectedCategory === 1 ? 'var(--primary)' : 'var(--white)'}
+              >
+                <img src='/icons/gyeongbokgung.webp' alt='gyeongbokgung' width={24} height={24} />
+                문화재
+              </Button>
+              <Button
+                type='button'
+                size='medium'
+                onClick={() => handleMapCategoryClick(2)}
+                color={selectedCategory === 2 ? 'var(--primary)' : 'var(--white)'}
+              >
+                <img src='/icons/korean_flag.webp' alt='korean-flag' width={24} height={24} />
+                3·1운동
+              </Button>
+              <Button
+                type='button'
+                size='medium'
+                onClick={() => handleMapCategoryClick(3)}
+                color={selectedCategory === 3 ? 'var(--primary)' : 'var(--white)'}
+              >
+                <img src='/icons/soldier.webp' alt='soldier' width={24} height={24} />
+                6·25전쟁
+              </Button>
+            </CategoryWrapper>
+            <BottomPanelArea
+              markerNearbyData={markerNearbyData}
+              onCenterClick={handleCenterClick}
+            />
+            <TabBar />
+          </>
         )}
-        <CategoryWrapper>
-          <Button
-            type='button'
-            size='medium'
-            onClick={() => handleMapCategoryClick(1)}
-            color={selectedCategory === 1 ? 'var(--primary)' : 'var(--white)'}
-          >
-            <img src='/icons/gyeongbokgung.webp' alt='gyeongbokgung' width={24} height={24} />
-            문화재
-          </Button>
-          <Button
-            type='button'
-            size='medium'
-            onClick={() => handleMapCategoryClick(2)}
-            color={selectedCategory === 2 ? 'var(--primary)' : 'var(--white)'}
-          >
-            <img src='/icons/korean_flag.webp' alt='korean-flag' width={24} height={24} />
-            3·1운동
-          </Button>
-          <Button
-            type='button'
-            size='medium'
-            onClick={() => handleMapCategoryClick(3)}
-            color={selectedCategory === 3 ? 'var(--primary)' : 'var(--white)'}
-          >
-            <img src='/icons/soldier.webp' alt='soldier' width={24} height={24} />
-            6·25전쟁
-          </Button>
-        </CategoryWrapper>
 
         {markerList === undefined ? (
           <MapMarker position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }} />
@@ -164,9 +172,7 @@ const MainPage = () => {
           position={{ lat, lng }}
           image={{ src: '/assets/images/currMarker.png', size: { width: 50, height: 50 } }}
         />
-        <BottomPanelArea markerNearbyData={markerNearbyData} onCenterClick={handleCenterClick} />
       </KakaoMap>
-      <TabBar />
     </MainLayout>
   );
 };
