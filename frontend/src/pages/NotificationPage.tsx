@@ -9,7 +9,7 @@ import { NotificationData } from '@/types/notification';
 import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
 
 import TabBar from '@/components/TabBar';
-import Header from '@/components/Header/Header';
+import Header from '@/components/Header';
 
 const NotificationWrapper = styled.div`
   margin: ${HEADER_HEIGHT + 1.6}rem 1.6rem ${TABBAR_HEIGHT + 1.6}rem;

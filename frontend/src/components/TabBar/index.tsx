@@ -50,22 +50,18 @@ const TabBar = () => {
     <Container>
       <NavigationButton isActive={isActive('/')} onClick={() => navigate('/')}>
         <IconMap />
-        <span>지도</span>
       </NavigationButton>
       <NavigationButton isActive={isActive('/example')} onClick={() => navigate('/example')}>
         <IconBook />
-        <span>도감</span>
       </NavigationButton>
       <NavigationButton
         isActive={isActive('/notifications')}
         onClick={() => navigate('/notifications')}
       >
         <IconNotification />
-        <span>알림</span>
       </NavigationButton>
       <NavigationButton isActive={isActive('/setting')} onClick={() => navigate('/setting')}>
         <IconSetting />
-        <span>환경설정</span>
       </NavigationButton>
     </Container>
   );

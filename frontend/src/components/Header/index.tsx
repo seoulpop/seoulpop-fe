@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import { FONT_SIZE } from '@/styles/common';
+import { IconLeftArrow } from '#/svgs';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -44,7 +45,11 @@ const Header: React.FC<HeaderProps> = ({ hasPrevious = false, pageName }) => {
 
   return (
     <HeaderContainer>
-      {hasPrevious && <BackButton onClick={onBack}>&#x2190;</BackButton>}
+      {hasPrevious && (
+        <BackButton onClick={onBack}>
+          <IconLeftArrow />
+        </BackButton>
+      )}
       <Title>{pageName}</Title>
     </HeaderContainer>
   );

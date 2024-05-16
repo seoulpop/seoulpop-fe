@@ -6,6 +6,7 @@ import IconNotification from './notification-bell.svg?react';
 import IconSetting from './settings.svg?react';
 import IconBook from './open-book.svg?react';
 import IconMap from './map.svg?react';
+import IconLeftArrow from './left-arrow.svg?react';
 
 export {
   IconCenter,
@@ -16,4 +17,5 @@ export {
   IconSetting,
   IconBook,
   IconMap,
+  IconLeftArrow,
 };
