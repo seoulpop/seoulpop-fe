@@ -52,7 +52,7 @@ const TabBar = () => {
       <NavigationButton isActive={isActive('/')} onClick={() => navigate('/')}>
         <IconMap />
       </NavigationButton>
-      <NavigationButton isActive={isActive('/example')} onClick={() => navigate('/example')}>
+      <NavigationButton isActive={isActive('/collection')} onClick={() => navigate('/collection')}>
         <IconBook />
       </NavigationButton>
       <NavigationButton

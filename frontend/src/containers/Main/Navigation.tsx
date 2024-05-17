@@ -31,7 +31,7 @@ const directionStyle = (visible: boolean) => css`
     gap: 0.8rem;
     align-items: center;
 
-    > div:nth-child(2) {
+    > div:nth-of-child(2) {
       margin-right: 1rem;
     }
   }

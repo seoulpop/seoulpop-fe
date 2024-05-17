@@ -82,6 +82,7 @@ const MainPage = () => {
   useEffect(() => {
     const data = sessionStorage.getItem(NOTIFICATION_DATA_KEY);
     if (data) {
+      sessionStorage.removeItem(NOTIFICATION_DATA_KEY);
       const notificationData: NotificationData = JSON.parse(data);
       notificationMutation.mutate(notificationData.notificationId);
       setDestination({
@@ -98,7 +99,6 @@ const MainPage = () => {
   useEffect(() => {
     if (!isInit && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
       setCenter({ lat, lng });
-      setOrigin({ lat, lng });
       setIsInit(true);
     }
   }, [isInit, lat, lng]);
@@ -113,12 +113,11 @@ const MainPage = () => {
         center={center}
         isPanto
         onCenterChanged={(map) =>
-          // TODO: debounce 필요
           setCenter({ lat: map.getCenter().getLat(), lng: map.getCenter().getLng() })
         }
         ref={mapRef}
       >
-        {!!destination && isInit && mapRef.current ? (
+        {destination && isInit && mapRef.current ? (
           <>
             <Navigation
               map={mapRef.current}

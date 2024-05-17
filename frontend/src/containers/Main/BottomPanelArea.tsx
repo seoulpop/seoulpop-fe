@@ -80,10 +80,10 @@ const StyledFlicking = styled(Flicking)`
     height: 100%;
   }
 
-  &:first-child {
+  &:first-of-child {
     padding-left: 2rem;
   }
-  &:last-child {
+  &:last-of-child {
     padding-right: 2rem;
   }
 `;
