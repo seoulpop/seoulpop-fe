@@ -6,8 +6,10 @@ import useAtlases from '@/hooks/server/useAtlases';
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { isAuthenticated, hasRefreshToken, reissueAccessToken } from '@/utils/auth';
+import LoginModal from '@/components/LoginModal';
 
 const Container = styled.div`
   margin: ${HEADER_HEIGHT + 1.6}rem 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
@@ -102,9 +104,50 @@ const CollectionPage = () => {
   const changeTab = (category: '전체' | '문화재' | '6·25전쟁' | '3·1운동') => {
     setCurrentCategory(category);
   };
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalSubMessage, setModalSubMessage] = useState('');
+
+  const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+  const loginUri = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  const handleConfirm = () => {
+    window.location.href = loginUri; // 로그인 페이지로 이동
+  };
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      if (!isAuthenticated()) {
+        if (!hasRefreshToken()) {
+          setModalMessage('로그인이 필요한 서비스입니다.');
+          setModalSubMessage('로그인 하시겠습니까?');
+          setShowModal(true);
+          return;
+        }
+        try {
+          await reissueAccessToken();
+        } catch (error) {
+          setModalMessage('세션이 만료되었습니다');
+          setModalSubMessage('로그인 하시겠습니까?');
+          setShowModal(true);
+        }
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   return (
     <>
+      {showModal && (
+        <LoginModal
+          message={modalMessage}
+          subMessage={modalSubMessage}
+          onConfirm={() => handleConfirm()}
+          onClose={() => navigate('/')}
+        />
+      )}
       <Header pageName='도감' />
       <Container>
         <TabArea>
