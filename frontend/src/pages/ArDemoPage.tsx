@@ -2,8 +2,6 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import useArMarkers from '@/hooks/server/useArMarkers';
-
 import ArContents from '@/containers/ArDemo/ArContents';
 // import CoorDebug from '@/containers/ArDemo/CoorDebug';
 import FoundButton from '@/containers/ArDemo/FoundButton';
@@ -18,6 +16,7 @@ const SceneContainer = styled.div`
 
 /** 
 // 테스트용 데이터
+*/
 const MOCK_DATA: MarkerInfo[] = [
   {
     id: -1,
@@ -35,18 +34,35 @@ const MOCK_DATA: MarkerInfo[] = [
     category: '문화재',
     arImage: '/assets/images/test2.png',
   },
+  {
+    id: -97,
+    lat: 37.4717377,
+    lng: 127.0880092,
+    name: '서울 숭례문 (서울 崇禮門)',
+    category: '문화재',
+    arImage: '/assets/images/sungnyemunGate.jpeg',
+  },
+  {
+    id: 1,
+    lat: 37.55992779,
+    lng: 126.9753598,
+    name: '서울 숭례문 (서울 崇禮門)',
+    category: '문화재',
+    arImage: '/assets/images/sungnyemunGate.jpeg',
+  },
 ];
-*/
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
   const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  const { markerNearbyData } = useArMarkers({
-    lat: position?.latitude,
-    lng: position?.longitude,
-  });
+  // const { markerNearbyData } = useArMarkers({
+  //   lat: position?.latitude,
+  //   lng: position?.longitude,
+  // });
+
+  const markerNearbyData = MOCK_DATA;
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
