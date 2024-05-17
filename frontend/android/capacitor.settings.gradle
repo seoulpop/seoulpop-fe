@@ -5,8 +5,11 @@ project(':capacitor-android').projectDir = new File('../node_modules/.pnpm/@capa
 include ':capacitor-community-background-geolocation'
 project(':capacitor-community-background-geolocation').projectDir = new File('../node_modules/.pnpm/@capacitor-community+background-geolocation@1.2.17_@capacitor+core@6.0.0/node_modules/@capacitor-community/background-geolocation/android')
 
-include ':capacitor-push-notifications'
-project(':capacitor-push-notifications').projectDir = new File('../node_modules/.pnpm/@capacitor+push-notifications@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/push-notifications/android')
+include ':capacitor-camera'
+project(':capacitor-camera').projectDir = new File('../node_modules/.pnpm/@capacitor+camera@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/camera/android')
 
 include ':capacitor-geolocation'
 project(':capacitor-geolocation').projectDir = new File('../node_modules/.pnpm/@capacitor+geolocation@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/geolocation/android')
+
+include ':capacitor-push-notifications'
+project(':capacitor-push-notifications').projectDir = new File('../node_modules/.pnpm/@capacitor+push-notifications@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/push-notifications/android')

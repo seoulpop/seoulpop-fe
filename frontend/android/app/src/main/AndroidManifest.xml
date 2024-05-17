@@ -52,6 +52,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <!--    camera permissions  -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
     <uses-feature android:name="android.hardware.location.gps" />
