@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
 
 import useHeritageVisited from '@/hooks/server/useHeritageVisited';
+import useToast from '@/hooks/useToast';
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/ar';
 
@@ -60,6 +61,7 @@ const Text = styled.span`
 const FoundButton = ({ heritage, isOpen }: { heritage?: MarkerInfo; isOpen?: boolean }) => {
   const navigate = useNavigate();
   const heritageVisitedMutation = useHeritageVisited();
+  const { toastMessage } = useToast();
 
   let className = '';
 
@@ -68,9 +70,13 @@ const FoundButton = ({ heritage, isOpen }: { heritage?: MarkerInfo; isOpen?: boo
   else className = 'is-inactive';
 
   const handleClick = () => {
-    if (!heritage) return;
+    if (!heritage || heritageVisitedMutation.isPending) return;
     // TODO: 새로운 문화재 등록시 ui
-    heritageVisitedMutation.mutate(heritage.id);
+    heritageVisitedMutation.mutate(heritage.id, {
+      onSuccess: () => {
+        toastMessage('새로운 도감이 등록되었습니다!');
+      },
+    });
 
     if (heritage?.category === '문화재') {
       navigate(`/heritage/detail/${heritage.id}`);
