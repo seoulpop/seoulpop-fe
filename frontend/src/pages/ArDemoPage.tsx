@@ -98,7 +98,7 @@ const ArDemo = () => {
         />
         <Assets>
           {/** XXX: 아래 코드 삭제하지 마세요. 삭제시 spot과의 거리가 보이지 않음 */}
-          <AssetItem id='hamster' src='/assets/map_pointer/scene.gltf' />{' '}
+          <AssetItem id='' src='' />
         </Assets>
 
         {markerNearbyData &&
