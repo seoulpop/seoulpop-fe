@@ -6,8 +6,15 @@ import ArContents from '@/containers/ArDemo/ArContents';
 // import CoorDebug from '@/containers/ArDemo/CoorDebug';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
+import NearMessage from '@/containers/ArDemo/NearMessage.styled';
 import Spot from '@/containers/ArDemo/Spot';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
+import { getDistanceFromLatLonInMeters } from '@/utils/distance';
+
+interface NearItem {
+  marker: MarkerInfo | null;
+  distance: number;
+}
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -56,6 +63,7 @@ const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
   const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
+  const [nearItem, setNearItem] = useState<MarkerInfo | null>();
 
   // const { markerNearbyData } = useArMarkers({
   //   lat: position?.latitude,
@@ -95,10 +103,42 @@ const ArDemo = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // 가장 가까운 지점 계산
+    if (!position) return;
+
+    const minDistance = 0.06;
+
+    const near: MarkerInfo | null = markerNearbyData.reduce<NearItem>(
+      (closest, marker) => {
+        const distance = getDistanceFromLatLonInMeters({
+          lat1: position.latitude,
+          lon1: position.longitude,
+          lat2: marker.lat,
+          lon2: marker.lng,
+        });
+
+        if (distance > minDistance) return closest;
+
+        if (distance < closest.distance) {
+          return { marker, distance };
+        }
+        return closest;
+      },
+      { marker: null, distance: Infinity },
+    ).marker;
+
+    setNearItem(near);
+  }, [markerNearbyData, position]);
+
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
       {/* <CoorDebug lat={position?.latitude} lng={position?.longitude} /> */}
+
+      {/* TODO: 이,가 */}
+      {nearItem && <NearMessage> {nearItem?.name}이 가까운 곳에 있습니다! </NearMessage>}
+
       <GoBackButton />
       <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
