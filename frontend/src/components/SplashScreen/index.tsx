@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 
 import DefaultLayout from '@/Layouts/DetailLayout';
 
@@ -9,13 +9,13 @@ const SplashContainer = styled.div`
   align-items: center;
   height: 100svh;
 
-  background: #fafcfe;
+  background: var(--primary);
 `;
 const Logo = styled.div`
   width: 20rem;
   height: 20rem;
 
-  background: url('/assets/images/logo.webp') no-repeat center;
+  background: url('/assets/images/logo.png') no-repeat center;
   background-size: contain;
 `;
 
@@ -25,26 +25,6 @@ const SplashScreen = () => {
       <SplashContainer>
         <Logo />
       </SplashContainer>
-    </DefaultLayout>
-  );
-};
-
-const _SplashContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100svh;
-
-  background: var(--primary);
-
-  color: var(--white);
-  font-size: 32px;
-`;
-
-const _SplashScreen = () => {
-  return (
-    <DefaultLayout>
-      <SplashContainer>서울 팝</SplashContainer>
     </DefaultLayout>
   );
 };
