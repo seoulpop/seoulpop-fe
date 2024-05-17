@@ -6,6 +6,7 @@ import useArMarkers from '@/hooks/server/useArMarkers';
 
 import ArContents from '@/containers/ArDemo/ArContents';
 import FoundButton from '@/containers/ArDemo/FoundButton';
+import GoBackButton from '@/containers/ArDemo/GoBackButton';
 import Spot from '@/containers/ArDemo/Spot';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 // import CoorDebug from '@/containers/ArDemo/CoorDebug';
@@ -82,6 +83,7 @@ const ArDemo = () => {
   return (
     <SceneContainer>
       {/* <CoorDebug lat={position?.latitude} lng={position?.longitude} /> */}
+      <GoBackButton />
       <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
         vr-mode-ui='enabled: false'
