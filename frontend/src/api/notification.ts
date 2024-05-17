@@ -1,17 +1,13 @@
 import { api, apiUser } from '@/api/index';
-import { PostNotificationResponse } from '@/types/notification';
+import { Coords } from '@/types/location';
 
 export const postToken = async (fcmToken: string): Promise<string> => {
   const response = await apiUser.post(`/v1/notifications/regist`, { fcmToken });
   return response.data;
 };
 
-export const postNotifications = async ({
-  memberId = -100,
-  lat,
-  lng,
-}: PostNotificationResponse): Promise<string> => {
-  const response = await apiUser.post(`/v1/notifications`, { memberId, lat, lng });
+export const postNotifications = async ({ lat, lng }: Coords): Promise<string> => {
+  const response = await apiUser.post(`/v1/notifications/send`, { lat, lng });
   return response.data;
 };
 

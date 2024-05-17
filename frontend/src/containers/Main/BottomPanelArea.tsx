@@ -13,6 +13,9 @@ import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { MarkerNearbyInfo } from '@/types/marker';
 import { TABBAR_HEIGHT } from '@/constants/components';
 
+import { Camera } from '@capacitor/camera';
+import { Capacitor } from '@capacitor/core';
+
 const carouselStyle = (visible: boolean) => css`
   position: absolute;
   left: 0;
@@ -161,6 +164,19 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
     setIsVisible(!isVisible);
   };
 
+  const handleARCamera = async () => {
+    if (Capacitor.getPlatform() === 'android') {
+      const status = await Camera.requestPermissions();
+      if (status.camera === 'granted') {
+        navigate('/ardemo');
+      } else {
+        navigate('/setting');
+      }
+    } else {
+      navigate('/ardemo');
+    }
+  };
+
   useEffect(() => {
     if (!markerNearbyData || !markerNearbyData.length) {
       setIsVisible(false);
@@ -178,7 +194,7 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
           size='large'
           color='var(--primary)'
           // TODO: url 변경
-          onClick={() => navigate('/ardemo')}
+          onClick={handleARCamera}
         >
           <img src='/icons/camera_3d.webp' alt='camera' width={30} height={24} />
           카메라로 찍어보기

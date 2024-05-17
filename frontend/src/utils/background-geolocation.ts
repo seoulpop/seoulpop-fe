@@ -15,7 +15,7 @@ export const addBackgroundGeolocationWatcher = () => {
       requestPermissions: true,
       stale: false,
       // 다음 위치와의 최소 미터 수 (default value: 0)
-      distanceFilter: 100,
+      distanceFilter: 50,
     },
     // TODO: 타입 지정
     (location: any, error: any) => {
@@ -30,8 +30,7 @@ export const addBackgroundGeolocationWatcher = () => {
       }
 
       // data fetch
-      // postNotifications({ lat: location.latitude, lng: location.longitude });
-      postNotifications({ lat: 37.592106, lng: 126.6737845 });
+      postNotifications({ lat: location.latitude, lng: location.longitude });
 
       return console.log(location);
     },

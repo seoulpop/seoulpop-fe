@@ -1,9 +1,3 @@
-import { Coords } from '@/types/location';
-
-export interface PostNotificationResponse extends Coords {
-  memberId?: number;
-}
-
 export interface NotificationData {
   notificationId: string;
   historyName: string;

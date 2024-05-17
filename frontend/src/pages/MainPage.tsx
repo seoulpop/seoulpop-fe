@@ -193,6 +193,7 @@ const MainPage = () => {
         <MapMarker
           position={{ lat, lng }}
           image={{ src: '/assets/images/currMarker.png', size: { width: 50, height: 50 } }}
+          zIndex={Z_INDEX.float}
         />
       </KakaoMap>
     </MainLayout>
