@@ -2,14 +2,12 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import useArMarkers from '@/hooks/server/useArMarkers';
-
 import ArContents from '@/containers/ArDemo/ArContents';
+import CoorDebug from '@/containers/ArDemo/CoorDebug';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
 import Spot from '@/containers/ArDemo/Spot';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
-// import CoorDebug from '@/containers/ArDemo/CoorDebug';
 
 const SceneContainer = styled.div`
   width: 100%;
@@ -18,35 +16,37 @@ const SceneContainer = styled.div`
 
 /** 
 // 테스트용 데이터
+*/
 const MOCK_DATA: MarkerInfo[] = [
   {
     id: -1,
-    lng: -0.7165,
-    lat: 51.0595,
+    lng: 127.0875046,
+    lat: 37.4712586,
     name: '탑골공원',
     category: '문화재',
     arImage: '/assets/images/test.png',
   },
   {
     id: 2,
-    lng: -0.716,
-    lat: 51.0595,
+    lng: 127.087403,
+    lat: 37.4713001,
     name: '경복궁',
     category: '문화재',
     arImage: '/assets/images/test2.png',
   },
 ];
-*/
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
   const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  const { markerNearbyData } = useArMarkers({
-    lat: position?.latitude,
-    lng: position?.longitude,
-  });
+  // const { markerNearbyData } = useArMarkers({
+  //   lat: position?.latitude,
+  //   lng: position?.longitude,
+  // });
+
+  const markerNearbyData = MOCK_DATA;
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
@@ -82,7 +82,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      {/* <CoorDebug lat={position?.latitude} lng={position?.longitude} /> */}
+      <CoorDebug lat={position?.latitude} lng={position?.longitude} />
       <GoBackButton />
       <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
