@@ -3,3 +3,6 @@ export interface LoginInfo {
   kakaoNickname: string;
   accessToken: string;
 }
+export interface reissueInfo {
+  accessToken: string;
+}

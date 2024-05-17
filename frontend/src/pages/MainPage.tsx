@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 
@@ -169,22 +169,24 @@ const MainPage = () => {
               onCenterClick={handleCenterClick}
             />
             <TabBar />
-            {markerList === undefined ? (
-              <MapMarker
-                position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }}
-              />
-            ) : (
-              markerList.map((marker) => (
+            <MarkerClusterer averageCenter={true} minLevel={5}>
+              {markerList === undefined ? (
                 <MapMarker
-                  position={{ lat: marker.lat, lng: marker.lng }}
-                  key={marker.id}
-                  image={{
-                    src: `/assets/images/${marker.category}-${marker.visited}.webp`,
-                    size: { width: 40, height: 50 },
-                  }}
+                  position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }}
                 />
-              ))
-            )}
+              ) : (
+                markerList.map((marker) => (
+                  <MapMarker
+                    position={{ lat: marker.lat, lng: marker.lng }}
+                    key={marker.id}
+                    image={{
+                      src: `/assets/images/${marker.category}-${marker.visited}.webp`,
+                      size: { width: 40, height: 50 },
+                    }}
+                  />
+                ))
+              )}
+            </MarkerClusterer>
           </>
         )}
 
