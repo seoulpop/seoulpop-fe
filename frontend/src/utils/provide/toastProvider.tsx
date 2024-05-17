@@ -48,8 +48,6 @@ const ToastProvider = () => {
     };
   }, [show]);
 
-  // if (!show) return null;
-
   return <ToastContainer className={`${show ? 'show' : ''}`}>{message}</ToastContainer>;
 };
 export default ToastProvider;
