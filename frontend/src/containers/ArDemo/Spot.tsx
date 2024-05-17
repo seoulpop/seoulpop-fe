@@ -1,11 +1,11 @@
 import { Circle, Entity, Plane, Ring, Text } from '@belivvr/aframe-react';
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 
 import HERITAGE_FONT from '@/constants/msdfs';
 
 import HeritageName from '@/containers/ArDemo/HeritageName';
-import { AR_Z_INDEX, Z_INDEX } from '@/styles/common';
+import { AR_Z_INDEX, BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { MarkerInfo, Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
@@ -13,15 +13,19 @@ import { getDistanceFromLatLonInMeters } from '@/utils/distance';
 const NearMessage = styled.div`
   position: fixed;
   z-index: ${Z_INDEX.float};
-  left: 0;
-  right: 0;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
 
-  padding: 0.6rem 0;
+  padding: 1rem 2rem;
+  width: fit-content;
+  border-radius: ${BORDER_RADIUS.circle};
 
-  background: var(--primary);
+  background: var(--black);
+  opacity: 0.5;
 
   text-align: center;
-  font-size: 2rem;
+  font-size: ${FONT_SIZE.md};
   color: var(--white);
 `;
 
