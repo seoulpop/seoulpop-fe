@@ -1,4 +1,3 @@
-// LoginModal.js
 import styled from '@emotion/styled';
 
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
