@@ -30,7 +30,8 @@ export const addBackgroundGeolocationWatcher = () => {
       }
 
       // data fetch
-      postNotifications({ lat: location.latitude, lng: location.longitude });
+      // postNotifications({ lat: location.latitude, lng: location.longitude });
+      postNotifications({ lat: 37.592106, lng: 126.6737845 });
 
       return console.log(location);
     },
