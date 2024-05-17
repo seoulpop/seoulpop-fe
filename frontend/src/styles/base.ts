@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 const base = css`
   :root {
-    --primary: #0be688;
+    --primary: #735cff;
     --secondary: #b2a5ff;
     --tertiary: #e9b43a;
     --lightergray: #f3f3f3;
