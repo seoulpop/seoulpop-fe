@@ -2,7 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { FONT_SIZE } from '@/styles/common';
+import { FONT_SIZE, Z_INDEX } from '@/styles/common';
+import { IconLeftArrow } from '#/svgs';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -11,8 +12,11 @@ const HeaderContainer = styled.header`
   padding: 1.6rem 2rem;
   background-color: var(--white);
   border-bottom: 0.1rem solid var(--lightgray);
-  margin-bottom: 2rem;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: ${Z_INDEX.layout};
 `;
 
 const BackButton = styled.button`
@@ -25,15 +29,16 @@ const BackButton = styled.button`
 `;
 
 const Title = styled.h1`
-  font-size: ${FONT_SIZE.xxl};
+  font-size: ${FONT_SIZE.lg};
   font-weight: bold;
 `;
 
 interface HeaderProps {
+  hasPrevious?: boolean;
   pageName: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ pageName }) => {
+const Header: React.FC<HeaderProps> = ({ hasPrevious = false, pageName }) => {
   const navigate = useNavigate();
   const onBack = () => {
     navigate(-1);
@@ -41,7 +46,11 @@ const Header: React.FC<HeaderProps> = ({ pageName }) => {
 
   return (
     <HeaderContainer>
-      <BackButton onClick={onBack}>&#x2190;</BackButton>
+      {hasPrevious && (
+        <BackButton onClick={onBack}>
+          <IconLeftArrow />
+        </BackButton>
+      )}
       <Title>{pageName}</Title>
     </HeaderContainer>
   );

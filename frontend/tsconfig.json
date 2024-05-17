@@ -28,6 +28,6 @@
       "#/*": ["public/*"]
     }
   },
-  "include": ["src", "public", "src/types/svg.d.ts"],
+  "include": ["src", "public", "src/types/svg.d.ts", "src/types/aframe.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

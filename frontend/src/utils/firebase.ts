@@ -22,11 +22,22 @@ export const initFCMListener = async () => {
     });
     // notification을 클릭했을 때 실행되는 listener
     await PushNotifications.addListener('pushNotificationActionPerformed', async (notification) => {
-      const { historyCategory, historyName, historyLat, historyLng } =
+      const { notificationId, historyCategory, historyName, historyLat, historyLng } =
         notification.notification.data;
-      const data: NotificationData = { historyCategory, historyName, historyLat, historyLng };
-      sessionStorage.setItem(NOTIFICATION_DATA_KEY, JSON.stringify(data));
-      window.location.href = '/';
+      const data: NotificationData = {
+        notificationId,
+        historyCategory,
+        historyName,
+        historyLat,
+        historyLng,
+      };
+      try {
+        sessionStorage.setItem(NOTIFICATION_DATA_KEY, JSON.stringify(data));
+        window.location.href = '/';
+      } catch (error) {
+        console.log('Patch notificationId error: ', error);
+        window.location.href = '/';
+      }
     });
   } else {
     console.log('User denied permissions!');

@@ -3,23 +3,24 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Z_INDEX } from '@/styles/common';
 import { IconBook, IconSetting, IconNotification, IconMap } from '#/svgs';
+import { TABBAR_ICON_HEIGHT, TABBAR_PADDING } from '@/constants/components';
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 1rem 0;
+  padding: ${TABBAR_PADDING}rem 0;
   background-color: var(--white);
   z-index: ${Z_INDEX.layout};
 `;
 
 const NavigationButton = styled.button<{ isActive: boolean }>`
   width: 4.8rem;
-  height: 5.8rem;
+  height: ${TABBAR_ICON_HEIGHT}rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +32,7 @@ const NavigationButton = styled.button<{ isActive: boolean }>`
 
   svg {
     fill: currentColor;
+    width: 4.8rem;
   }
 
   span {
@@ -49,19 +51,18 @@ const TabBar = () => {
     <Container>
       <NavigationButton isActive={isActive('/')} onClick={() => navigate('/')}>
         <IconMap />
-        <span>지도</span>
       </NavigationButton>
-      <NavigationButton isActive={isActive('/example')} onClick={() => navigate('/example')}>
+      <NavigationButton isActive={isActive('/collection')} onClick={() => navigate('/collection')}>
         <IconBook />
-        <span>도감</span>
       </NavigationButton>
-      <NavigationButton isActive={isActive('/ardemo')} onClick={() => navigate('/ardemo')}>
+      <NavigationButton
+        isActive={isActive('/notifications')}
+        onClick={() => navigate('/notifications')}
+      >
         <IconNotification />
-        <span>알림</span>
       </NavigationButton>
       <NavigationButton isActive={isActive('/setting')} onClick={() => navigate('/setting')}>
         <IconSetting />
-        <span>환경설정</span>
       </NavigationButton>
     </Container>
   );

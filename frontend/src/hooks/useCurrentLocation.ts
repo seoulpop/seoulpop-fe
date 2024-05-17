@@ -21,8 +21,14 @@ const useCurrentLocation = (): Coords => {
     Geolocation.watchPosition({}, (position) => {
       if (position?.coords.latitude && position.coords.longitude) {
         setLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+          // lat: position.coords.latitude,
+          // lng: position.coords.longitude,
+          // 공원
+          // lat: position.coords.latitude - 0.02079700000000173,
+          // lng: position.coords.longitude + 0.31367950000000633,
+          // 집
+          lat: position.coords.latitude - 0.020960500000001048,
+          lng: position.coords.longitude + 0.3145450000000096,
           error: null,
         });
       }

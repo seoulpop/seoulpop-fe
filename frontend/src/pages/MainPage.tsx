@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 
@@ -15,6 +15,7 @@ import BottomPanelArea from '@/containers/Main/BottomPanelArea';
 import Navigation from '@/containers/Main/Navigation';
 import { Coords, DestinationInfo } from '@/types/location';
 import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
+import useNotifications from '@/hooks/server/useNotifications';
 
 import TabBar from '@/components/TabBar';
 import Button from '@/components/Button';
@@ -39,6 +40,7 @@ const MainPage = () => {
   useKakaoLoader();
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
+  const { notificationMutation } = useNotifications();
   const mapRef = useRef(null);
   const [center, setCenter] = useState({
     lat: DEFAULT_MARKER_INFO.lat,
@@ -80,10 +82,12 @@ const MainPage = () => {
   useEffect(() => {
     const data = sessionStorage.getItem(NOTIFICATION_DATA_KEY);
     if (data) {
+      sessionStorage.removeItem(NOTIFICATION_DATA_KEY);
       const notificationData: NotificationData = JSON.parse(data);
-      // 데이터 처리
+      notificationMutation.mutate(notificationData.notificationId);
       setDestination({
         name: notificationData.historyName,
+        category: notificationData.historyCategory,
         lat: notificationData.historyLat,
         lng: notificationData.historyLng,
       });
@@ -95,7 +99,6 @@ const MainPage = () => {
   useEffect(() => {
     if (!isInit && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
       setCenter({ lat, lng });
-      setOrigin({ lat, lng });
       setIsInit(true);
     }
   }, [isInit, lat, lng]);
@@ -110,18 +113,26 @@ const MainPage = () => {
         center={center}
         isPanto
         onCenterChanged={(map) =>
-          // TODO: debounce 필요
           setCenter({ lat: map.getCenter().getLat(), lng: map.getCenter().getLng() })
         }
         ref={mapRef}
       >
-        {!!destination && isInit && mapRef.current ? (
-          <Navigation
-            map={mapRef.current}
-            origin={origin}
-            destination={destination}
-            setDestination={setDestination}
-          />
+        {destination && isInit && mapRef.current ? (
+          <>
+            <Navigation
+              map={mapRef.current}
+              origin={origin}
+              destination={destination}
+              setDestination={setDestination}
+            />
+            <MapMarker
+              position={{ lat: destination.lat, lng: destination.lng }}
+              image={{
+                src: `/assets/images/${destination.category}-false.webp`,
+                size: { width: 40, height: 50 },
+              }}
+            />
+          </>
         ) : (
           <>
             <CategoryWrapper>
@@ -158,16 +169,27 @@ const MainPage = () => {
               onCenterClick={handleCenterClick}
             />
             <TabBar />
+            <MarkerClusterer averageCenter={true} minLevel={5}>
+              {markerList === undefined ? (
+                <MapMarker
+                  position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }}
+                />
+              ) : (
+                markerList.map((marker) => (
+                  <MapMarker
+                    position={{ lat: marker.lat, lng: marker.lng }}
+                    key={marker.id}
+                    image={{
+                      src: `/assets/images/${marker.category}-${marker.visited}.webp`,
+                      size: { width: 40, height: 50 },
+                    }}
+                  />
+                ))
+              )}
+            </MarkerClusterer>
           </>
         )}
 
-        {markerList === undefined ? (
-          <MapMarker position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }} />
-        ) : (
-          markerList.map((marker) => (
-            <MapMarker position={{ lat: marker.lat, lng: marker.lng }} key={marker.id} />
-          ))
-        )}
         <MapMarker
           position={{ lat, lng }}
           image={{ src: '/assets/images/currMarker.png', size: { width: 50, height: 50 } }}

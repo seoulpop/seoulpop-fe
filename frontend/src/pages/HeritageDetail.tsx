@@ -7,10 +7,19 @@ import useHistoryDetail from '@/hooks/server/useHistoryDetail';
 import { FONT_SIZE, BORDER_RADIUS } from '@/styles/common';
 import { HeritageInfo } from '@/types/history';
 import ImageCarousel from '@/containers/History/ImageCarousel';
-import DetailLayout from '@/Layouts/DetailLayout';
 
 import KakaoMap from '@/components/History/KakaoMap';
-import Header from '@/components/Header/Header';
+import Header from '@/components/Header';
+import {
+  Address,
+  AddressBox,
+  BigTitle,
+  Container,
+  MediumTitle,
+  SmallTitle,
+  StyledImage,
+  Text,
+} from '@/components/Detail/style';
 
 const TabButtonArea = styled.div`
   display: flex;
@@ -34,80 +43,21 @@ const TabButton = styled.button<TabButtonProps>`
   height: 90%;
   cursor: pointer;
   margin: 0.3rem;
-  font-size: ${FONT_SIZE.lg};
-  font-weight: bold;
-`;
-
-const Container = styled.div`
-  max-width: 90%;
-  margin: 0 auto;
-  padding: 0.2rem;
-`;
-
-const BigTitle = styled.div`
-  font-size: ${FONT_SIZE.xxxl};
-  font-weight: bold;
-  margin: 1rem;
-`;
-
-const StyledImage = styled.img`
-  width: auto;
-  height: auto;
-  border-radius: 2%;
-  object-fit: cover;
-  display: block;
-  margin: auto;
-  margin-bottom: 2rem;
-  max-height: 30rem;
-  max-width: 100%;
-`;
-
-const MediumTitle = styled.div`
-  font-size: ${FONT_SIZE.xxl};
-  font-weight: bold;
-  margin: 1rem;
-`;
-
-const SmallTitle = styled.div`
   font-size: ${FONT_SIZE.md};
   font-weight: bold;
-  margin-right: 0.9rem;
 `;
 
-const AddressBox = styled.div`
-  margin: 1rem;
+const Era = styled.div`
+  font-size: ${FONT_SIZE.md};
   display: flex;
   flex-direction: row;
-`;
-
-const Address = styled.div`
-  font-size: ${FONT_SIZE.md};
-  margin: 1rem;
+  margin: 1rem 0;
 `;
 
 const Marker = styled.img`
   width: 1.3rem;
   height: 1.6rem;
   display: block;
-  margin: auto 0 auto;
-  margin-right: 0.2rem;
-`;
-
-const Era = styled.div`
-  font-size: ${FONT_SIZE.md};
-  margin: 1rem;
-  display: flex;
-  flex-direction: row;
-`;
-
-const Text = styled.div`
-  font-size: ${FONT_SIZE.md};
-  margin: 1rem;
-  padding: 0.2rem;
-  letter-spacing: 0.03rem;
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
-  white-space: pre-wrap;
 `;
 
 const HeritageDetail = () => {
@@ -125,9 +75,9 @@ const HeritageDetail = () => {
   const showTab = data.additionalInfo !== null; // null로 바꿔줘야 함~
 
   return (
-    <DetailLayout>
+    <>
+      <Header pageName='문화재 정보' hasPrevious />
       <Container>
-        <Header pageName='문화재 정보' />
         <BigTitle>{nameFormatting(data.name)}</BigTitle>
         <AddressBox>
           <Marker src='/assets/images/placeMarker.png' alt='마커이미지' />
@@ -170,7 +120,7 @@ const HeritageDetail = () => {
           />
         </div>
       </Container>
-    </DetailLayout>
+    </>
   );
 };
 

@@ -31,7 +31,7 @@ const directionStyle = (visible: boolean) => css`
     gap: 0.8rem;
     align-items: center;
 
-    > div:nth-child(2) {
+    > div:nth-of-child(2) {
       margin-right: 1rem;
     }
   }
@@ -68,6 +68,13 @@ const Navigation = ({ map, origin, destination, setDestination }: Props) => {
   useEffect(() => {
     if (polyLine) polyLine.setMap(map);
   }, [polyLine]);
+
+  useEffect(() => {
+    return () => {
+      polyLine?.setMap(null);
+      setDestination(null);
+    };
+  }, []);
 
   return (
     <div css={directionStyle(isVisible)}>

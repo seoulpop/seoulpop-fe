@@ -71,6 +71,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.22.3
     version: 6.23.0(react-dom@18.3.1)(react@18.3.1)
+  react-spinners:
+    specifier: ^0.13.8
+    version: 0.13.8(react-dom@18.3.1)(react@18.3.1)
   zustand:
     specifier: ^4.5.2
     version: 4.5.2(@types/react@18.3.1)(react@18.3.1)
@@ -4835,6 +4838,16 @@ packages:
     dependencies:
       '@remix-run/router': 1.16.0
       react: 18.3.1
+    dev: false
+
+  /react-spinners@0.13.8(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-3e+k56lUkPj0vb5NDXPVFAOkPC//XyhKPJjvcGjyMNPWsBKpplfeyialP74G7H7+It7KzhtET+MvGqbKgAqpZA==}
+    peerDependencies:
+      react: ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /react@17.0.2:
