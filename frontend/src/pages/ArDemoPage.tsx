@@ -2,6 +2,8 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
+import useArMarkers from '@/hooks/server/useArMarkers';
+
 import ArContents from '@/containers/ArDemo/ArContents';
 import CoorDebug from '@/containers/ArDemo/CoorDebug';
 import FoundButton from '@/containers/ArDemo/FoundButton';
@@ -16,7 +18,6 @@ const SceneContainer = styled.div`
 
 /** 
 // 테스트용 데이터
-*/
 const MOCK_DATA: MarkerInfo[] = [
   {
     id: -1,
@@ -35,18 +36,17 @@ const MOCK_DATA: MarkerInfo[] = [
     arImage: '/assets/images/test2.png',
   },
 ];
+*/
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
   const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
 
-  // const { markerNearbyData } = useArMarkers({
-  //   lat: position?.latitude,
-  //   lng: position?.longitude,
-  // });
-
-  const markerNearbyData = MOCK_DATA;
+  const { markerNearbyData } = useArMarkers({
+    lat: position?.latitude,
+    lng: position?.longitude,
+  });
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
