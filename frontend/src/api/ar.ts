@@ -1,4 +1,4 @@
-import { api } from '@/api';
+import { api, apiUser } from '@/api';
 import { MarkerInfo } from '@/types/ar';
 
 /**
@@ -9,5 +9,15 @@ import { MarkerInfo } from '@/types/ar';
  */
 export const getArMarkerNearby = async (lat: number, lng: number): Promise<MarkerInfo[]> => {
   const response = await api.get(`/v1/histories/ar?lat=${lat}&lng=${lng}&level=7`);
+  return response.data;
+};
+
+/**
+ * 문화재/역사지 방문 처리
+ */
+export const poseHeritageVisited = async (historyId: number) => {
+  const response = await apiUser.post(`/v1/atlases`, {
+    historyId,
+  });
   return response.data;
 };
