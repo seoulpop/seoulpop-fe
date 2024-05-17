@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import useArMarkers from '@/hooks/server/useArMarkers';
 
 import ArContents from '@/containers/ArDemo/ArContents';
-import CoorDebug from '@/containers/ArDemo/CoorDebug';
+// import CoorDebug from '@/containers/ArDemo/CoorDebug';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
 import Spot from '@/containers/ArDemo/Spot';
@@ -82,7 +82,7 @@ const ArDemo = () => {
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
-      <CoorDebug lat={position?.latitude} lng={position?.longitude} />
+      {/* <CoorDebug lat={position?.latitude} lng={position?.longitude} /> */}
       <GoBackButton />
       <FoundButton isOpen={isOpen} heritage={selectItem} />
       <Scene
