@@ -133,8 +133,12 @@ export const PcContainer = () => {
             서울팝은 <span>안드로이드 12</span>부터 최적화되어 있습니다.
           </p>
           <div className='link'>
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a className='link-android' href='#'>
+            <a
+              className='link-android'
+              href='https://drive.google.com/file/d/1V5Yt-i7uwTJR1bWPjYjYGDwHAtJvuK1D/view?usp=drive_link'
+              target='_blank'
+              rel='noreferrer'
+            >
               <span className='logo' />
               <span>설치하러 가기</span>
             </a>
