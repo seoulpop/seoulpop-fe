@@ -31,10 +31,14 @@ const PCContainer = styled.div`
     color: var(--black);
     letter-spacing: -0.333px;
 
+    h1.title {
+      font-size: 16px;
+    }
+
     .logo-wrapper {
-      margin-top: 10.1rem;
-      width: 42.3rem;
-      height: 42.3rem;
+      margin-top: 4.1rem;
+      width: 28rem;
+      height: 28rem;
 
       img {
         width: 100%;
@@ -51,6 +55,7 @@ const PCContainer = styled.div`
     .desc {
       margin: 2.6rem 3.6rem 0;
 
+      line-height: 1.4;
       font-size: 20px;
       font-weight: 400;
     }
@@ -114,6 +119,7 @@ export const PcContainer = () => {
     <>
       <PcBackground />
       <PCContainer>
+        <h1 className='title'>서울팝</h1>
         <div className='logo-wrapper'>
           <img src='/assets/images/logo.png' alt='' />
         </div>
@@ -124,7 +130,7 @@ export const PcContainer = () => {
         </p>
         <div className='link-container'>
           <p>
-            서울팝은 <span>안드로이드</span>에 최적화되어 있습니다.
+            서울팝은 <span>안드로이드 12</span>부터 최적화되어 있습니다.
           </p>
           <div className='link'>
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
