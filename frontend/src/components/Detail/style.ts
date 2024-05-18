@@ -1,15 +1,14 @@
 import styled from '@emotion/styled';
 
-import { FONT_SIZE } from '@/styles/common';
 import { HEADER_HEIGHT } from '@/constants/components';
+import { FONT_SIZE } from '@/styles/common';
 
 export const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin: ${HEADER_HEIGHT + 1.6}rem 0 0;
-  padding: 0 2rem;
+  padding: ${HEADER_HEIGHT + 1.6}rem 2rem 0;
   gap: 1rem;
 `;
 

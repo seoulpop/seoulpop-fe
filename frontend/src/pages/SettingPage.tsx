@@ -1,19 +1,19 @@
+import DefaultLayout from '@/Layouts/DetailLayout';
 import Header from '@/components/Header';
-import styled from '@emotion/styled';
-import { HEADER_HEIGHT } from '@/constants/components';
-import { PushNotifications } from '@capacitor/push-notifications';
-import { Geolocation } from '@capacitor/geolocation';
-import { useEffect, useState } from 'react';
-import TabBar from '@/components/TabBar';
 import PermissionSlider from '@/components/PermissionSlider';
+import TabBar from '@/components/TabBar';
+import { HEADER_HEIGHT } from '@/constants/components';
 import { FONT_SIZE } from '@/styles/common';
+import { Geolocation } from '@capacitor/geolocation';
+import { PushNotifications } from '@capacitor/push-notifications';
+import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-top: ${HEADER_HEIGHT}rem;
-  padding: 2rem;
+  padding: ${HEADER_HEIGHT + 2}rem 2rem 2rem;
 
   > div {
     display: flex;
@@ -70,7 +70,7 @@ const SettingPage = () => {
   }, []);
 
   return (
-    <>
+    <DefaultLayout>
       <Header pageName='설정' />
       <Container>
         <div>
@@ -91,7 +91,7 @@ const SettingPage = () => {
         </div>
       </Container>
       <TabBar />
-    </>
+    </DefaultLayout>
   );
 };
 

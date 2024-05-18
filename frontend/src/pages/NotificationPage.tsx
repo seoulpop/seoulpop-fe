@@ -1,18 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 
+import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
+import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
 import useNotifications from '@/hooks/server/useNotifications';
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
-import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
 import { NotificationData } from '@/types/notification';
-import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
 
-import TabBar from '@/components/TabBar';
+import DefaultLayout from '@/Layouts/DetailLayout';
 import Header from '@/components/Header';
+import TabBar from '@/components/TabBar';
 
 const NotificationWrapper = styled.div`
-  margin: ${HEADER_HEIGHT + 1.6}rem 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
+  padding-top: ${HEADER_HEIGHT + 1.6}rem;
+  margin: 0 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
   display: flex;
   gap: 1.6rem;
   flex-direction: column;
@@ -56,7 +58,7 @@ const NotificationPage = () => {
   };
 
   return (
-    <>
+    <DefaultLayout>
       <Header pageName='알림' />
       <NotificationWrapper>
         {notificationsData?.map((data) => {
@@ -82,7 +84,7 @@ const NotificationPage = () => {
         })}
       </NotificationWrapper>
       <TabBar />
-    </>
+    </DefaultLayout>
   );
 };
 

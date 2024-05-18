@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 
+import PC_LAYOUT, { MOBILE_MIN_WIDTH } from '@/constants/pcLayout';
 import useToastStore from '@/store/toast';
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 
@@ -28,6 +29,11 @@ const ToastContainer = styled.div`
   &.show {
     bottom: 5rem;
     transition: bottom 1s ease;
+  }
+
+  @media screen and (min-width: ${MOBILE_MIN_WIDTH}px) {
+    max-width: 432px;
+    transform: translate(calc(${PC_LAYOUT.OFFSET}rem + 240px - 50%), 0);
   }
 `;
 

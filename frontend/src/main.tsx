@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ReactDOM from 'react-dom/client';
 
 import App from '@/App';
+import { PcContainer } from '@/Layouts/PcLayout';
 import GlobalStyles from '@/styles/GlobalStyles';
 import ToastProvider from '@/utils/provide/toastProvider';
 
@@ -19,6 +20,7 @@ root.render(
   <>
     <GlobalStyles />
     <QueryClientProvider client={queryClient}>
+      <PcContainer />
       <App />
       <ToastProvider />
       {(import.meta.env.VITE_NODE_ENV === 'development' ||

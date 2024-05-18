@@ -9,13 +9,9 @@ interface HeritageFont {
 }
 
 const HERITAGE_FONT: HeritageFont = {
-  '-1': {
-    src: `${FILE_PATH}/tapgolPark.json`,
-    text: '서울숭례문',
-  },
   '1': {
-    src: `${FILE_PATH}/multicampus.json`,
-    text: '멀티캠퍼스',
+    src: `${FILE_PATH}/sungnyemunGate.json`,
+    text: '서울숭례문',
   },
   '2': {
     src: `${FILE_PATH}/gyeongbokgung.json`,

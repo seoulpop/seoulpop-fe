@@ -65,6 +65,15 @@ const base = css`
   video {
     display: none;
   }
+
+  // ar pc 레이아웃
+  @media screen and (min-width: 1023px) {
+    a-scene {
+      max-width: 480px;
+      height: 100svh;
+      margin: 0 0 0 calc(50vw + 5rem);
+    }
+  }
 `;
 
 export default base;
