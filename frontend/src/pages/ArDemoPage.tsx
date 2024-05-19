@@ -6,6 +6,7 @@ import useArMarkers from '@/hooks/server/useArMarkers';
 
 import ArContents from '@/containers/ArDemo/ArContents';
 // import CoorDebug from '@/containers/ArDemo/CoorDebug';
+import AR_IMAGE from '@/constants/arImage';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
 import NearMessage from '@/containers/ArDemo/NearMessage';
@@ -60,6 +61,21 @@ const MOCK_DATA: MarkerInfo[] = [
   },
 ];
 */
+
+const getArImage = (marker?: MarkerInfo): string | undefined => {
+  let arImage;
+
+  if (marker?.arImage) {
+    if (marker.arImage in AR_IMAGE) {
+      arImage = AR_IMAGE[marker.arImage];
+    } else {
+      arImage = undefined;
+    }
+  } else {
+    arImage = undefined;
+  }
+  return arImage;
+};
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
@@ -131,6 +147,8 @@ const ArDemo = () => {
     setNearItem(near);
   }, [markerNearbyData, position]);
 
+  const arImage = getArImage(selectItem);
+
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
@@ -160,7 +178,8 @@ const ArDemo = () => {
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&
           markerNearbyData?.map((heritage) => {
-            const { id, lat, lng, arImage } = heritage;
+            const { id, lat, lng } = heritage;
+            const image = getArImage(heritage);
             return (
               <Spot
                 key={id}
@@ -173,7 +192,7 @@ const ArDemo = () => {
                   setSelectItem(markerNearbyData.find((data) => data.id === heritageId));
                 }}
                 position={position}
-                hasArContents={!!arImage}
+                hasArContents={!!image}
               />
             );
           })}
@@ -182,7 +201,7 @@ const ArDemo = () => {
           isOpen={isOpen}
           lat={selectItem?.lat}
           lng={selectItem?.lng}
-          arImage={selectItem?.arImage}
+          arImage={arImage}
           onClose={() => setIsOpen(false)}
         />
       </Scene>
