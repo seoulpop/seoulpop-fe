@@ -137,7 +137,10 @@ const Spot = ({
           />
           {hasFontFile && (
             <Entity position={{ x: 0, y: 6, z: 0 }}>
-              <HeritageName name={heritage.name} font={HERITAGE_FONT[heritage.id]} />
+              <HeritageName
+                name={HERITAGE_FONT[heritage.id].text}
+                font={HERITAGE_FONT[heritage.id].src}
+              />
             </Entity>
           )}
         </Entity>
