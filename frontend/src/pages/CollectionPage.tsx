@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
@@ -11,6 +11,9 @@ import Header from '@/components/Header';
 import TabBar from '@/components/TabBar';
 
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
+import { LocalAtlases } from '@/types/atlases';
+import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
+import { TOTAL_ATLASES_CNT } from '@/constants/atlases';
 
 const Container = styled.div`
   margin: ${HEADER_HEIGHT + 1.6}rem 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
@@ -91,20 +94,40 @@ const heritageImageStyle = (visited: boolean) => css`
 const CollectionPage = () => {
   const navigate = useNavigate();
   const { atlasesData, isAtlasesLoading } = useAtlases();
+  const { visitedAtlases } = useVisitedAtlases();
   const [currentCategory, setCurrentCategory] = useState<
     '전체' | '문화재' | '6·25전쟁' | '3·1운동'
   >('전체');
-  const totalData = atlasesData?.filter(
-    ({ historyCategory }) => historyCategory === currentCategory || currentCategory === '전체',
-  );
-  const gauge = atlasesData?.filter(
-    ({ historyCategory, visited }) =>
-      (historyCategory === currentCategory || currentCategory === '전체') && visited,
-  );
+  const [cntVisited, setCntVisited] = useState({ 전체: 0, 문화재: 0, '6·25전쟁': 0, '3·1운동': 0 });
+  const [cntTotal, setCntTotal] = useState(TOTAL_ATLASES_CNT);
 
   const changeTab = (category: '전체' | '문화재' | '6·25전쟁' | '3·1운동') => {
     setCurrentCategory(category);
   };
+
+  useEffect(() => {
+    if (atlasesData) {
+      setCntTotal(
+        currentCategory === '전체'
+          ? atlasesData.length
+          : atlasesData.filter(({ historyCategory }) => historyCategory === currentCategory).length,
+      );
+    }
+  }, [atlasesData, currentCategory]);
+
+  useEffect(() => {
+    if (visitedAtlases.length) {
+      setCntVisited({
+        전체: visitedAtlases.length,
+        문화재: visitedAtlases.filter(({ historyCategory }) => historyCategory === '문화재').length,
+        '6·25전쟁': visitedAtlases.filter(({ historyCategory }) => historyCategory === '6·25전쟁')
+          .length,
+        '3·1운동': visitedAtlases.filter(({ historyCategory }) => historyCategory === '3·1운동')
+          .length,
+      });
+    }
+  }, [visitedAtlases]);
+
   /** TODO: 추후 로그인 권한 체크
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
@@ -188,17 +211,31 @@ const CollectionPage = () => {
         <Gauge>
           <div
             css={GaugePoint(
-              gauge && totalData ? Math.round((gauge.length / totalData.length) * 100) : 0,
+              atlasesData && cntVisited
+                ? Math.round((cntVisited[currentCategory] / cntTotal) * 100)
+                : 0,
             )}
           />
           <Percentage>
-            {gauge && totalData ? Math.round((gauge.length / totalData.length) * 100) : 0}%
+            {cntVisited[currentCategory]} / {cntTotal} &nbsp;
+            {atlasesData && cntVisited
+              ? Math.round((cntVisited[currentCategory] / cntTotal) * 100)
+              : 0}
+            %
           </Percentage>
         </Gauge>
         <CollectionArea>
           {!isAtlasesLoading &&
-            totalData?.map(
-              ({ historyId, historyCategory, historyName, heritageImgUrl, visited }) => {
+            atlasesData
+              ?.filter(
+                ({ historyCategory }) =>
+                  currentCategory === '전체' || historyCategory === currentCategory,
+              )
+              ?.map(({ historyId, historyCategory, historyName, heritageImgUrl }) => {
+                const visited = !!visitedAtlases.filter(
+                  (visitedAtlas: LocalAtlases) => visitedAtlas.historyId === historyId,
+                ).length;
+                console.log('collection page: ', historyId, visited);
                 return (
                   <Collection
                     key={historyId}
@@ -213,8 +250,7 @@ const CollectionPage = () => {
                     <div>{visited ? historyName : '????'}</div>
                   </Collection>
                 );
-              },
-            )}
+              })}
         </CollectionArea>
       </Container>
       <TabBar />

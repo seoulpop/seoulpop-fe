@@ -2,13 +2,13 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import useHeritageVisited from '@/hooks/server/useHeritageVisited';
-
 import Button from '@/components/Button';
 
 import useToastStore from '@/store/toast';
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/ar';
+import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
+import { ATLASES_DATA_KEY } from '@/constants/atlases';
 
 const slideIn = keyframes`
   from {
@@ -61,8 +61,8 @@ const Text = styled.span`
 
 const FoundButton = ({ heritage, isOpen }: { heritage?: MarkerInfo; isOpen?: boolean }) => {
   const navigate = useNavigate();
-  const heritageVisitedMutation = useHeritageVisited();
   const { toast } = useToastStore();
+  const { visitedAtlases } = useVisitedAtlases();
 
   let className = '';
 
@@ -71,27 +71,23 @@ const FoundButton = ({ heritage, isOpen }: { heritage?: MarkerInfo; isOpen?: boo
   else className = 'is-inactive';
 
   const handleClick = () => {
-    if (!heritage || heritageVisitedMutation.isPending) return;
-    heritageVisitedMutation.mutate(heritage.id, {
-      onSuccess: () => {
-        // TODO: 새롭게 등록 되었는지 boolean 필요
-        toast({ message: '새로운 도감이 등록되었습니다!' });
+    if (!heritage) return;
 
-        if (heritage?.category === '문화재') {
-          navigate(`/heritage/detail/${heritage.id}`);
-          return;
-        }
-        navigate(`/site/detail/${heritage.id}`);
-      },
-      onError: () => {
-        // FIXME: 에러가 난 경우 도감 등록이 안됨. 로직 개선 필요
-        if (heritage?.category === '문화재') {
-          navigate(`/heritage/detail/${heritage.id}`);
-          return;
-        }
-        navigate(`/site/detail/${heritage.id}`);
-      },
-    });
+    localStorage.setItem(
+      ATLASES_DATA_KEY,
+      JSON.stringify([
+        ...visitedAtlases,
+        { historyId: heritage.id, historyCategory: heritage.category },
+      ]),
+    );
+
+    toast({ message: '새로운 도감이 등록되었습니다!' });
+
+    if (heritage?.category === '문화재') {
+      navigate(`/heritage/detail/${heritage.id}`);
+      return;
+    }
+    navigate(`/site/detail/${heritage.id}`);
   };
 
   return (
