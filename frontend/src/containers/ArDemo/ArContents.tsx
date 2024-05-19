@@ -50,6 +50,11 @@ const ArContents = ({
         el.removeEventListener('click', closeModal);
       },
     });
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      delete AFRAME.components['close-btn'];
+    };
   }, []);
 
   // 닫기 애니메이션 종료 후 상태 업데이트
@@ -110,8 +115,8 @@ const ArContents = ({
       />
 
       <Entity close-btn position={{ x: buttonOffsetX, y: buttonOffsetY, z: 0.3 }} visible={visible}>
-        <Circle color='#fff' radius={closeBtnRadius} />
-        <Circle radius={closeBtnRadius / 1.5} src='/svgs/cancel.svg' />
+        <Circle color='#fff' radius={closeBtnRadius} close-btn />
+        <Circle radius={closeBtnRadius / 1.5} src='/svgs/cancel.svg' close-btn />
       </Entity>
     </Entity>
   );
