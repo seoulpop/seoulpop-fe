@@ -46,10 +46,11 @@ interface Props {
   map: kakao.maps.Map;
   origin: Coords;
   destination: DestinationInfo;
+  setOrigin: React.Dispatch<React.SetStateAction<Coords | null>>;
   setDestination: React.Dispatch<React.SetStateAction<DestinationInfo | null>>;
 }
 
-const Navigation = ({ map, origin, destination, setDestination }: Props) => {
+const Navigation = ({ map, origin, setOrigin, destination, setDestination }: Props) => {
   const [isVisible, setIsVisible] = useState(true);
   const { polyLine, bounds } = usePolyLine(origin, destination);
 
@@ -58,6 +59,7 @@ const Navigation = ({ map, origin, destination, setDestination }: Props) => {
     setTimeout(() => {
       polyLine?.setMap(null);
       setDestination(null);
+      setOrigin(null);
     }, 500);
   };
 
@@ -74,6 +76,7 @@ const Navigation = ({ map, origin, destination, setDestination }: Props) => {
     return () => {
       polyLine?.setMap(null);
       setDestination(null);
+      setOrigin(null);
     };
   }, []);
 

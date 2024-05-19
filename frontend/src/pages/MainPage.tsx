@@ -50,7 +50,7 @@ const MainPage = () => {
     lat: DEFAULT_MARKER_INFO.lat,
     lng: DEFAULT_MARKER_INFO.lng,
   });
-  const [origin, setOrigin] = useState<Coords>({ lat, lng });
+  const [origin, setOrigin] = useState<Coords | null>(null);
   const [destination, setDestination] = useState<DestinationInfo | null>(null);
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
@@ -114,7 +114,6 @@ const MainPage = () => {
         lat: notificationData.historyLat,
         lng: notificationData.historyLng,
       });
-      setOrigin({ lat, lng });
     }
   }, []);
 
@@ -122,6 +121,7 @@ const MainPage = () => {
   useEffect(() => {
     if (!isInit && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
       setCenter({ lat, lng });
+      setOrigin({ lat, lng });
       setIsInit(true);
     }
   }, [isInit, lat, lng]);
@@ -141,11 +141,12 @@ const MainPage = () => {
         ref={mapRef}
         onClick={() => setClickedMarker(null)}
       >
-        {destination && && isInit && mapRef.current ? (
+        {destination && origin && isInit && mapRef.current ? (
           <>
             <Navigation
               map={mapRef.current}
               origin={origin}
+              setOrigin={setOrigin}
               destination={destination}
               setDestination={setDestination}
             />
