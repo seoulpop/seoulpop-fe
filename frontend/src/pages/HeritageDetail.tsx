@@ -63,7 +63,6 @@ const Marker = styled.img`
 const HeritageDetail = () => {
   const { historyId } = useParams();
   const { historyDetailData } = useHistoryDetail(historyId ? +historyId : 1);
-  console.log(historyDetailData);
   const data: HeritageInfo = historyDetailData as HeritageInfo;
 
   const [activeTab, setActiveTab] = useState('tab1');

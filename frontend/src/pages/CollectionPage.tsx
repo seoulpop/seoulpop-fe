@@ -235,7 +235,6 @@ const CollectionPage = () => {
                 const visited = !!visitedAtlases.filter(
                   (visitedAtlas: LocalAtlases) => visitedAtlas.historyId === historyId,
                 ).length;
-                console.log('collection page: ', historyId, visited);
                 return (
                   <Collection
                     key={historyId}
