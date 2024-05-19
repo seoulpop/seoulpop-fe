@@ -10,7 +10,7 @@ import Button from '@/components/Button';
 import { IconCenter, IconDown, IconUp } from '#/svgs';
 import { bottomPanelSlideIn, bottomPanelSlideOut } from '@/styles/animation';
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
-import { MarkerNearbyInfo } from '@/types/marker';
+import { MarkerInfo, MarkerNearbyInfo } from '@/types/marker';
 import { TABBAR_HEIGHT } from '@/constants/components';
 
 import { Camera } from '@capacitor/camera';
@@ -153,9 +153,14 @@ const EmptyCarousel = styled.div`
 interface BottomPanelAreaProps {
   markerNearbyData?: MarkerNearbyInfo[];
   onCenterClick: () => void;
+  handleMarkerClick: (marker: MarkerInfo) => void;
 }
 
-const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaProps) => {
+const BottomPanelArea = ({
+  markerNearbyData,
+  onCenterClick,
+  handleMarkerClick,
+}: BottomPanelAreaProps) => {
   const navigate = useNavigate();
 
   const [isVisible, setIsVisible] = useState<boolean>(true);
@@ -207,17 +212,23 @@ const BottomPanelArea = ({ markerNearbyData, onCenterClick }: BottomPanelAreaPro
       <Carousel>
         <StyledFlicking align='prev' bound>
           {markerNearbyData && markerNearbyData.length ? (
-            markerNearbyData.map(({ id, thumbnail, name, address }) => (
-              <NearbyDataItem key={id}>
-                <ThumbnailWrapper>
-                  <Thumbnail src={thumbnail} alt={name} />
-                </ThumbnailWrapper>
-                <Info>
-                  <p className='name'>{name}</p>
-                  <p className='address'>{address}</p>
-                </Info>
-              </NearbyDataItem>
-            ))
+            markerNearbyData.map(
+              ({ id, thumbnail, name, address, lat, lng, category, visited }) => (
+                <NearbyDataItem
+                  key={id}
+                  role='button'
+                  onClick={() => handleMarkerClick({ category, id, lat, lng, name, visited })}
+                >
+                  <ThumbnailWrapper>
+                    <Thumbnail src={thumbnail} alt={name} />
+                  </ThumbnailWrapper>
+                  <Info>
+                    <p className='name'>{name}</p>
+                    <p className='address'>{address}</p>
+                  </Info>
+                </NearbyDataItem>
+              ),
+            )
           ) : (
             <NearbyDataItem>
               <EmptyCarousel>
