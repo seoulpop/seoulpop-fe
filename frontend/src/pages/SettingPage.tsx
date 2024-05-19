@@ -1,12 +1,12 @@
 import Header from '@/components/Header';
 import styled from '@emotion/styled';
-import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
+import { HEADER_HEIGHT } from '@/constants/components';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Geolocation } from '@capacitor/geolocation';
 import { useEffect, useState } from 'react';
 import TabBar from '@/components/TabBar';
 import PermissionSlider from '@/components/PermissionSlider';
-import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
+import { FONT_SIZE } from '@/styles/common';
 
 const Container = styled.div`
   display: flex;
@@ -21,22 +21,6 @@ const Container = styled.div`
     align-items: center;
     font-size: ${FONT_SIZE.md};
   }
-`;
-
-const LoginContainer = styled.a`
-  position: absolute;
-  bottom: ${TABBAR_HEIGHT + 1.6}rem;
-  display: block;
-  padding: 1.3rem;
-  background-color: #fee500;
-  left: 5%;
-  width: 90%;
-  border-radius: ${BORDER_RADIUS.circle};
-  text-decoration: none;
-  outline: none;
-  color: var(--black);
-  text-align: center;
-  font-size: ${FONT_SIZE.md};
 `;
 
 const SettingPage = () => {
@@ -85,10 +69,6 @@ const SettingPage = () => {
     checkGeolocationPermission();
   }, []);
 
-  const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
-  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
-  const loginUri = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
   return (
     <>
       <Header pageName='설정' />
@@ -110,7 +90,6 @@ const SettingPage = () => {
           />
         </div>
       </Container>
-      <LoginContainer href={loginUri}>카카오 로그인</LoginContainer>
       <TabBar />
     </>
   );
