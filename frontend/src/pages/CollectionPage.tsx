@@ -1,15 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import Header from '@/components/Header';
-import TabBar from '@/components/TabBar';
-import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
-import useAtlases from '@/hooks/server/useAtlases';
-import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isAuthenticated, hasRefreshToken, reissueAccessToken } from '@/utils/auth';
+
+import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
+import useAtlases from '@/hooks/server/useAtlases';
+
+import Header from '@/components/Header';
 import LoginModal from '@/components/LoginModal';
+import TabBar from '@/components/TabBar';
+
+import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
+import { hasRefreshToken, isAuthenticated, reissueAccessToken } from '@/utils/auth';
 
 const Container = styled.div`
   margin: ${HEADER_HEIGHT + 1.6}rem 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
