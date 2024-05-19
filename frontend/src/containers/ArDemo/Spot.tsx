@@ -49,6 +49,11 @@ const Spot = ({
         el.addEventListener('click', () => clickHandler(id));
       },
     });
+
+    // eslint-disable-next-line consistent-return
+    return () => {
+      delete AFRAME.components[`spot-click`];
+    };
   }, []);
 
   useEffect(() => {
