@@ -63,14 +63,12 @@ const MOCK_DATA: MarkerInfo[] = [
 */
 
 const getArImage = (marker?: MarkerInfo): string | undefined => {
+  if (!marker) return undefined;
+
   let arImage;
 
-  if (marker?.arImage) {
-    if (marker.arImage in AR_IMAGE) {
-      arImage = AR_IMAGE[marker.arImage];
-    } else {
-      arImage = undefined;
-    }
+  if (marker.id in AR_IMAGE) {
+    arImage = AR_IMAGE[marker.id];
   } else {
     arImage = undefined;
   }
