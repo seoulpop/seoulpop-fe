@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Z_INDEX } from '@/styles/common';
-import { IconBook, IconSetting, IconNotification, IconMap } from '#/svgs';
+import { IconBook, IconMap, IconNotification, IconSetting } from '#/svgs';
 import { TABBAR_ICON_HEIGHT, TABBAR_PADDING } from '@/constants/components';
+import PC_LAYOUT, { MOBILE_MIN_WIDTH } from '@/constants/pcLayout';
+import { Z_INDEX } from '@/styles/common';
 
 const Container = styled.div`
   position: fixed;
@@ -16,6 +17,11 @@ const Container = styled.div`
   padding: ${TABBAR_PADDING}rem 0;
   background-color: var(--white);
   z-index: ${Z_INDEX.layout};
+
+  @media screen and (min-width: ${MOBILE_MIN_WIDTH}px) {
+    max-width: 480px;
+    margin: 0 0 0 calc(50vw + ${PC_LAYOUT.OFFSET}rem);
+  }
 `;
 
 const NavigationButton = styled.button<{ isActive: boolean }>`
