@@ -70,7 +70,6 @@ const Carousel = styled.div`
 
 const StyledFlicking = styled(Flicking)`
   height: 19.5rem;
-  overflow: hidden;
 
   .flicking-viewport {
     display: flex;

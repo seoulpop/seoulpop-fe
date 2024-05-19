@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { MarkerInfo, MarkerNearbyInfo } from '@/types/marker';
 import { getMarkerInfo, getMarkerNearby } from '@/api/markerInfo';
@@ -14,6 +14,7 @@ const useMaps = (lat: number = DEFAULT_MARKER_INFO.lat, lng: number = DEFAULT_MA
     {
       queryKey: ['markerNearby', lat, lng],
       queryFn: () => getMarkerNearby(lat, lng),
+      placeholderData: keepPreviousData,
     },
   );
 
