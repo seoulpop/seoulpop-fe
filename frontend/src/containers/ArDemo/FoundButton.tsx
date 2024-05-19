@@ -4,11 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '@/components/Button';
 
+import { ATLASES_DATA_KEY } from '@/constants/atlases';
+import PC_LAYOUT, { MOBILE_MIN_WIDTH } from '@/constants/pcLayout';
+import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
 import useToastStore from '@/store/toast';
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/ar';
-import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
-import { ATLASES_DATA_KEY } from '@/constants/atlases';
 
 const slideIn = keyframes`
   from {
@@ -27,6 +28,7 @@ const slideOut = keyframes`
 `;
 
 const ButtonBlock = styled.div`
+  display: none;
   position: absolute;
   left: 50%;
   bottom: -4.8em;
@@ -39,7 +41,12 @@ const ButtonBlock = styled.div`
     animation: ${slideIn} 0.5s cubic-bezier(0.86, 0, 0.07, 1) forwards;
   }
   &.is-inactive {
+    display: block;
     animation: ${slideOut} 0.5s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+  }
+
+  @media screen and (min-width: ${MOBILE_MIN_WIDTH}px) {
+    transform: translate(calc(${PC_LAYOUT.OFFSET}rem + 240px - 50%), 0);
   }
 `;
 
