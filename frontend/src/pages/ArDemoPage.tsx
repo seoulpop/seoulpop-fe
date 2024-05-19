@@ -2,15 +2,13 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import useArMarkers from '@/hooks/server/useArMarkers';
-
 import ArContents from '@/containers/ArDemo/ArContents';
 // import CoorDebug from '@/containers/ArDemo/CoorDebug';
-import AR_IMAGE from '@/constants/arImage';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
 import NearMessage from '@/containers/ArDemo/NearMessage';
 import Spot from '@/containers/ArDemo/Spot';
+import useArMarkers from '@/hooks/server/useArMarkers';
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
@@ -48,6 +46,7 @@ const SceneContainer = styled.div`
 
 /** 
 // 테스트용 데이터
+
 const MOCK_DATA: MarkerInfo[] = [
   {
     id: -1,
@@ -85,19 +84,6 @@ const MOCK_DATA: MarkerInfo[] = [
 */
 
 const deviceMotionMessage = `<p class='a-dialog-message'>ar기능을 사용하기 위해 기기의 방향을 감지할 수 있는 권한을 허용해주세요.</p>`;
-
-const getArImage = (marker?: MarkerInfo): string | undefined => {
-  if (!marker) return undefined;
-
-  let arImage;
-
-  if (marker.id in AR_IMAGE) {
-    arImage = AR_IMAGE[marker.id];
-  } else {
-    arImage = undefined;
-  }
-  return arImage;
-};
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
@@ -169,8 +155,6 @@ const ArDemo = () => {
     setNearItem(near);
   }, [markerNearbyData, position]);
 
-  const arImage = getArImage(selectItem);
-
   // TODO: 문화재가 없는 경우 UI
   return (
     <SceneContainer>
@@ -201,8 +185,7 @@ const ArDemo = () => {
         {markerNearbyData &&
           markerNearbyData?.length > 0 &&
           markerNearbyData?.map((heritage) => {
-            const { id, lat, lng } = heritage;
-            const image = getArImage(heritage);
+            const { id, lat, lng, arImage } = heritage;
             return (
               <Spot
                 key={id}
@@ -215,7 +198,7 @@ const ArDemo = () => {
                   setSelectItem(markerNearbyData.find((data) => data.id === heritageId));
                 }}
                 position={position}
-                hasArContents={!!image}
+                hasArContents={!!arImage}
               />
             );
           })}
@@ -224,7 +207,7 @@ const ArDemo = () => {
           isOpen={isOpen}
           lat={selectItem?.lat}
           lng={selectItem?.lng}
-          arImage={arImage}
+          arImage={selectItem?.arImage}
           onClose={() => setIsOpen(false)}
         />
       </Scene>
