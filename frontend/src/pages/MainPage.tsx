@@ -19,6 +19,7 @@ import useNotifications from '@/hooks/server/useNotifications';
 
 import TabBar from '@/components/TabBar';
 import Button from '@/components/Button';
+import FindDirections from '@/containers/Main/FindDirections';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -51,6 +52,7 @@ const MainPage = () => {
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [isInit, setIsInit] = useState(false);
+  const [clickedMarker, setClickedMarker] = useState<MarkerInfo | null>(null);
 
   const handleCenterClick = () => {
     setCenter({ lat, lng });
@@ -58,6 +60,24 @@ const MainPage = () => {
 
   const handleMapCategoryClick = (index: number) => {
     setSelectedCategory(selectedCategory === index ? 0 : index);
+  };
+
+  const handleMarkerClick = (marker: MarkerInfo) => {
+    setCenter({ lat: marker.lat, lng: marker.lng });
+    setClickedMarker(marker);
+  };
+
+  const handleFindDirectionClick = () => {
+    if (clickedMarker) {
+      setClickedMarker(null);
+      setOrigin({ lat, lng });
+      setDestination({
+        name: clickedMarker.name,
+        category: clickedMarker.category,
+        lat: clickedMarker.lat,
+        lng: clickedMarker.lng,
+      });
+    }
   };
 
   useEffect(() => {
@@ -116,6 +136,7 @@ const MainPage = () => {
           setCenter({ lat: map.getCenter().getLat(), lng: map.getCenter().getLng() })
         }
         ref={mapRef}
+        onClick={() => setClickedMarker(null)}
       >
         {destination && isInit && mapRef.current ? (
           <>
@@ -164,9 +185,16 @@ const MainPage = () => {
                 6·25전쟁
               </Button>
             </CategoryWrapper>
+            {clickedMarker && (
+              <FindDirections
+                markerInfo={clickedMarker}
+                handleFindDirectionClick={handleFindDirectionClick}
+              />
+            )}
             <BottomPanelArea
               markerNearbyData={markerNearbyData}
               onCenterClick={handleCenterClick}
+              handleMarkerClick={handleMarkerClick}
             />
             <TabBar />
             <MarkerClusterer averageCenter={true} minLevel={5}>
@@ -181,8 +209,12 @@ const MainPage = () => {
                     key={marker.id}
                     image={{
                       src: `/assets/images/${marker.category}-${marker.visited}.webp`,
-                      size: { width: 40, height: 50 },
+                      size:
+                        marker.id !== clickedMarker?.id
+                          ? { width: 40, height: 50 }
+                          : { width: 50, height: 60 },
                     }}
+                    onClick={() => handleMarkerClick(marker)}
                   />
                 ))
               )}
