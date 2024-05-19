@@ -24,11 +24,12 @@ const directionStyle = (visible: boolean) => css`
   animation: ${visible ? directionPanelSlideIn : directionPanelSlideOut} 0.5s
     cubic-bezier(0.86, 0, 0.07, 1) forwards;
   font-size: ${FONT_SIZE.lg};
+  font-weight: bold;
 
   div {
     display: flex;
     flex-direction: row;
-    gap: 0.8rem;
+    gap: 1.2rem;
     align-items: center;
 
     > div:nth-of-child(2) {
@@ -79,8 +80,9 @@ const Navigation = ({ map, origin, destination, setDestination }: Props) => {
   return (
     <div css={directionStyle(isVisible)}>
       <div>
-        <img src='/assets/images/placeMarker.png' alt='marker' />
-        <div>도착지</div>
+        <div>
+          <img src='/assets/images/placeMarker.png' alt='marker' /> 도착지
+        </div>
         <div>{destination.name}</div>
       </div>
       <IconCancel width={16} onClick={closeNavigation} />
