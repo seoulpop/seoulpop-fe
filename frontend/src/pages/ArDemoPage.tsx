@@ -9,6 +9,7 @@ import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
 import NearMessage from '@/containers/ArDemo/NearMessage';
 import Spot from '@/containers/ArDemo/Spot';
+import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
 
@@ -20,6 +21,27 @@ interface NearItem {
 const SceneContainer = styled.div`
   width: 100%;
   height: 100%;
+
+  .a-dialog-message {
+    padding: 0 0.5rem;
+    color: var(--black);
+    font-size: ${FONT_SIZE.md};
+  }
+
+  .a-dialog-allow-button {
+    border-radius: ${BORDER_RADIUS.md};
+
+    background-color: var(--primary);
+    color: var(--white);
+  }
+
+  .a-dialog-deny-button {
+    border-radius: ${BORDER_RADIUS.md};
+
+    box-shadow: 0 0 0 1px var(--primary);
+    background-color: var(--white);
+    color: var(--primary);
+  }
 `;
 
 /** 
@@ -60,6 +82,8 @@ const MOCK_DATA: MarkerInfo[] = [
     arImage: '/assets/images/sungnyemunGate.jpeg',
   },
 ];
+
+const deviceMotionMessage = `<p class='a-dialog-message'>ar기능을 사용하기 위해 기기의 방향을 감지할 수 있는 권한을 허용해주세요.</p>`;
 
 const getArImage = (marker?: MarkerInfo): string | undefined => {
   if (!marker) return undefined;
@@ -165,6 +189,7 @@ const ArDemo = () => {
         raycaster='near: 0; far: 50000'
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer={{ antialias: true, alpha: true }}
+        device-orientation-permission-ui={`deviceMotionMessage: ${deviceMotionMessage}; allowButtonText: 허용; denyButtonText: 허용 안함;`}
       >
         <Camera
           gps-new-camera='gpsMinDistance: 5;'
