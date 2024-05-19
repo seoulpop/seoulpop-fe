@@ -13,7 +13,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: ${HEADER_HEIGHT}rem 2rem 2rem;
+  padding: ${HEADER_HEIGHT + 2}rem 2rem 2rem;
 
   > div {
     display: flex;
