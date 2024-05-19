@@ -2,11 +2,13 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
+import useArMarkers from '@/hooks/server/useArMarkers';
+
 import ArContents from '@/containers/ArDemo/ArContents';
 // import CoorDebug from '@/containers/ArDemo/CoorDebug';
 import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
-import NearMessage from '@/containers/ArDemo/NearMessage.styled';
+import NearMessage from '@/containers/ArDemo/NearMessage';
 import Spot from '@/containers/ArDemo/Spot';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
@@ -23,7 +25,6 @@ const SceneContainer = styled.div`
 
 /** 
 // 테스트용 데이터
-*/
 const MOCK_DATA: MarkerInfo[] = [
   {
     id: -1,
@@ -58,6 +59,7 @@ const MOCK_DATA: MarkerInfo[] = [
     arImage: '/assets/images/sungnyemunGate.jpeg',
   },
 ];
+*/
 
 const ArDemo = () => {
   const [position, setPosition] = useState<Position>();
@@ -65,12 +67,10 @@ const ArDemo = () => {
   const [isOpen, setIsOpen] = useState<boolean>();
   const [nearItem, setNearItem] = useState<MarkerInfo | null>();
 
-  // const { markerNearbyData } = useArMarkers({
-  //   lat: position?.latitude,
-  //   lng: position?.longitude,
-  // });
-
-  const markerNearbyData = MOCK_DATA;
+  const { markerNearbyData } = useArMarkers({
+    lat: position?.latitude,
+    lng: position?.longitude,
+  });
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
@@ -105,7 +105,7 @@ const ArDemo = () => {
 
   useEffect(() => {
     // 가장 가까운 지점 계산
-    if (!position) return;
+    if (!position || !markerNearbyData) return;
 
     const minDistance = 0.06;
 
