@@ -2,13 +2,29 @@
 const FILE_PATH = '/assets/msdfs';
 
 interface HeritageFont {
-  [key: string]: string;
+  [key: string]: {
+    src: string;
+    text: string;
+  };
 }
 
 const HERITAGE_FONT: HeritageFont = {
-  '-1': `${FILE_PATH}/tapgolPark.json`, // FIXME: 서울 숭례문 -> 서울서숭례문 으로 렌더링됨
-  '1': `${FILE_PATH}/multicampus.json`,
-  '2': `${FILE_PATH}/gyeongbokgung.json`,
+  '-1': {
+    src: `${FILE_PATH}/tapgolPark.json`,
+    text: '서울숭례문',
+  },
+  '1': {
+    src: `${FILE_PATH}/multicampus.json`,
+    text: '멀티캠퍼스',
+  },
+  '2': {
+    src: `${FILE_PATH}/gyeongbokgung.json`,
+    text: '경복궁',
+  },
+  72: {
+    src: `${FILE_PATH}/seonjeongneungTomb.json`,
+    text: '선정릉',
+  },
 };
 
 export default HERITAGE_FONT;
