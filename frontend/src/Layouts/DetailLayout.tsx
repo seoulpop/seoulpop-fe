@@ -7,14 +7,14 @@ const DefaultLayout = styled.div`
   width: auto;
   max-width: 480px;
   min-height: 100svh;
-  margin: 0 0 0 calc(50vw + ${PC_LAYOUT.OFFSET}rem);
+  margin: 0 auto;
   padding: 0;
   background-color: var(--white);
   font-size: 1.6rem;
   box-shadow: var(--shadow);
 
-  @media screen and (min-width: ${MOBILE_MIN_WIDTH}) {
-    margin: 0 auto;
+  @media screen and (min-width: ${MOBILE_MIN_WIDTH}px) {
+    margin: 0 0 0 calc(50vw + ${PC_LAYOUT.OFFSET}rem);
   }
 `;
 
