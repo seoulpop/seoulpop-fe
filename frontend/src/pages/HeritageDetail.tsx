@@ -1,15 +1,14 @@
 import { AutoPlay } from '@egjs/flicking-plugins';
-import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useState, ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import useHistoryDetail from '@/hooks/server/useHistoryDetail';
-import { FONT_SIZE, BORDER_RADIUS } from '@/styles/common';
-import { HeritageInfo } from '@/types/history';
 import ImageCarousel from '@/containers/History/ImageCarousel';
+import useHistoryDetail from '@/hooks/server/useHistoryDetail';
+import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
+import { HeritageInfo } from '@/types/history';
 
-import KakaoMap from '@/components/History/KakaoMap';
-import Header from '@/components/Header';
+import DefaultLayout from '@/Layouts/DetailLayout';
 import {
   Address,
   AddressBox,
@@ -20,6 +19,8 @@ import {
   StyledImage,
   Text,
 } from '@/components/Detail/style';
+import Header from '@/components/Header';
+import KakaoMap from '@/components/History/KakaoMap';
 
 const TabButtonArea = styled.div`
   display: flex;
@@ -74,7 +75,7 @@ const HeritageDetail = () => {
   const showTab = data.additionalInfo !== null; // null로 바꿔줘야 함~
 
   return (
-    <>
+    <DefaultLayout>
       <Header pageName='문화재 정보' hasPrevious />
       <Container>
         <BigTitle>{nameFormatting(data.name)}</BigTitle>
@@ -119,7 +120,7 @@ const HeritageDetail = () => {
           />
         </div>
       </Container>
-    </>
+    </DefaultLayout>
   );
 };
 

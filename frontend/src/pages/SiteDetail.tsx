@@ -2,12 +2,11 @@ import { AutoPlay } from '@egjs/flicking-plugins';
 import '@egjs/flicking-plugins/dist/arrow.css';
 import { useParams } from 'react-router-dom';
 
+import ImageCarousel from '@/containers/History/ImageCarousel';
 import useHistoryDetail from '@/hooks/server/useHistoryDetail';
 import { SiteInfo } from '@/types/history';
-import ImageCarousel from '@/containers/History/ImageCarousel';
 
-import KakaoMap from '@/components/History/KakaoMap';
-import Header from '@/components/Header';
+import DefaultLayout from '@/Layouts/DetailLayout';
 import {
   Address,
   AddressBox,
@@ -19,6 +18,8 @@ import {
   StyledImage,
   Text,
 } from '@/components/Detail/style';
+import Header from '@/components/Header';
+import KakaoMap from '@/components/History/KakaoMap';
 
 const SiteDetail = () => {
   const { historyId } = useParams();
@@ -29,7 +30,7 @@ const SiteDetail = () => {
   if (!data) return null;
 
   return (
-    <>
+    <DefaultLayout>
       <Header pageName='사적지 정보' hasPrevious />
       <Container>
         <BigTitle>{data.name}</BigTitle>
@@ -67,7 +68,7 @@ const SiteDetail = () => {
           />
         </div>
       </Container>
-    </>
+    </DefaultLayout>
   );
 };
 
