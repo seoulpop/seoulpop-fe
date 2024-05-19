@@ -9,6 +9,7 @@ import FoundButton from '@/containers/ArDemo/FoundButton';
 import GoBackButton from '@/containers/ArDemo/GoBackButton';
 import NearMessage from '@/containers/ArDemo/NearMessage';
 import Spot from '@/containers/ArDemo/Spot';
+import useArMarkers from '@/hooks/server/useArMarkers';
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';
@@ -46,7 +47,6 @@ const SceneContainer = styled.div`
 
 /** 
 // 테스트용 데이터
-*/
 
 const MOCK_DATA: MarkerInfo[] = [
   {
@@ -82,6 +82,7 @@ const MOCK_DATA: MarkerInfo[] = [
     arImage: '/assets/images/sungnyemunGate.jpeg',
   },
 ];
+*/
 
 const deviceMotionMessage = `<p class='a-dialog-message'>ar기능을 사용하기 위해 기기의 방향을 감지할 수 있는 권한을 허용해주세요.</p>`;
 
@@ -104,11 +105,10 @@ const ArDemo = () => {
   const [isOpen, setIsOpen] = useState<boolean>();
   const [nearItem, setNearItem] = useState<MarkerInfo | null>();
 
-  // const { markerNearbyData } = useArMarkers({
-  //   lat: position?.latitude,
-  //   lng: position?.longitude,
-  // });
-  const markerNearbyData = MOCK_DATA;
+  const { markerNearbyData } = useArMarkers({
+    lat: position?.latitude,
+    lng: position?.longitude,
+  });
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
@@ -169,9 +169,7 @@ const ArDemo = () => {
     setNearItem(near);
   }, [markerNearbyData, position]);
 
-  // const arImage = getArImage(selectItem);
-  const arImage =
-    'https://seoulpop.s3.ap-northeast-2.amazonaws.com/31%EC%9A%B4%EB%8F%99/%EC%98%9B%EB%82%A0+%EC%9D%B4%EB%AF%B8%EC%A7%80/1715065173911_10_YMCA%ED%9A%8C%EA%B4%80.png'; //
+  const arImage = getArImage(selectItem);
 
   // TODO: 문화재가 없는 경우 UI
   return (
