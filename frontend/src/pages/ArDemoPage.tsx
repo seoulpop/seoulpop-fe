@@ -2,8 +2,6 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import useArMarkers from '@/hooks/server/useArMarkers';
-
 import ArContents from '@/containers/ArDemo/ArContents';
 // import CoorDebug from '@/containers/ArDemo/CoorDebug';
 import AR_IMAGE from '@/constants/arImage';
@@ -26,6 +24,8 @@ const SceneContainer = styled.div`
 
 /** 
 // 테스트용 데이터
+*/
+
 const MOCK_DATA: MarkerInfo[] = [
   {
     id: -1,
@@ -60,7 +60,6 @@ const MOCK_DATA: MarkerInfo[] = [
     arImage: '/assets/images/sungnyemunGate.jpeg',
   },
 ];
-*/
 
 const getArImage = (marker?: MarkerInfo): string | undefined => {
   if (!marker) return undefined;
@@ -81,10 +80,11 @@ const ArDemo = () => {
   const [isOpen, setIsOpen] = useState<boolean>();
   const [nearItem, setNearItem] = useState<MarkerInfo | null>();
 
-  const { markerNearbyData } = useArMarkers({
-    lat: position?.latitude,
-    lng: position?.longitude,
-  });
+  // const { markerNearbyData } = useArMarkers({
+  //   lat: position?.latitude,
+  //   lng: position?.longitude,
+  // });
+  const markerNearbyData = MOCK_DATA;
 
   useEffect(() => {
     const onUpdateGps = (event: unknown) => {
@@ -145,7 +145,9 @@ const ArDemo = () => {
     setNearItem(near);
   }, [markerNearbyData, position]);
 
-  const arImage = getArImage(selectItem);
+  // const arImage = getArImage(selectItem);
+  const arImage =
+    'https://seoulpop.s3.ap-northeast-2.amazonaws.com/31%EC%9A%B4%EB%8F%99/%EC%98%9B%EB%82%A0+%EC%9D%B4%EB%AF%B8%EC%A7%80/1715065173911_10_YMCA%ED%9A%8C%EA%B4%80.png'; //
 
   // TODO: 문화재가 없는 경우 UI
   return (
