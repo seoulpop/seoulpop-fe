@@ -7,3 +7,8 @@ interface Atlas {
 }
 
 export type AtlasesData = Atlas[];
+
+export interface LocalAtlases {
+  historyId: number;
+  historyCategory: string;
+}

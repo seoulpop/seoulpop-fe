@@ -1,4 +1,4 @@
-import { api, apiUser } from '@/api/index';
+import { apiUser } from '@/api/index';
 import { Coords } from '@/types/location';
 
 export const postToken = async (fcmToken: string): Promise<string> => {
@@ -13,7 +13,7 @@ export const postNotifications = async ({ lat, lng }: Coords): Promise<string> =
 
 export const patchNotifications = async (notificationId: string) => {
   try {
-    const response = await api.patch(`/v1/notifications`, { notificationId });
+    const response = await apiUser.patch(`/v1/notifications`, { notificationId });
     return response.data;
   } catch (error) {
     console.log('Patch notificationId error: ', error);
@@ -23,10 +23,14 @@ export const patchNotifications = async (notificationId: string) => {
 
 export const getNotifications = async () => {
   try {
-    const response = await api.get(`/v1/notifications`);
+    const response = await apiUser.get(`/v1/notifications`);
     return response.data;
-  } catch (error) {
-    console.log('Get notifications error: ', error);
+  } catch (error: any) {
+    console.log(
+      'Get notifications error: ',
+      error.response.data.httpStatus,
+      error.response.data.errorMsg,
+    );
     return [];
   }
 };

@@ -20,6 +20,8 @@ import useNotifications from '@/hooks/server/useNotifications';
 import TabBar from '@/components/TabBar';
 import Button from '@/components/Button';
 import FindDirections from '@/containers/Main/FindDirections';
+import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
+import { LocalAtlases } from '@/types/atlases';
 
 const KakaoMap = styled(Map)`
   width: 100svw;
@@ -42,12 +44,13 @@ const MainPage = () => {
   const { lat, lng, error } = useCurrentLocation();
   const { markerData, markerNearbyData } = useMaps(lat, lng);
   const { notificationMutation } = useNotifications();
+  const { visitedAtlases } = useVisitedAtlases();
   const mapRef = useRef(null);
   const [center, setCenter] = useState({
     lat: DEFAULT_MARKER_INFO.lat,
     lng: DEFAULT_MARKER_INFO.lng,
   });
-  const [origin, setOrigin] = useState<Coords>({ lat, lng });
+  const [origin, setOrigin] = useState<Coords | null>(null);
   const [destination, setDestination] = useState<DestinationInfo | null>(null);
   const [markerList, setMarkerList] = useState<MarkerInfo[]>();
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
@@ -111,7 +114,6 @@ const MainPage = () => {
         lat: notificationData.historyLat,
         lng: notificationData.historyLng,
       });
-      setOrigin({ lat, lng });
     }
   }, []);
 
@@ -119,6 +121,7 @@ const MainPage = () => {
   useEffect(() => {
     if (!isInit && lat !== DEFAULT_MARKER_INFO.lat && lng !== DEFAULT_MARKER_INFO.lng) {
       setCenter({ lat, lng });
+      setOrigin({ lat, lng });
       setIsInit(true);
     }
   }, [isInit, lat, lng]);
@@ -138,11 +141,12 @@ const MainPage = () => {
         ref={mapRef}
         onClick={() => setClickedMarker(null)}
       >
-        {destination && isInit && mapRef.current ? (
+        {destination && origin && isInit && mapRef.current ? (
           <>
             <Navigation
               map={mapRef.current}
               origin={origin}
+              setOrigin={setOrigin}
               destination={destination}
               setDestination={setDestination}
             />
@@ -203,20 +207,25 @@ const MainPage = () => {
                   position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }}
                 />
               ) : (
-                markerList.map((marker) => (
-                  <MapMarker
-                    position={{ lat: marker.lat, lng: marker.lng }}
-                    key={marker.id}
-                    image={{
-                      src: `/assets/images/${marker.category}-${marker.visited}.webp`,
-                      size:
-                        marker.id !== clickedMarker?.id
-                          ? { width: 40, height: 50 }
-                          : { width: 50, height: 60 },
-                    }}
-                    onClick={() => handleMarkerClick(marker)}
-                  />
-                ))
+                markerList.map((marker) => {
+                  const visited = !!visitedAtlases.filter(
+                    (visitedAtlas: LocalAtlases) => visitedAtlas.historyId === marker.id,
+                  ).length;
+                  return (
+                    <MapMarker
+                      position={{ lat: marker.lat, lng: marker.lng }}
+                      key={marker.id}
+                      image={{
+                        src: `/assets/images/${marker.category}-${visited}.webp`,
+                        size:
+                          marker.id !== clickedMarker?.id
+                            ? { width: 40, height: 50 }
+                            : { width: 50, height: 60 },
+                      }}
+                      onClick={() => handleMarkerClick(marker)}
+                    />
+                  );
+                })
               )}
             </MarkerClusterer>
           </>
