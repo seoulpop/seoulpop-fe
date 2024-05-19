@@ -1,15 +1,16 @@
 /** @jsxImportSource @emotion/react */
-import Header from '@/components/Header';
-import TabBar from '@/components/TabBar';
-import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
-import useAtlases from '@/hooks/server/useAtlases';
-import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { isAuthenticated, hasRefreshToken, reissueAccessToken } from '@/utils/auth';
-import LoginModal from '@/components/LoginModal';
+
+import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
+import useAtlases from '@/hooks/server/useAtlases';
+
+import Header from '@/components/Header';
+import TabBar from '@/components/TabBar';
+
+import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 
 const Container = styled.div`
   margin: ${HEADER_HEIGHT + 1.6}rem 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
@@ -104,6 +105,7 @@ const CollectionPage = () => {
   const changeTab = (category: '전체' | '문화재' | '6·25전쟁' | '3·1운동') => {
     setCurrentCategory(category);
   };
+  /** TODO: 추후 로그인 권한 체크
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [modalSubMessage, setModalSubMessage] = useState('');
@@ -137,9 +139,11 @@ const CollectionPage = () => {
 
     checkAuth();
   }, [navigate]);
+  */
 
   return (
     <>
+      {/** TODO: 추후 로그인 권한 체크
       {showModal && (
         <LoginModal
           message={modalMessage}
@@ -148,6 +152,7 @@ const CollectionPage = () => {
           onClose={() => navigate('/')}
         />
       )}
+      */}
       <Header pageName='도감' />
       <Container>
         <TabArea>
