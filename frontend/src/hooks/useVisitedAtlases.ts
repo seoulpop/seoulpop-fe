@@ -10,7 +10,6 @@ export const useVisitedAtlases = () => {
     if (localAtlasesData) {
       setVisitedAtlases(JSON.parse(localAtlasesData));
     }
-    console.log('visitedAtlases: ', localAtlasesData);
   }, []);
 
   return { visitedAtlases };
