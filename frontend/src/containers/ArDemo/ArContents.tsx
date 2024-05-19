@@ -72,8 +72,7 @@ const ArContents = ({
     };
   }, [isClosed]);
 
-  // TODO: NULL 체크
-  if (!arImage || arImage === 'NULL') return null;
+  if (!arImage) return null;
 
   return (
     <Entity
