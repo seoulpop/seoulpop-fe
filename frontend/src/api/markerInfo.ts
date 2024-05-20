@@ -7,6 +7,6 @@ export const getMarkerInfo = async (): Promise<MarkerInfo[]> => {
 };
 
 export const getMarkerNearby = async (lat: number, lng: number): Promise<MarkerNearbyInfo[]> => {
-  const response = await api.get(`/v1/histories/carousels?lat=${lat}&lng=${lng}&level=10`);
+  const response = await api.get(`/v1/histories/carousels?lat=${lat}&lng=${lng}&level=8`);
   return response.data;
 };

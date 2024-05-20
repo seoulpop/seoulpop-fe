@@ -5,12 +5,13 @@ import styled from '@emotion/styled';
 import { HEADER_HEIGHT, TABBAR_HEIGHT } from '@/constants/components';
 import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
 import useNotifications from '@/hooks/server/useNotifications';
-import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
-import { NotificationData } from '@/types/notification';
 
-import DefaultLayout from '@/Layouts/DetailLayout';
 import Header from '@/components/Header';
 import TabBar from '@/components/TabBar';
+
+import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
+import { NotificationData } from '@/types/notification';
+import DefaultLayout from '@/Layouts/DetailLayout';
 
 const NotificationWrapper = styled.div`
   padding-top: ${HEADER_HEIGHT + 1.6}rem;
@@ -49,6 +50,11 @@ const HistoryName = styled.div`
   font-weight: bold;
 `;
 
+const NoData = styled.div`
+  text-align: center;
+  line-height: calc(100svh - ${TABBAR_HEIGHT}rem - ${HEADER_HEIGHT}rem);
+`;
+
 const NotificationPage = () => {
   const { notificationsData } = useNotifications();
 
@@ -61,27 +67,31 @@ const NotificationPage = () => {
     <DefaultLayout>
       <Header pageName='알림' />
       <NotificationWrapper>
-        {notificationsData?.map((data) => {
-          return (
-            <button
-              css={notificationStyle(data.checked)}
-              key={data.notificationId}
-              type='button'
-              onClick={() => handleNotificationClick(data)}
-            >
-              <img
-                src={`/assets/images/${data.historyCategory}.webp`}
-                alt=''
-                width={45}
-                height={45}
-              />
-              <Content>
-                <HistoryName>{data.historyName}</HistoryName>
-                <div>{data.body}</div>
-              </Content>
-            </button>
-          );
-        })}
+        {notificationsData && notificationsData.length ? (
+          notificationsData.map((data) => {
+            return (
+              <button
+                css={notificationStyle(data.checked)}
+                key={data.notificationId}
+                type='button'
+                onClick={() => handleNotificationClick(data)}
+              >
+                <img
+                  src={`/assets/images/${data.historyCategory}.webp`}
+                  alt=''
+                  width={45}
+                  height={45}
+                />
+                <Content>
+                  <HistoryName>{data.historyName}</HistoryName>
+                  <div>{data.body}</div>
+                </Content>
+              </button>
+            );
+          })
+        ) : (
+          <NoData>알림이 없습니다.</NoData>
+        )}
       </NotificationWrapper>
       <TabBar />
     </DefaultLayout>
