@@ -7,6 +7,13 @@ import { DEFAULT_MARKER_INFO } from '@/constants/map';
 import useMaps from '@/hooks/server/useMap';
 import useKakaoLoader from '@/hooks/useKakaoLoader';
 import useCurrentLocation from '@/hooks/useCurrentLocation';
+import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
+import useNotifications from '@/hooks/server/useNotifications';
+import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
+
+import TabBar from '@/components/TabBar';
+import Button from '@/components/Button';
+
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/marker';
 import MainLayout from '@/Layouts/MainLayout';
@@ -14,13 +21,7 @@ import { NotificationData } from '@/types/notification';
 import BottomPanelArea from '@/containers/Main/BottomPanelArea';
 import Navigation from '@/containers/Main/Navigation';
 import { Coords, DestinationInfo } from '@/types/location';
-import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
-import useNotifications from '@/hooks/server/useNotifications';
-
-import TabBar from '@/components/TabBar';
-import Button from '@/components/Button';
 import FindDirections from '@/containers/Main/FindDirections';
-import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
 import { LocalAtlases } from '@/types/atlases';
 
 const KakaoMap = styled(Map)`
@@ -201,7 +202,7 @@ const MainPage = () => {
               handleMarkerClick={handleMarkerClick}
             />
             <TabBar />
-            <MarkerClusterer averageCenter={true} minLevel={5}>
+            <MarkerClusterer averageCenter minLevel={5}>
               {markerList === undefined ? (
                 <MapMarker
                   position={{ lat: DEFAULT_MARKER_INFO.lat, lng: DEFAULT_MARKER_INFO.lng }}

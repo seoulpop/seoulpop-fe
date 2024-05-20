@@ -68,7 +68,7 @@ const NotificationPage = () => {
       <Header pageName='알림' />
       <NotificationWrapper>
         {notificationsData && notificationsData.length ? (
-          notificationsData.map((data) => {
+          notificationsData.reverse().map((data) => {
             return (
               <button
                 css={notificationStyle(data.checked)}
