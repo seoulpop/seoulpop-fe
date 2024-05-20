@@ -1,9 +1,10 @@
-import React from 'react';
 import styled from '@emotion/styled';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { IconLeftArrow } from '#/svgs';
+import PC_LAYOUT, { MOBILE_MIN_WIDTH } from '@/constants/pcLayout';
+import { FONT_SIZE, Z_INDEX } from '@/styles/common';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -17,6 +18,11 @@ const HeaderContainer = styled.header`
   left: 0;
   width: 100%;
   z-index: ${Z_INDEX.layout};
+
+  @media screen and (min-width: ${MOBILE_MIN_WIDTH}px) {
+    max-width: 480px;
+    margin: 0 0 0 calc(50vw + ${PC_LAYOUT.OFFSET}rem);
+  }
 `;
 
 const BackButton = styled.button`

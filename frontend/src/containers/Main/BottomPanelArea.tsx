@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
 
 import { IconCenter, IconDown, IconUp } from '#/svgs';
+import { TABBAR_HEIGHT } from '@/constants/components';
 import { bottomPanelSlideIn, bottomPanelSlideOut } from '@/styles/animation';
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { MarkerInfo, MarkerNearbyInfo } from '@/types/marker';
-import { TABBAR_HEIGHT } from '@/constants/components';
 
+import isMobile from '@/utils/isMobile';
 import { Camera } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 
@@ -176,9 +177,14 @@ const BottomPanelArea = ({
       } else {
         navigate('/setting');
       }
-    } else {
-      navigate('/ardemo');
+      return;
     }
+
+    if (!isMobile()) {
+      navigate('/ar-pc');
+      return;
+    }
+    navigate('/ardemo');
   };
 
   useEffect(() => {

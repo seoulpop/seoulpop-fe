@@ -10,13 +10,15 @@ import useAtlases from '@/hooks/server/useAtlases';
 import Header from '@/components/Header';
 import TabBar from '@/components/TabBar';
 
+import DefaultLayout from '@/Layouts/DetailLayout';
+import { TOTAL_ATLASES_CNT } from '@/constants/atlases';
+import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
 import { LocalAtlases } from '@/types/atlases';
-import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
-import { TOTAL_ATLASES_CNT } from '@/constants/atlases';
 
 const Container = styled.div`
-  margin: ${HEADER_HEIGHT + 1.6}rem 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
+  padding-top: ${HEADER_HEIGHT + 1.6}rem;
+  margin: 0 1.6rem ${TABBAR_HEIGHT + 1.6}rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -165,7 +167,7 @@ const CollectionPage = () => {
   */
 
   return (
-    <>
+    <DefaultLayout>
       {/** TODO: 추후 로그인 권한 체크
       {showModal && (
         <LoginModal
@@ -253,7 +255,7 @@ const CollectionPage = () => {
         </CollectionArea>
       </Container>
       <TabBar />
-    </>
+    </DefaultLayout>
   );
 };
 
