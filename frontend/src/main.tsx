@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import ReactDOM from 'react-dom/client';
 
 import App from '@/App';
-import { PcContainer } from '@/Layouts/PcLayout';
+import { PcContainer } from '@/layouts/PcLayout';
 import GlobalStyles from '@/styles/GlobalStyles';
 import ToastProvider from '@/utils/provide/toastProvider';
 

@@ -16,7 +16,7 @@ import Button from '@/components/Button';
 
 import { Z_INDEX } from '@/styles/common';
 import { MarkerInfo } from '@/types/marker';
-import MainLayout from '@/Layouts/MainLayout';
+import MainLayout from '@/layouts/MainLayout';
 import { NotificationData } from '@/types/notification';
 import BottomPanelArea from '@/containers/Main/BottomPanelArea';
 import Navigation from '@/containers/Main/Navigation';

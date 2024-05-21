@@ -6,7 +6,7 @@ import ImageCarousel from '@/containers/History/ImageCarousel';
 import useHistoryDetail from '@/hooks/server/useHistoryDetail';
 import { SiteInfo } from '@/types/history';
 
-import DefaultLayout from '@/Layouts/DetailLayout';
+import DefaultLayout from '@/layouts/DetailLayout';
 import {
   Address,
   AddressBox,

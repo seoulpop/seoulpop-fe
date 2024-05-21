@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { ClipLoader } from 'react-spinners';
 
 import { FONT_SIZE } from '@/styles/common';
-import DefaultLayout from '@/Layouts/DetailLayout';
+import DefaultLayout from '@/layouts/DetailLayout';
 import { getOauthId } from '@/api/login'; // getOauthId 함수 임포트
 
 const LoaderContainer = styled.div`

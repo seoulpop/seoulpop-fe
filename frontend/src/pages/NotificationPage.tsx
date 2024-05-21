@@ -11,7 +11,7 @@ import TabBar from '@/components/TabBar';
 
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 import { NotificationData } from '@/types/notification';
-import DefaultLayout from '@/Layouts/DetailLayout';
+import DefaultLayout from '@/layouts/DetailLayout';
 
 const NotificationWrapper = styled.div`
   padding-top: ${HEADER_HEIGHT + 1.6}rem;

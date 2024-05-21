@@ -10,7 +10,7 @@ import useAtlases from '@/hooks/server/useAtlases';
 import Header from '@/components/Header';
 import TabBar from '@/components/TabBar';
 
-import DefaultLayout from '@/Layouts/DetailLayout';
+import DefaultLayout from '@/layouts/DetailLayout';
 import { TOTAL_ATLASES_CNT } from '@/constants/atlases';
 import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
 import { BORDER_RADIUS, FONT_SIZE, Z_INDEX } from '@/styles/common';
