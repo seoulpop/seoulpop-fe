@@ -2,12 +2,12 @@ import { AssetItem, Assets, Camera, Scene } from '@belivvr/aframe-react';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 
-import ArContents from '@/containers/ArDemo/ArContents';
-// import CoorDebug from '@/containers/ArDemo/CoorDebug';
-import FoundButton from '@/containers/ArDemo/FoundButton';
-import GoBackButton from '@/containers/ArDemo/GoBackButton';
-import NearMessage from '@/containers/ArDemo/NearMessage';
-import Spot from '@/containers/ArDemo/Spot';
+import ArContents from '@/containers/Ar/ArContents';
+// import CoorDebug from '@/containers/Ar/CoorDebug';
+import FoundButton from '@/containers/Ar/FoundButton';
+import GoBackButton from '@/containers/Ar/GoBackButton';
+import NearMessage from '@/containers/Ar/NearMessage';
+import Spot from '@/containers/Ar/Spot';
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 import { GeolocationCoordinates, MarkerInfo, Position } from '@/types/ar';
 import { getDistanceFromLatLonInMeters } from '@/utils/distance';

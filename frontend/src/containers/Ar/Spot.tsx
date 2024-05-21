@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import HERITAGE_FONT from '@/constants/msdfs';
 
-import HeritageName from '@/containers/ArDemo/HeritageName';
+import HeritageName from '@/containers/Ar/HeritageName';
 import { AR_Z_INDEX } from '@/styles/common';
 import { MarkerInfo, Position } from '@/types/ar';
 import { formatGpsNewEntityPlace } from '@/utils/ar';
