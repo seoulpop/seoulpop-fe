@@ -173,7 +173,7 @@ const BottomPanelArea = ({
     if (Capacitor.getPlatform() === 'android') {
       const status = await Camera.requestPermissions();
       if (status.camera === 'granted') {
-        navigate('/ardemo');
+        navigate('/ar');
       } else {
         navigate('/setting');
       }
@@ -184,7 +184,7 @@ const BottomPanelArea = ({
       navigate('/ar-pc');
       return;
     }
-    navigate('/ardemo');
+    navigate('/ar');
   };
 
   useEffect(() => {

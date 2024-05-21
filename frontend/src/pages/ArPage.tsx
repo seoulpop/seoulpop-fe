@@ -44,48 +44,9 @@ const SceneContainer = styled.div`
   }
 `;
 
-/** 
-// 테스트용 데이터
-
-const MOCK_DATA: MarkerInfo[] = [
-  {
-    id: -1,
-    lng: 127.0875046,
-    lat: 37.4712586,
-    name: '탑골공원',
-    category: '문화재',
-    arImage: '/assets/images/test.png',
-  },
-  {
-    id: 2,
-    lng: 127.087403,
-    lat: 37.4713001,
-    name: '경복궁',
-    category: '문화재',
-    arImage: '/assets/images/test2.png',
-  },
-  {
-    id: -97,
-    lat: 37.4717377,
-    lng: 127.0880092,
-    name: '서울 숭례문 (서울 崇禮門)',
-    category: '문화재',
-    arImage: '/assets/images/sungnyemunGate.jpeg',
-  },
-  {
-    id: 1,
-    lat: 37.55992779,
-    lng: 126.9753598,
-    name: '서울 숭례문 (서울 崇禮門)',
-    category: '문화재',
-    arImage: '/assets/images/sungnyemunGate.jpeg',
-  },
-];
-*/
-
 const deviceMotionMessage = `<p class='a-dialog-message'>ar기능을 사용하기 위해 기기의 방향을 감지할 수 있는 권한을 허용해주세요.</p>`;
 
-const ArDemo = () => {
+const ArPage = () => {
   const [position, setPosition] = useState<Position>();
   const [selectItem, setSelectItem] = useState<MarkerInfo>();
   const [isOpen, setIsOpen] = useState<boolean>();
@@ -215,4 +176,4 @@ const ArDemo = () => {
   );
 };
 
-export default ArDemo;
+export default ArPage;
