@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { ComponentType, useEffect, useState } from 'react';
 
 import DefaultLayout from '@/layouts/DetailLayout';
 
@@ -29,23 +29,26 @@ const SplashScreen = () => {
   );
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, react/function-component-definition
-const withSplashScreen = (Component: React.FC<any>) => (props: any) => {
-  const [loading, setLoading] = useState(true);
+const withSplashScreen = <P extends object>(Component: ComponentType<P>) => {
+  const WrappedComponent = (props: P) => {
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 1000);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  });
+      return () => {
+        clearTimeout(timer);
+      };
+    });
 
-  if (loading) return <SplashScreen />;
+    if (loading) return <SplashScreen />;
 
-  return <Component {...props} />;
+    return <Component {...props} />;
+  };
+
+  return WrappedComponent;
 };
 
 export default withSplashScreen;
