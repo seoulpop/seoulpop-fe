@@ -1,11 +1,11 @@
+import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { ClipLoader } from 'react-spinners';
 
-import { FONT_SIZE } from '@/styles/common';
-import DefaultLayout from '@/layouts/DetailLayout';
+import DefaultLayout from '@/Layouts/DetailLayout';
 import { getOauthId } from '@/api/login'; // getOauthId 함수 임포트
+import { FONT_SIZE } from '@/styles/common';
 
 const LoaderContainer = styled.div`
   display: flex;

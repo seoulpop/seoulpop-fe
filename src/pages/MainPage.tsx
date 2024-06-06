@@ -1,28 +1,28 @@
 /** @jsxImportSource @emotion/react */
-import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
+import { Map, MapMarker, MarkerClusterer } from 'react-kakao-maps-sdk';
 
 import { DEFAULT_MARKER_INFO } from '@/constants/map';
-import useMaps from '@/hooks/server/useMap';
-import useKakaoLoader from '@/hooks/useKakaoLoader';
-import useCurrentLocation from '@/hooks/useCurrentLocation';
 import { NOTIFICATION_DATA_KEY } from '@/constants/notification';
+import useMaps from '@/hooks/server/useMap';
 import useNotifications from '@/hooks/server/useNotifications';
+import useCurrentLocation from '@/hooks/useCurrentLocation';
+import useKakaoLoader from '@/hooks/useKakaoLoader';
 import { useVisitedAtlases } from '@/hooks/useVisitedAtlases';
 
-import TabBar from '@/components/TabBar';
 import Button from '@/components/Button';
+import TabBar from '@/components/TabBar';
 
-import { Z_INDEX } from '@/styles/common';
-import { MarkerInfo } from '@/types/marker';
-import MainLayout from '@/layouts/MainLayout';
-import { NotificationData } from '@/types/notification';
+import MainLayout from '@/Layouts/MainLayout';
 import BottomPanelArea from '@/containers/Main/BottomPanelArea';
-import Navigation from '@/containers/Main/Navigation';
-import { Coords, DestinationInfo } from '@/types/location';
 import FindDirections from '@/containers/Main/FindDirections';
+import Navigation from '@/containers/Main/Navigation';
+import { Z_INDEX } from '@/styles/common';
 import { LocalAtlases } from '@/types/atlases';
+import { Coords, DestinationInfo } from '@/types/location';
+import { MarkerInfo } from '@/types/marker';
+import { NotificationData } from '@/types/notification';
 
 const KakaoMap = styled(Map)`
   width: 100svw;

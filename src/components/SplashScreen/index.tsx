@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ComponentType, useEffect, useState } from 'react';
 
-import DefaultLayout from '@/layouts/DetailLayout';
+import DefaultLayout from '@/Layouts/DetailLayout';
 
 const SplashContainer = styled.div`
   display: flex;
