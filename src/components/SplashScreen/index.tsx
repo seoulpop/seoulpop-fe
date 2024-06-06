@@ -29,8 +29,8 @@ const SplashScreen = () => {
   );
 };
 
-const withSplashScreen = <P extends object>(Component: ComponentType<P>) => {
-  const WrappedComponent = (props: P) => {
+const withSplashScreen = (Component: ComponentType) => {
+  const WrappedComponent = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const withSplashScreen = <P extends object>(Component: ComponentType<P>) => {
 
     if (loading) return <SplashScreen />;
 
-    return <Component {...props} />;
+    return <Component />;
   };
 
   return WrappedComponent;
