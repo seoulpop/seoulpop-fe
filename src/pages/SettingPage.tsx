@@ -1,4 +1,4 @@
-import DefaultLayout from '@/layouts/DetailLayout';
+import DefaultLayout from '@/Layouts/DetailLayout';
 import Header from '@/components/Header';
 import PermissionSlider from '@/components/PermissionSlider';
 import TabBar from '@/components/TabBar';

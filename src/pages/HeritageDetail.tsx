@@ -8,7 +8,7 @@ import useHistoryDetail from '@/hooks/server/useHistoryDetail';
 import { BORDER_RADIUS, FONT_SIZE } from '@/styles/common';
 import { HeritageInfo } from '@/types/history';
 
-import DefaultLayout from '@/layouts/DetailLayout';
+import DefaultLayout from '@/Layouts/DetailLayout';
 import {
   Address,
   AddressBox,
